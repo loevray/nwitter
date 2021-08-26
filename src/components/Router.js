@@ -12,15 +12,15 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
         <Switch>
             {isLoggedIn ? (
             <>
-                <Route exact path="/">
+                <Route exact path="/nwitter/">
                     <Home userObj={userObj} />
                 </Route>
-                <Route exact path="/profile">
+                <Route exact path="/nwitter/profile">
                     <Profile userObj={userObj} refreshUser={refreshUser} />
                 </Route>
             </>
             ) : (
-                <Route exact path="/">
+                <Route exact path="/nwitter/">
                     <Auth />
                 </Route>
                 )}
