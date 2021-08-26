@@ -16,8 +16,8 @@ const SocialLinks = () => {
     };
     return(
         <>
-        <button onClick={onSocialClick} name="google">Continue with Google</button>
-        <button onClick={onSocialClick} name="github">Continue with Github</button>
+        <button onClick={onSocialClick} name="google">Login with Google</button>
+        <button onClick={onSocialClick} name="github">Login with Github</button>
         </>
     );
 };

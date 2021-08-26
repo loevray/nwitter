@@ -9,10 +9,10 @@ const Navigation = ({ userObj }) => {
     <nav>
         <ul>
             <li>
-                <Link to="/nwitter/">Home</Link>
+                <Link to="/">Home</Link>
             </li>
             <li>
-                <Link to="/nwitter/profile"> {userObj.displayName}'s Profile </Link>
+                <Link to="/profile"> {userObj.displayName}'s Profile </Link>
             </li>
         </ul>
 </nav>

@@ -6,12 +6,14 @@ const Auth = () => {
 
     //화면 리턴
     return(
-    <div>
+    <>
+    <div className="register">
         <AuthForm />
-        <div>
+        <div className="social_links">
         <SocialLinks />
         </div>
     </div>
+    </>
     );
 };
 export default Auth;

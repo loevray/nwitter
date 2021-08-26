@@ -19,7 +19,7 @@ const Home = ({ userObj }) => {
     }, []);
 
     return(
-    <div>
+    <div className="nweetWrapper">
         <NweetFactory userObj={userObj} />
         <div>
             {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}

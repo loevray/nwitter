@@ -7,6 +7,10 @@ const NweetFactory = ({ userObj }) => {
     const [attachment, setAttachment] = useState("");
     const onSubmit = async (event) => {
         event.preventDefault();
+        if(nweet === ""){
+            alert("내용을 입력해주세요!");
+            return;
+        }
         let attachmentUrl = "";
         if(attachment !== ""){
             const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
