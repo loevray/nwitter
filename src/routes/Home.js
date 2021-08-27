@@ -2,6 +2,8 @@ import Nweet from "components/Nweet";
 import NweetFactory from "components/NweetFactory";
 import { dbService } from "fbase";
 import React, { useEffect, useState } from "react";
+import "../css/Home.css";
+
 
 const Home = ({ userObj }) => {
     const [nweets, setNweets] = useState([]);
@@ -19,15 +21,23 @@ const Home = ({ userObj }) => {
     }, []);
 
     return(
-    <div className="nweetWrapper">
-        <NweetFactory userObj={userObj} />
-        <div>
-            {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
-            {nweets.map((a_nweet) => (
-                <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
-            ))} 
+    <>
+    <div className="home_center">
+        <div className="nweet_wrapper">
+            <NweetFactory userObj={userObj} />
+            <div>
+                {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
+                {nweets.map((a_nweet) => (
+                    <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
+                ))} 
+            </div>
+                <button className="test">ㅇ</button>
         </div>
     </div>
+    <div className="home_right">
+        우측측
+    </div>
+    </>
     );
 };
 

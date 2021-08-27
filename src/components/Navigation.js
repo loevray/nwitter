@@ -6,16 +6,16 @@ const Navigation = ({ userObj }) => {
         userObj.displayName = "익명";
     }
     return(
-    <nav>
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-            <li>
-                <Link to="/profile"> {userObj.displayName}'s Profile </Link>
-            </li>
-        </ul>
-</nav>
+        <nav className="nav">
+            <ul>
+                <li>
+                    <Link to="/home">Home</Link>
+                </li>
+                <li>
+                    <Link to="/profile"> {userObj.displayName}'s Profile </Link>
+                </li>
+            </ul>
+        </nav>
     );
 }
 ;
