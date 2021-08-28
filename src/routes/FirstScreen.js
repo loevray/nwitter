@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { authService } from "fbase";
+import React, { useEffect, useRef, useState } from "react";
 import Auth from "routes/Auth";
 import CreateAccount from "../components/CreateAccount";
 import Footer from "../components/Footer";
@@ -6,17 +7,31 @@ import Footer from "../components/Footer";
 
 const FirstScreen = ({ isLoggedIn }) => {
     const [signUp, setSignUp] = useState(false);
+    const signUpPage = useRef();
     const onClick = () => {
         setSignUp(true);
     };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if(signUp && !signUpPage.current.contains(event.target)){
+                setSignUp(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [signUp]);
     return(
     <div className="main_wrapper_1">
-        {signUp ? (      
+        {signUp && (      
         <div className="modal_wrapper">
             <div className="modal">
-                <CreateAccount />
+                <div className="register_wrapper" ref={signUpPage}>
+                 <CreateAccount setSignUp={setSignUp}/>
+                </div>
             </div>
-        </div>) : null}
+        </div>)}
   
         <div className="main_top">
             {/* 화면좌측 */}
@@ -31,8 +46,6 @@ const FirstScreen = ({ isLoggedIn }) => {
                     </svg>
                 </div>
             </header>
-            {/* 화면좌측 끝 */}
-
             {/* 화면우측 */}
             <main className="main">
                 <div className="birdImg2_wrapper">
@@ -47,7 +60,7 @@ const FirstScreen = ({ isLoggedIn }) => {
                 </div>
                     <div className="main_text_wrapper">
                         <span>지금 일어나고 있는 일</span>
-                        <span>오늘 트위터에 로그인하세요.</span>
+                        <span>오늘 이재광에 로그인하세요.</span>
                     </div>
                     <Auth />
                     <div className="main_regist_text">
@@ -57,7 +70,7 @@ const FirstScreen = ({ isLoggedIn }) => {
             </main>
         </div>
         <div className="main_bottom">
-            { isLoggedIn ? null : <Footer /> }
+           <Footer />
         </div>
     </div>
     );

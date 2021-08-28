@@ -3,9 +3,11 @@ import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import Profile from "routes/Profile";
 import Home from "../routes/Home";
 import FirstScreen from "../routes/FirstScreen";
-import Navigation from "./Navigation";
+import Navigation from "../routes/Navigation";
+import Aside from "routes/Aside";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
+    const admin = true;
     return(
     <Router>
         {isLoggedIn && <Navigation userObj={userObj} />}
@@ -28,6 +30,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 </>
                 )}
         </Switch>
+        {isLoggedIn && <Aside />}
     </Router>
     );
 };

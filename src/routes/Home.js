@@ -31,11 +31,8 @@ const Home = ({ userObj }) => {
                     <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
                 ))} 
             </div>
-                <button className="test">ㅇ</button>
+                <button className="test">가운데에에</button>
         </div>
-    </div>
-    <div className="home_right">
-        우측측
     </div>
     </>
     );

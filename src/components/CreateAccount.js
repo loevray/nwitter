@@ -1,10 +1,12 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../css/CreateAccount.css"
 
-const CreateAccount = () => {
+const CreateAccount = (props) => {
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
+    const history = useHistory();
     const onChange = (event) => {
         const {target: {name, value}} = event;
         if(name === "register_email") {
@@ -18,14 +20,25 @@ const CreateAccount = () => {
         try{
             await authService.createUserWithEmailAndPassword(registerEmail, registerPassword);
             alert("가입 완료");
-            window.location.replace("/home");
+            history.push("/home")
+            authService.languageCode = "ko";
+            emailVerification();
             } catch(error) {
             alert(error.message);
             window.location.replace("/");
         }
     };
+    const onClick = () => {
+        props.setSignUp(false);
+    }
+    const emailVerification = () => {
+        authService.currentUser.sendEmailVerification()
+        .then(() => {
+            alert("verification link sent to your email. please check email.");
+        });
+    };
     return(
-    <div className="register_wrapper">
+        <>
         <span>회원 가입</span>
         <form onSubmit={onSubmit} className="register_form">
             <input 
@@ -52,8 +65,8 @@ const CreateAccount = () => {
             required
             />
         </form>
-        <button>닫기</button>
-    </div>
+        <button onClick={onClick}>닫기</button>
+        </>
     );
 };
 

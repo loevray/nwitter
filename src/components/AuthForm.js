@@ -1,7 +1,7 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
 
-const AuthForm = ({ isLoggedIn }) => {
+const AuthForm = () => {
     // 1) useState 사용해서 input 태그의 이메일, 패스워드 조작.
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -21,8 +21,7 @@ const AuthForm = ({ isLoggedIn }) => {
         try{
             await authService.signInWithEmailAndPassword(loginEmail, loginPassword);
             } catch(error) {
-            alert(error.message);
-            window.location.replace("/");
+            console.log(error.message);
         }
     };
     return(
@@ -38,14 +37,14 @@ const AuthForm = ({ isLoggedIn }) => {
             onChange={onChange} 
             autoComplete="username" 
             required />
-            <input 
+            <input
             className="login_form_password" 
             name="login_password" 
             type="password" 
             placeholder="Password" 
             value={loginPassword} 
             onChange={onChange} 
-            autoComplete="current-password" 
+            autoComplete="current-password"
             required />
             <input 
             className="login_form_submit" 
