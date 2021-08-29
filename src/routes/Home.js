@@ -1,5 +1,5 @@
-import Nweet from "components/Nweet";
-import NweetFactory from "components/NweetFactory";
+import Nweet from "components/Nweets/Nweet";
+import NweetFactory from "components/Nweets/NweetFactory";
 import { dbService } from "fbase";
 import React, { useEffect, useState } from "react";
 import "../css/Home.css";
@@ -31,7 +31,6 @@ const Home = ({ userObj }) => {
                     <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
                 ))} 
             </div>
-                <button className="test">가운데에에</button>
         </div>
     </div>
     </>

@@ -1,20 +1,35 @@
-import React from "react";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import Profile from "routes/Profile";
 import Home from "../routes/Home";
 import FirstScreen from "../routes/FirstScreen";
 import Navigation from "../routes/Navigation";
 import Aside from "routes/Aside";
+import Verified from "routes/Verified";
+import { useEffect, useState } from "react";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
-    const admin = true;
+    const [verifying, setVeyrifying] = useState(false);
+    const [notWatching, setNotWatching] = useState(true);
+    useEffect(() => {
+        const emailsended = JSON.parse(window.localStorage.getItem("sendMail"));
+        if(emailsended === null || emailsended === undefined || emailsended === false) {
+            return;
+        } else {
+            setVeyrifying(true);
+        }
+    }, [verifying]);
     return(
     <Router>
-        {isLoggedIn && <Navigation userObj={userObj} />}
+        {isLoggedIn && notWatching &&<Navigation userObj={userObj} />}
         <Switch>
+            {verifying &&
+            <Route exact path="/verifying">
+            <Verified setNotWatching={setNotWatching}/>
+            </Route>
+            }
             {isLoggedIn ? (
             <>
-            <Redirect from="/" to="/home"/>
+            <Redirect from="/" to="/home" />
                 <Route exact path="/home">
                     <Home userObj={userObj} />
                 </Route>
@@ -30,7 +45,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 </>
                 )}
         </Switch>
-        {isLoggedIn && <Aside />}
+        {isLoggedIn && notWatching && <Aside />}
     </Router>
     );
 };

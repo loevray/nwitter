@@ -14,6 +14,7 @@ function App() {
           displayName: user.displayName,
           uid: user.uid,
           email: user.email,
+          creationTime: user.metadata.creationTime,
           updateProfile: (args) => user.updateProfile(args),
         });
       } else {
@@ -28,6 +29,7 @@ function App() {
         displayName: user.displayName,
         uid: user.uid,
         email: user.email,
+        creationTime: user.metadata.creationTime,
         updateProfile: (args) => user.updateProfile(args),
       });
   };

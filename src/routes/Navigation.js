@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const Navigation = ({ userObj }) => {
+const Navigation = ({ userObj} ) => {
     if(userObj.displayName === null){
         const email = userObj.email;
         const emailToNickname = email.split("@");
@@ -32,7 +32,7 @@ const Navigation = ({ userObj }) => {
                                         </path>
                                         </g>
                                     </svg>
-                                    <span class="nav_menu_text">홈</span>
+                                    <span className="nav_menu_text">홈</span>
                                     </div>
                                 </Link>
                             </li>

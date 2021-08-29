@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Verified = () => {
+const Verified = ({ setNotWatching }) => {
+    useEffect(() => {
+        setNotWatching(false);
+    })
+    const onClick = () => {
+        window.localStorage.removeItem("sendMail");
+        window.close();
+    }
     return(
         <div>
             <span>인증이 완료되었습니다</span>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
-            <button>확인</button>
+            <button onClick={onClick}>확인</button>
         </div>
     );
 };

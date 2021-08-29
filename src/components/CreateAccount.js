@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../css/CreateAccount.css"
 
-const CreateAccount = (props) => {
+const CreateAccount = ({props}) => {
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
     const history = useHistory();
@@ -15,28 +15,29 @@ const CreateAccount = (props) => {
             setRegisterPassword(value);
         }
     };
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        try{
-            await authService.createUserWithEmailAndPassword(registerEmail, registerPassword);
-            alert("가입 완료");
-            history.push("/home")
-            authService.languageCode = "ko";
-            emailVerification();
-            } catch(error) {
-            alert(error.message);
-            window.location.replace("/");
-        }
-    };
-    const onClick = () => {
-        props.setSignUp(false);
-    }
     const emailVerification = () => {
         authService.currentUser.sendEmailVerification()
         .then(() => {
             alert("verification link sent to your email. please check email.");
         });
     };
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        try{
+            await authService.createUserWithEmailAndPassword(registerEmail, registerPassword);
+            authService.languageCode = "ko";
+            alert("가입 완료");
+            history.push("/home")
+            emailVerification();
+            window.localStorage.setItem("sendMail", true);
+            } catch(error) {
+            alert(error.message, "에러!");
+            window.location.replace("/");
+        }
+    };
+    const onClick = () => {
+        props.setSignUp(false);
+    }
     return(
         <>
         <span>회원 가입</span>

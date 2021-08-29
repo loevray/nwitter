@@ -1,10 +1,12 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const AuthForm = () => {
     // 1) useState 사용해서 input 태그의 이메일, 패스워드 조작.
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
+    const history = useHistory();
 /*  react에선 input태그가 입력받은 value를 사용자에게 보여주지 않음.
     각 input마다 onChange 이벤트에 함수를 부여해서 제어. */
     const onChange = (event) => {
@@ -20,6 +22,7 @@ const AuthForm = () => {
         event.preventDefault();
         try{
             await authService.signInWithEmailAndPassword(loginEmail, loginPassword);
+            history.push("/home");
             } catch(error) {
             console.log(error.message);
         }
