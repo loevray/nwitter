@@ -1,9 +1,10 @@
-import { dbService, storageService } from "fbase";
-import React, { useState } from "react";
+import { authService, dbService, dbStore, storageService } from "fbase";
+import React, { useEffect, useRef, useState } from "react";
 
 const Nweet = ({ nweetObj, isOwner }) => {
     const [editing, setEditing] = useState(false);
     const [newNweet, setNewNweet] = useState(nweetObj.text);
+    const likeBtn = useRef();
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this nweet?");
         if(ok) {
@@ -25,6 +26,19 @@ const Nweet = ({ nweetObj, isOwner }) => {
         const {target :{value}} = event;
         setNewNweet(value);
     };
+    const onClick = async () => {
+        if(
+            nweetObj.like.includes(authService.currentUser.uid, 1)
+            ){
+            await dbService.doc(`nweets/${likeBtn.current.name}`).update({
+            like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
+            })
+            return;
+        }
+        await dbService.doc(`nweets/${likeBtn.current.name}`).update({
+            like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
+        })
+    }
     return (
         <>
             {editing ? 
@@ -41,6 +55,9 @@ const Nweet = ({ nweetObj, isOwner }) => {
                 :
                 <>
                     <h4>{nweetObj.text}</h4>
+                    <button name={nweetObj.id} ref={likeBtn} onClick={onClick}>좋아요</button>
+                    <h3>좋아요:{nweetObj.like.length - 1}
+                    </h3>
                     {nweetObj.attachmentUrl && 
                     (
                         <img src={nweetObj.attachmentUrl} alt="img" width="50px" height="50px" />

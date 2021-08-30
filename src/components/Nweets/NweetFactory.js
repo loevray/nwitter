@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj }) => {
+const NweetFactory = ({ userObj, likeCount }) => {
     const [nweet, setNweet] = useState("초기값");
     const [attachment, setAttachment] = useState("");
     const [hiddenClass, setHiddenClass] = useState(false);
@@ -40,7 +40,8 @@ const NweetFactory = ({ userObj }) => {
             text: nweet,
             createdAt: Date.now(),
             createrId: userObj.uid,
-            attachmentUrl
+            attachmentUrl,
+            like: ["First"]
         };
         await dbService.collection("nweets").add(nweetObj);
         setNweet("");
@@ -75,7 +76,7 @@ const NweetFactory = ({ userObj }) => {
                 suppressContentEditableWarning="true"
                 htmlFor="put_text"
                 ref={nweetText}>
-                <br className="fake_br" />
+                응애
                 </span>
             </div>
             <form onSubmit={onSubmit} className="nweet_factory_form">
