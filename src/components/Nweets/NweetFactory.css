@@ -1,0 +1,52 @@
+.hidden {
+    display: none;
+}
+
+.nweet_factory_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+}
+
+.nweet_factory_form_top, .nweet_factory_form_bottom {
+    width: 100%;
+}
+
+.nweet_factory_form_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 3;
+}
+
+.nweet_factory_form_bottom {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+}
+
+.nweet_factory_text {
+    border: none;
+    border-bottom: 2px solid #EFF3F4;
+}
+
+.nweet_factory_nweet {
+    line-height: 3.5vh;
+    padding-right: 1.5vh;
+    padding-left: 1.5vh;
+    font-size: 1.7vh;
+    font-weight: bold;
+    border-radius: 50vh;
+    color: white;
+    background: #00acee;
+    border: 1px solid #00acee;
+}
+
+.icon {
+    cursor: pointer;
+    width: 2.2vh;
+    fill: #00acee;
+}

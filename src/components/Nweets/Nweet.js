@@ -26,7 +26,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
         setNewNweet(value);
     };
     return (
-        <div>
+        <>
             {editing ? 
                 <>
                 {isOwner && <>
@@ -54,7 +54,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
                     )}
                  </>
             }
-        </div>
+            </>
     );
 };
 

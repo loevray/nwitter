@@ -23,13 +23,19 @@ const Home = ({ userObj }) => {
     return(
     <>
     <div className="home_center">
-        <div className="nweet_wrapper">
-            <NweetFactory userObj={userObj} />
-            <div>
-                {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
-                {nweets.map((a_nweet) => (
-                    <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
-                ))} 
+        <div className="home_center_top">
+            <div className="home_center_homebar">
+            </div>
+            <div className="nweet_wrapper">
+                <div className="nweet_write">
+                    <NweetFactory userObj={userObj} />
+                </div>
+                <div className="nweets">
+                    {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
+                    {nweets.map((a_nweet) => (
+                        <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
+                    ))} 
+                </div>
             </div>
         </div>
     </div>
