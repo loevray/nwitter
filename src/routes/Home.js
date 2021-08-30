@@ -19,23 +19,27 @@ const Home = ({ userObj }) => {
             setNweets(nweetArray);
         });
     }, []);
-
     return(
     <>
     <div className="home_center">
-        <div className="home_center_top">
+        <div className="home_center_wrapper">
             <div className="home_center_homebar">
+                <span>홈</span>
             </div>
-            <div className="nweet_wrapper">
-                <div className="nweet_write">
-                    <NweetFactory userObj={userObj} />
+            <div className="home_center_nweet_wrapper">
+                <div className="home_center_nweet_profile_img">
+                    프로필 사진
                 </div>
+                <NweetFactory userObj={userObj}/>
+            </div>
+            <div className="home_center_bottom">
                 <div className="nweets">
                     {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
                     {nweets.map((a_nweet) => (
                         <Nweet key={a_nweet.id} nweetObj={a_nweet} isOwner={a_nweet.createrId === userObj.uid} />
-                    ))} 
+                ))} 
                 </div>
+                여긴 중앙화면의 아래
             </div>
         </div>
     </div>

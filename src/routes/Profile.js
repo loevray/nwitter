@@ -1,5 +1,5 @@
-import { authService, dbService } from "fbase";
-import React, { useEffect, useState } from "react";
+import { authService } from "fbase";
+// import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../css/Profile.css"
 import ProfileTop from "components/Profile/ProfileTop";

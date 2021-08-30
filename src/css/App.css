@@ -8,6 +8,10 @@ body {
     height: 100vh;
 }
 
+.hidden {
+    display: none;
+}
+
 .header {
     display: flex;
     justify-content: center;
