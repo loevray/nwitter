@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj, likeCount }) => {
-    const [nweet, setNweet] = useState("초기값");
+const NweetFactory = ({ userObj }) => {
+    const [nweet, setNweet] = useState("");
     const [attachment, setAttachment] = useState("");
-    const [hiddenClass, setHiddenClass] = useState(false);
+    const [nweetTyped, setNweetTyped] = useState(false);
     const fileInput = useRef();
     const nweetText = useRef();
     useEffect(() => {
@@ -15,7 +15,9 @@ const NweetFactory = ({ userObj, likeCount }) => {
             for(let mutation of mutationList) {
                 if (mutation.type === "characterData") {
                     setNweet(nweetText.current.innerText);
-                    setHiddenClass(true);
+                    setNweetTyped(true);
+                } else if (nweetText.current.innerText === "") {
+                    setNweetTyped(false);
                 }
             }
         };
@@ -46,6 +48,7 @@ const NweetFactory = ({ userObj, likeCount }) => {
         await dbService.collection("nweets").add(nweetObj);
         setNweet("");
         setAttachment("");
+        nweetText.current.innerText = "";
     };
     const onFileChange = (event) => { 
         const {target:{files}} = event;
@@ -66,24 +69,24 @@ const NweetFactory = ({ userObj, likeCount }) => {
         <div className="nweet_factory_right">
             <div className="nweet_factory_nweet_wrapper">
                 <div 
-                className={ hiddenClass ? "hidden placeholder" : "placeholder"}>
-                여긴 내용 적는곳
+                className={ nweetTyped ? "hidden placeholder" : "placeholder"}>
+                무슨 일이 일어나고 있나요?
                 </div>
                 <span
                 className="nweet_factory_nweet_text"
                 role="textbox"
                 contentEditable="true"
                 suppressContentEditableWarning="true"
+                maxLength="80"
                 htmlFor="put_text"
                 ref={nweetText}>
-                응애
                 </span>
             </div>
             <form onSubmit={onSubmit} className="nweet_factory_form">
                     <input 
                     className="nweet_factory_nweet_input hidden" 
                     type="text"
-                    placeholder="무슨 일이 일어나고 있나요?" 
+                    placeholder="무슨일?" 
                     maxLength="80" 
                     id="put_text"
                     value={nweet}
@@ -112,8 +115,8 @@ const NweetFactory = ({ userObj, likeCount }) => {
                         </label>
                     </div>
                     <input 
-                    className="nweet_factory_nweet" 
-                    type="submit" 
+                    className={nweetTyped ? "nweet_factory_nweet_on" : "nweet_factory_nweet_off"}
+                    type="submit"
                     value="트윗하기" />
                 </div>
                 {attachment && 

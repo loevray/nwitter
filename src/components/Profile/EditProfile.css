@@ -1,0 +1,65 @@
+.edit_profile_menu_wrapper {
+    display: flex;
+    flex: 0.2;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    border-top-left-radius: 2vh;
+    border-top-right-radius: 2vh;
+    background-color: darkmagenta;
+    z-index: 4;
+}
+
+.edit_profile_menu_wrapper > button {
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
+.edit_profile_content {
+    width: 100%;
+    background-color: darkorange;
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-bottom-left-radius: 2vh;
+    border-bottom-right-radius: 2vh;
+    z-index: 4;
+}
+
+/*Scroll bar nav*/
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+}
+
+::-webkit-scrollbar-button {
+    background-color: red;
+    background-size: 10px 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 16px;
+    width: 1em;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-button:end {
+    width: auto;
+    height: auto;
+    background-color: red;
+    border-bottom-right-radius: 20px; 
+}
+
+::-webkit-scrollbar-button:start {
+    width: auto;
+    height: auto;
+    background-color: red;
+}

@@ -88,10 +88,14 @@
 
 .edit_profile_modal {
     display: flex;
-    width: 45vh;
-    height: 58vh;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 60vh;
+    height: 70vh;
     background-color: teal;
     position: fixed;
+    border-radius: 10vh;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);

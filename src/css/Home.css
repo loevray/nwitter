@@ -21,6 +21,7 @@ a {
     background-color: brown;
     text-align: right;
 }
+
 .nav_birdImg2 {
     fill: #00acee;
     width: 3.3vh;
@@ -70,6 +71,39 @@ a {
     background-color: burlywood;
 }
 
+/* .home_center_wrapper {
+    overflow-x: hidden; 
+    overflow-y: hidden;
+} */
+
+.home_center_homebar_wrapper {
+    z-index: 2;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 1.5vh;
+    padding-right: 1.5vh;
+    height: 5vh;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+
+.home_center_homebar {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.home_center_homebar > span {
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    font-size: 2vh;
+    font-weight: bold;
+}
+
 .home_center_nweet_wrapper {
     display: flex;
     padding: 0 1.5vh 0 1.5vh;
@@ -77,10 +111,6 @@ a {
 
 .home_center_nweet_profile_img {
     padding-top: 1.5vh;
-}
-
-.home_center_homebar {
-    border-bottom: 2px solid black;
 }
 
 .home_center_bottom {

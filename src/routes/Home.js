@@ -1,13 +1,12 @@
 import Nweet from "components/Nweets/Nweet";
 import NweetFactory from "components/Nweets/NweetFactory";
 import { dbService } from "fbase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/Home.css";
-
 
 const Home = ({ userObj }) => {
     const [nweets, setNweets] = useState([]);
-    const [likeCount, setLikeCount] = useState(0);
+    const topCoord = useRef();
     // 1) 컴포넌트 mount될때 실행.
     // 2) nweets컬렉션에서 스냅샷들 가져옴(일종의 데이터). orderby로 시간차순 정렬.
     // 3) 그걸 map으로 분해 후, nweetArray에 할당. 마지막으로 setNweets로 nweets에 배열 다시 보냄.
@@ -20,18 +19,24 @@ const Home = ({ userObj }) => {
             setNweets(nweetArray);
         });
     }, []);
+    const onClick = () => {
+        topCoord.current.scrollIntoView(false);
+    };
     return(
     <>
     <div className="home_center">
         <div className="home_center_wrapper">
-            <div className="home_center_homebar">
+            <div className="home_center_homebar_wrapper" onClick={onClick}>
+                <div className="home_center_homebar">
                 <span>홈</span>
+                <span>★</span>
+                </div>
             </div>
-            <div className="home_center_nweet_wrapper">
+            <div className="home_center_nweet_wrapper" ref={topCoord}>
                 <div className="home_center_nweet_profile_img">
                     프로필 사진
                 </div>
-                <NweetFactory userObj={userObj} likeCount={likeCount}/>
+                <NweetFactory userObj={userObj} />
             </div>
             <div className="home_center_bottom">
                 <div className="nweets">
@@ -44,6 +49,341 @@ const Home = ({ userObj }) => {
                 ))} 
                 </div>
                 여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
+                여긴 중앙화면의 아래
+                <br />
             </div>
         </div>
     </div>

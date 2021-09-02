@@ -1,5 +1,5 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 const Nweet = ({ nweetObj, isOwner }) => {
     const [editing, setEditing] = useState(false);
@@ -27,9 +27,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
         setNewNweet(value);
     };
     const onClick = async () => {
-        if(
-            nweetObj.like.includes(authService.currentUser.uid, 1)
-            ){
+        if(nweetObj.like.includes(authService.currentUser.uid, 1)) {
             await dbService.doc(`nweets/${likeBtn.current.name}`).update({
             like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
             })
