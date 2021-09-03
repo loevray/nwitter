@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../css/CreateAccount.css"
 
-const CreateAccount = ({props}) => {
+const CreateAccount = ({ setSignUp }) => {
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
     const history = useHistory();
@@ -15,28 +15,28 @@ const CreateAccount = ({props}) => {
             setRegisterPassword(value);
         }
     };
-    const emailVerification = () => {
+/*     const emailVerification = () => {
         authService.currentUser.sendEmailVerification()
         .then(() => {
             alert("verification link sent to your email. please check email.");
         });
-    };
+    }; */
     const onSubmit = async (event) => {
         event.preventDefault();
         try{
             await authService.createUserWithEmailAndPassword(registerEmail, registerPassword);
             authService.languageCode = "ko";
-            alert("가입 완료");
+            alert("가입완료");
             history.push("/home")
-            emailVerification();
-            window.localStorage.setItem("sendMail", true);
+            // emailVerification();
+            // window.localStorage.setItem("sendMail", true);
             } catch(error) {
-            alert(error.message, "에러!");
+            console.log(error.message, "에러!");
             window.location.replace("/");
         }
     };
     const onClick = () => {
-        props.setSignUp(false);
+        setSignUp(false);
     }
     return(
         <>
@@ -47,6 +47,7 @@ const CreateAccount = ({props}) => {
             name="register_email" 
             type="text" 
             placeholder="Email" 
+            autoComplete="off"
             value={registerEmail} 
             onChange={onChange} 
             required/>
@@ -55,6 +56,7 @@ const CreateAccount = ({props}) => {
             name="register_password" 
             type="password" 
             placeholder="Password" 
+            autoComplete="new-password"
             value={registerPassword} 
             onChange={onChange} 
             required

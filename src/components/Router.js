@@ -40,7 +40,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
             ) : (
                 <>
                 <Route path="*">
-                    <FirstScreen isLoggedIn={isLoggedIn} />
+                    <FirstScreen userObj={userObj} isLoggedIn={isLoggedIn} />
                 </Route>
                 </>
                 )}

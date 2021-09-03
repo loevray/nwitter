@@ -4,7 +4,7 @@ import CreateAccount from "../components/CreateAccount";
 import Footer from "../components/Footer";
 
 
-const FirstScreen = () => {
+const FirstScreen = ({ userObj }) => {
     const [signUp, setSignUp] = useState(false);
     const signUpPage = useRef();
     const onClick = () => {
@@ -27,7 +27,7 @@ const FirstScreen = () => {
         <div className="modal_wrapper">
             <div className="modal">
                 <div className="register_wrapper" ref={signUpPage}>
-                 <CreateAccount setSignUp={setSignUp} />
+                 <CreateAccount setSignUp={setSignUp} userObj={userObj}/>
                 </div>
             </div>
         </div>)}

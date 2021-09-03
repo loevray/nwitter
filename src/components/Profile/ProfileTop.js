@@ -31,7 +31,7 @@ const ProfileTop = ({ userObj, refreshUser }) => {
                 <div className="profile_img_wrapper1">
                     <div className="profile_img_wrapper">
                         <div className="profile_img_circle">
-                            프로필 이미지
+                            <img src={userObj.profileImg} alt="profile_image" width="100px" height="100px" />
                         </div>
                     </div>
                     <div className="profile_background_img">

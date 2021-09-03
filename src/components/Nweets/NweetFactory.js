@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj }) => {
+const NweetFactory = ({ userObj, userProfileImg }) => {
     const [nweet, setNweet] = useState("");
     const [attachment, setAttachment] = useState("");
     const [nweetTyped, setNweetTyped] = useState(false);
@@ -22,7 +22,6 @@ const NweetFactory = ({ userObj }) => {
             }
         };
         const observer = new MutationObserver(callback);
-
         observer.observe(nweetText.current, config);
         console.log("renderd");
     }, [])
@@ -34,7 +33,7 @@ const NweetFactory = ({ userObj }) => {
         }
         let attachmentUrl = "";
         if(attachment !== ""){
-            const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+            const attachmentRef = storageService.ref().child(`${userObj.uid}/nweet_img/${uuidv4()}`);
             const response = await attachmentRef.putString(attachment, "data_url");
             attachmentUrl = await response.ref.getDownloadURL();
         }
@@ -50,7 +49,7 @@ const NweetFactory = ({ userObj }) => {
         setAttachment("");
         nweetText.current.innerText = "";
     };
-    const onFileChange = (event) => { 
+    const onFileChange = (event) => {
         const {target:{files}} = event;
         const theFile = files[0];
         const reader = new FileReader();
@@ -58,12 +57,17 @@ const NweetFactory = ({ userObj }) => {
             const {currentTarget:{result}} = finishedEvent;
             setAttachment(result);
         };
-        reader.readAsDataURL(theFile);
+        if(theFile){
+            reader.readAsDataURL(theFile);
+        }
     };
     const onClearAttachment = () => {
         fileInput.current.value = null;
         setAttachment("");
     };
+    const onFileClick = (event) => {
+        event.target.value = null;
+    }
     return(
         <>
         <div className="nweet_factory_right">
@@ -111,6 +115,7 @@ const NweetFactory = ({ userObj }) => {
                             type="file" 
                             accept="image/*" 
                             onChange={onFileChange}
+                            onClick={onFileClick}
                             ref={fileInput} />
                         </label>
                     </div>
