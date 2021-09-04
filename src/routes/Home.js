@@ -17,10 +17,10 @@ const Home = ({ userObj }) => {
                 let profileUrl = "";
                 const storageRef = storageService.ref().child(`userDeafultSet/profile_img/userprofile.png`);
                 profileUrl = await storageRef.getDownloadURL();
-                userObj.profileImg = profileUrl;
+                userObj.photoURL = profileUrl;
                 const userSetObj = {
-                    profileImg: userObj.profileImg,
-                    backgroundimg: 1
+                    profileImg: userObj.photoURL,
+                    backgroundImg: "home"
                 };
                 await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
             }

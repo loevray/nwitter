@@ -25,14 +25,18 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
             const imgRef = storageService.ref().child(`${userObj.uid}/profile_img/1`);
             const response = await imgRef.putString(profileImg, "data_url");
             imgUrl = await response.ref.getDownloadURL();
-            userObj.profileImg = imgUrl;
+            userObj.photoURL = imgUrl;
+            const userSetObj = {
+                profileImg: userObj.photoURL,
+                backgroundImg: "editProfile"
+            };
+            await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
+            await userObj.updateProfile({
+                photoURL: imgUrl
+            })
         }
-        const userSetObj = {
-            profileImg: userObj.profileImg,
-            backgroundimg: 1
-        };
-        await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
         setProfileImg("");
+        refreshUser();
     };
     const onProfileImgChange = (event) => {
         const {target:{files}} = event;
@@ -88,7 +92,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
                         <input type="submit" value="Update Profile" />
                     </form>
                 </div>
-                <img src={userObj.profileImg} alt="profileimg"/>
+                <img src={userObj.photoURL} alt="profileimg"/>
                 ㅇ
                 <br />
                 ㅇ
