@@ -46,6 +46,7 @@
     border: none;
     outline: none;
     border-bottom: 2px solid #EFF3F4;
+    word-break: break-all;
 }
 
 .nweet_factory_form_bottom {

@@ -47,6 +47,12 @@
     border: 4px solid white;
 }
 
+.profile_img_circle > img {
+    width: 14.6vh;
+    height: 14.6vh;
+    border-radius: 50%;
+}
+
 .profile_top_bottom {
     height: 50%;
     display: flex;

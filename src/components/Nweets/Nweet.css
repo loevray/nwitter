@@ -1,0 +1,71 @@
+.nweet_wrapper {
+    border-bottom: 1px solid black;
+}
+
+.nweet {
+    padding: 1.5vh 1.5vh 1.5vh 1.5vh;
+    display: flex;
+}
+
+.nweet_left > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.nweet_right {
+    display: flex;
+    padding-left: 1.5vh;
+    flex: 1;
+    flex-direction: column;
+}
+
+.nweet_right_top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nweet_info {
+    display: flex;
+}
+
+.nweet_menu_wrapper {
+    position: relative;
+}
+
+.nweet_drop_down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    background-color: rgb(107, 175, 30);
+    color: white;
+    width: 18vh;
+    height: 8vh;
+    right: 0vh;
+    z-index: 10;
+}
+
+.nweet_drop_menu{
+    font-size: 1.7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    cursor: pointer;
+}
+
+.nweet_drop_menu:hover {
+    background-color: rgb(82, 114, 255);
+}
+
+.nweet_right_bottom {
+    padding-top: 1.5vh;
+    display: flex;
+}
+
+.nweet_content {
+    white-space:pre;
+}

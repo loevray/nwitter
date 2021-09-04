@@ -91,9 +91,8 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
                 </span>
             </div>
             <form onSubmit={onSubmit} className="nweet_factory_form">
-                    <input 
+                    <textarea
                     className="nweet_factory_nweet_input hidden" 
-                    type="text"
                     placeholder="무슨일?" 
                     maxLength="80" 
                     id="put_text"
