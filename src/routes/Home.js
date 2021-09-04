@@ -6,28 +6,27 @@ import "../css/Home.css";
 
 const Home = ({ userObj }) => {
     const [nweets, setNweets] = useState([]);
-    const [userProfileImg, setUserProfileImg] = useState("");
     const topCoord = useRef();
     // 1) 컴포넌트 mount될때 실행.
     // 2) nweets컬렉션에서 스냅샷들 가져옴(일종의 데이터). orderby로 시간차순 정렬.
     // 3) 그걸 map으로 분해 후, nweetArray에 할당. 마지막으로 setNweets로 nweets에 배열 다시 보냄.
     useEffect(() => {
          const profileIs = async () => {
-            if(userObj.profileImg === null) {
+            if(userObj.photoURL === null) {
                 let profileUrl = "";
                 const storageRef = storageService.ref().child(`userDeafultSet/profile_img/userprofile.png`);
                 profileUrl = await storageRef.getDownloadURL();
-                userObj.photoURL = profileUrl;
                 const userSetObj = {
-                    profileImg: userObj.photoURL,
+                    profileImg: profileUrl,
                     backgroundImg: "home"
                 };
+                userObj.updateProfile({
+                    photoURL: profileUrl
+                })
                 await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
             }
-            dbService.collection("userInfo").doc(`${userObj.uid}`).onSnapshot((snaps) => {
-                 setUserProfileImg(snaps.data().profileImg);
-             });
         };
+        profileIs();
         dbService.collection("nweets").orderBy("createdAt","desc").onSnapshot((snapshot) => {
             const nweetInfoObj = snapshot.docs.map(doc => ({
                 id:doc.id,
@@ -35,7 +34,6 @@ const Home = ({ userObj }) => {
             }));
             setNweets(nweetInfoObj);
         });
-        profileIs();
     }, []);
     const onClick = () => {
         topCoord.current.scrollIntoView(false);
@@ -63,7 +61,7 @@ const Home = ({ userObj }) => {
                         <Nweet key={a_nweet.id} 
                         nweetObj={a_nweet} 
                         isOwner={a_nweet.createrId === userObj.uid}
-                        userProfileImg={userProfileImg}
+                        profile={a_nweet.profile}
                         />
                 ))} 
                 </div>

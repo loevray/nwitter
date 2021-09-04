@@ -25,16 +25,28 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
             const imgRef = storageService.ref().child(`${userObj.uid}/profile_img/1`);
             const response = await imgRef.putString(profileImg, "data_url");
             imgUrl = await response.ref.getDownloadURL();
-            userObj.photoURL = imgUrl;
-            const userSetObj = {
-                profileImg: userObj.photoURL,
-                backgroundImg: "editProfile"
-            };
-            await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
-            await userObj.updateProfile({
-                photoURL: imgUrl
+            const userRef = dbService.collection("nweets");
+            const query = userRef.where("createrId", "==", `${userObj.uid}`);
+            query.get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    userRef.doc(doc.id).update({
+                    profile: imgUrl
+                    })
+                });
             })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
         }
+        const userSetObj = {
+            profileImg: imgUrl,
+            backgroundImg: "editProfile"
+        };
+        await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
+        await userObj.updateProfile({
+            photoURL: imgUrl
+        })
         setProfileImg("");
         refreshUser();
     };

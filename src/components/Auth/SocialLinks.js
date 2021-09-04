@@ -1,4 +1,4 @@
-import { authService, fireBaseInstance } from "fbase";
+import { authService, dbService, fireBaseInstance } from "fbase";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const SocialLinks = () => {
     const onSocialClick = async (event) => {
         const { target: { name }} = event;
         let provider;
+        let a = "";
         if(name === "google"){
             provider = new fireBaseInstance.auth.GoogleAuthProvider();
             provider.setCustomParameters({
@@ -18,6 +19,15 @@ const SocialLinks = () => {
             provider = new fireBaseInstance.auth.GithubAuthProvider();
         }
         await authService.signInWithPopup(provider);
+        const user = authService.currentUser;
+        user.providerData.forEach((profile) => {
+            a = profile.photoURL;
+        });
+        const userSetObj = {
+            profileImg: a,
+            backgroundImg: "sociallinks"
+        };
+        await dbService.collection("userInfo").doc(user.uid).set(userSetObj);
         history.push("/home");
     };
     return(

@@ -1,7 +1,7 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
 import React, { useRef, useState } from "react";
 
-const Nweet = ({ nweetObj, isOwner, userProfileImg }) => {
+const Nweet = ({ nweetObj, isOwner, profile }) => {
     const [editing, setEditing] = useState(false);
     const [newNweet, setNewNweet] = useState(nweetObj.text);
     const likeBtn = useRef();
@@ -52,7 +52,7 @@ const Nweet = ({ nweetObj, isOwner, userProfileImg }) => {
                 </>
                 :
                 <>
-                    <img src={userProfileImg} alt="img" width="50px" height="50px" />
+                    <img src={profile} alt="img" width="50px" height="50px" />
                     <h4>{nweetObj.text}</h4>
                     <button name={nweetObj.id} ref={likeBtn} onClick={onClick}>좋아요</button>
                     <h3>좋아요:{nweetObj.like.length - 1}
