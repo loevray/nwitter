@@ -1,0 +1,29 @@
+.aside {
+    display: flex;
+    border-left: 1px solid #EFF3F4;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.aside_wrapper {
+    display: flex;
+    flex: 1;
+    padding: 0 3.5vh 0 3.5vh;
+}
+
+.aside_left, .aside_right {
+    flex: 1;
+}
+
+.aside_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: tomato;
+}
+
+.aside_right {
+    background-color: green;
+}

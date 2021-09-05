@@ -32,6 +32,7 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
             return;
         }
         let attachmentUrl = "";
+        let date = new Date();
         if(attachment !== ""){
             const attachmentRef = storageService.ref().child(`${userObj.uid}/nweet_img/${uuidv4()}`);
             const response = await attachmentRef.putString(attachment, "data_url");
@@ -39,12 +40,13 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
         }
         const nweetObj = {
             text: nweet,
-            createdAt: Date.now(),
+            createdAt: [date.getTime(), date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes()],
             createrId: userObj.uid,
             attachmentUrl,
-            reNweet: ["First"],
-            like: ["First"],
-            profile: userObj.photoURL
+            reNweet: [],
+            like: [],
+            profile: userObj.photoURL,
+            displayName: userObj.displayName
         };
         await dbService.collection("nweets").add(nweetObj);
         setNweet("");
@@ -63,10 +65,10 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
             reader.readAsDataURL(theFile);
         }
     };
-    const onClearAttachment = () => {
+/*     const onClearAttachment = () => {
         fileInput.current.value = null;
         setAttachment("");
-    };
+    }; */
     const onFileClick = (event) => {
         event.target.value = null;
     }
@@ -91,6 +93,12 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
                 ref={nweetText}>
                 </span>
             </div>
+            {attachment && 
+                <div className="nweet_factory_attachmentImg">
+                    <img src={attachment} alt="img" />
+                    {/* <button onClick={onClearAttachment} >Clear</button> */}
+                </div>
+                }
             <form onSubmit={onSubmit} className="nweet_factory_form">
                     <textarea
                     className="nweet_factory_nweet_input hidden" 
@@ -129,12 +137,6 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
                     type="submit"
                     value="트윗하기" />
                 </div>
-                {attachment && 
-                <div>
-                    <img src={attachment} alt="img" width="50px" height="50px" />
-                    <button onClick={onClearAttachment} >Clear</button>
-                </div>
-                }
             </form>
         </div>
         </>

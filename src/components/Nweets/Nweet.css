@@ -1,5 +1,5 @@
 .nweet_wrapper {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #EFF3F4;
 }
 
 .nweet {
@@ -27,6 +27,25 @@
 
 .nweet_info {
     display: flex;
+}
+
+.nweet_info_displayName {
+    font-weight: bold;
+}
+
+.nweet_info_userId {
+    padding-left: 0.3vh;
+}
+
+.nweet_info_userId, .nweet_info_timeAgo {
+    font-size: 1.6vh;
+    color: #536471;
+}
+
+.block {
+    color: #536471;
+    padding-left: 0.4vh;
+    padding-right: 0.4vh;
 }
 
 .nweet_menu_wrapper {
@@ -64,8 +83,46 @@
 .nweet_right_bottom {
     padding-top: 1.5vh;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nweet_right_bottom_like, .nweet_right_bottom_reNweet {
+    cursor: pointer;
+    display: flex;
+}
+
+.nweet_right_bottom_like:hover > svg, .nweet_right_bottom_reNweet:hover > svg {
+    background-color: #DEF1EB;
+    fill: #00BA7C
+}
+
+.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg {
+    width: 2vh;
+    fill: #536471;
+}
+
+.nweet_right_bottom_like > span, .nweet_right_bottom_reNweet > span {
+    padding-left: 1vh;
+    color: #536471;
+    font-size: 1.5vh;
+    align-self: flex;
 }
 
 .nweet_content {
     white-space:pre;
+}
+
+.nweet_content_img_wrapper {
+    padding-top: 1vh;
+    width: 57vh;
+    height: 32vh;
+}
+
+.nweet_content_img_wrapper > img {
+    border: 0.5px solid #EFF3F4;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

@@ -8,17 +8,17 @@ a {
     cursor: inherit;
 }
 
-.nav, .home_right, .home_center {
+.nav, .aside, .home_center {
     flex-grow: 1;
     flex-basis: 0;
 }
 
 .nav {
-    border-right: 1px solid greenyellow;
+    border-right: 1px solid #EFF3F4;
     height: 100vh;
     position: sticky;
     top: 0;
-    background-color: brown;
+    background-color: white;
     text-align: right;
 }
 
@@ -68,7 +68,7 @@ a {
 
 .home_center {
     align-self: flex-start;
-    background-color: burlywood;
+    background-color: white;
 }
 
 /* .home_center_wrapper {
@@ -86,7 +86,7 @@ a {
     padding-left: 1.5vh;
     padding-right: 1.5vh;
     height: 5vh;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid #EFF3F4;
     cursor: pointer;
 }
 
@@ -106,23 +106,21 @@ a {
 
 .home_center_nweet_wrapper {
     display: flex;
-    padding: 0 1.5vh 0 1.5vh;
+    padding: 0 2vh 0 1.5vh;
 }
 
 .home_center_nweet_profile_img {
     padding-top: 1.5vh;
 }
 
-.home_center_bottom {
-    border-top: 2px solid black;
+.home_center_nweet_profile_img > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
 }
 
-.home_right {
-    border-left: 1px solid greenyellow;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    background-color: gray;
+.home_center_bottom {
+    border-top: 1px solid #EFF3F4;
 }
 
 .test {
