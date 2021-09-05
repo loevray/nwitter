@@ -1,5 +1,5 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./Nweet.css"
 
 const Nweet = ({ nweetObj, isOwner, profile }) => {
@@ -8,6 +8,7 @@ const Nweet = ({ nweetObj, isOwner, profile }) => {
     const [newNweet, setNewNweet] = useState(nweetObj.text);
     const likeBtn = useRef();
     const menuBtn = useRef();
+    const reNweetBtn = useRef();
     // useEffect(() => {
     //     if(menuBtn && menuBtn.current) {
     //         document.menuBtn.current.addEventListener("blur", wowFunc)
@@ -37,7 +38,7 @@ const Nweet = ({ nweetObj, isOwner, profile }) => {
         const {target :{value}} = event;
         setNewNweet(value);
     };
-    const onClick = async () => {
+    const onLikeBtnClick = async () => {
         if(nweetObj.like.includes(authService.currentUser.uid, 1)) {
             await dbService.doc(`nweets/${likeBtn.current.name}`).update({
             like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
@@ -46,6 +47,17 @@ const Nweet = ({ nweetObj, isOwner, profile }) => {
         }
         await dbService.doc(`nweets/${likeBtn.current.name}`).update({
             like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
+        })
+    }
+    const onReNweetBtnClick = async () => {
+        if(nweetObj.reNweet.includes(authService.currentUser.uid, 1)) {
+            await dbService.doc(`nweets/${reNweetBtn.current.name}`).update({
+            reNweet: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
+            })
+            return;
+        }
+        await dbService.doc(`nweets/${reNweetBtn.current.name}`).update({
+            reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
         })
     }
     const onMenuClick = () => {
@@ -100,8 +112,10 @@ const Nweet = ({ nweetObj, isOwner, profile }) => {
                                 <h4 className="nweet_content">내용: {nweetObj.text}</h4>
                             </div>
                             <div className="nweet_right_bottom">
-                                <button name={nweetObj.id} ref={likeBtn} onClick={onClick}>좋아요</button>
+                            <button name={nweetObj.id} ref={likeBtn} onClick={onLikeBtnClick}>좋아요</button>
                                 <h3>좋아요:{nweetObj.like.length - 1}</h3>
+                            <button name={nweetObj.id} ref={reNweetBtn} onClick={onReNweetBtnClick}>리트윗</button>
+                                <h3>리트윗:{nweetObj.reNweet.length - 1}</h3>
                             </div>
                         </div>
                         {nweetObj.attachmentUrl && (

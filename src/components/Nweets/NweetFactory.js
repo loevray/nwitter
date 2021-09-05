@@ -42,6 +42,7 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
             createdAt: Date.now(),
             createrId: userObj.uid,
             attachmentUrl,
+            reNweet: ["First"],
             like: ["First"],
             profile: userObj.photoURL
         };
