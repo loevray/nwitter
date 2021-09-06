@@ -39,11 +39,6 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
                 console.log("Error getting documents: ", error);
             });
         }
-        const userSetObj = {
-            profileImg: imgUrl,
-            backgroundImg: "editProfile"
-        };
-        await dbService.collection("userInfo").doc(userObj.uid).set(userSetObj);
         await userObj.updateProfile({
             photoURL: imgUrl
         })

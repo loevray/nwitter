@@ -13,59 +13,6 @@ a {
     flex-basis: 0;
 }
 
-.nav {
-    border-right: 1px solid #EFF3F4;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    text-align: right;
-}
-
-.nav_birdImg2 {
-    fill: #00acee;
-    width: 3.3vh;
-    padding-top: 1.5vh;
-}
-
-.nav_menu_wrapper1 {
-    position: relative;
-    height: 100%;
-}
-
-.nav_menu_wrapper2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    color: black;
-    text-align: left;
-    font-size: 2.4vh;
-}
-
-.nav_menu {
-    display: flex;
-    flex-direction: column;
-}
-
-.nav_menu > ul > li {
-    padding-top: 4vh;
-}
-
-.nav_icon {
-    width: 3vh;
-}
-
-.nav_menu_text {
-    margin-left: 20px;
-}
-
-.nav_home_wrapper, .nav_profile_wrapper {
-    display: flex;
-    align-items: center;
-}
-
 .home_center {
     align-self: flex-start;
     background-color: white;

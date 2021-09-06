@@ -46,7 +46,8 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
             reNweet: [],
             like: [],
             profile: userObj.photoURL,
-            displayName: userObj.displayName
+            displayName: userObj.displayName,
+            userEmail: userObj.email
         };
         await dbService.collection("nweets").add(nweetObj);
         setNweet("");
