@@ -23,7 +23,6 @@ const NweetFactory = ({ userObj, userProfileImg }) => {
         };
         const observer = new MutationObserver(callback);
         observer.observe(nweetText.current, config);
-        console.log("renderd");
     }, [])
     const onSubmit = async (event) => {
         event.preventDefault();
