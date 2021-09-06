@@ -63,15 +63,15 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj }) => {
     const onLikeBtnClick = async (event) => {
         if(event.target.className.baseVal != null){
             const path = event.target.className.baseVal;
-            const pathRef = dbService.collection("nweets").doc(`${path}`);
             console.log(path);
+            const pathRef = dbService.collection("nweets");
             if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
-                await pathRef.update({
+                await pathRef.doc(`${path}`).update({
                 like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
                 })
                 return;
             }
-            await pathRef.update({
+            await pathRef.doc(`${path}`).update({
                 like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
             })
         }
