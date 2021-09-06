@@ -23,11 +23,6 @@ const SocialLinks = () => {
         user.providerData.forEach((profile) => {
             a = profile.photoURL;
         });
-        const userSetObj = {
-            profileImg: a,
-            backgroundImg: "sociallinks"
-        };
-        await dbService.collection("userInfo").doc(user.uid).set(userSetObj);
         history.push("/home");
     };
     return(

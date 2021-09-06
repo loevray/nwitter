@@ -9,7 +9,6 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj }) => {
     const [userId, setUserId] = useState("");
     const [time, setTime] = useState("");
     const [newNweet, setNewNweet] = useState(nweetObj.text);
-    const icon = useRef();
     useEffect(() => {
         console.log("render from Nweet.js");
         const nweetAt = `
