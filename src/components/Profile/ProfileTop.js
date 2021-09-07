@@ -46,13 +46,13 @@ const ProfileTop = ({ userObj, refreshUser }) => {
                     </div>
                 </div>
                 <div className="profile_info_name">
-                    <span>닉네임 : {userObj.displayName}</span>
+                    <span>{userObj.displayName}</span>
                 </div>
                 <div className="profile_info_state">
                     <span>상태메세지:</span>
                 </div>
                 <div className="profile_info_creationtime">
-                    <span>가입일 : {userObj.creationTime}</span>
+                    <span>{userObj.creationTime}</span>
                 </div>
                 <div className="profile_menu_bar">
                 <span className="profile_menu_tweet">트윗</span> 

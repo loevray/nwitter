@@ -92,19 +92,16 @@
 
 .profile_info_name {
     height: 15%;
-    background-color: rgb(248, 195, 248);
     font-weight: 600;
-    font-size: 2vh;
+    font-size: 1.9vh;
 }
 
 .profile_info_state {
     height: 15%;
-    background-color: rgb(59, 240, 3);
 }
 
 .profile_info_creationtime {
     height: 15%;
-    background-color: rgb(255, 165, 106);
     color: rgb(93, 93, 93);
 }
 

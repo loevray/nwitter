@@ -8,7 +8,7 @@ a {
     cursor: inherit;
 }
 
-.nav, .aside, .home_center {
+.home_center {
     flex-grow: 1;
     flex-basis: 0;
 }

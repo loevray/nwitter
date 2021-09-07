@@ -134,7 +134,7 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj }) => {
                                 </div>
                             </div>
                             <div className="nweet_right_center">
-                                <h4 className="nweet_content">문서아뒤: {nweetObj.id} 내용: {nweetObj.text}</h4>
+                                <h4 className="nweet_content">{nweetObj.text}</h4>
                                 {nweetObj.attachmentUrl && (
                                     <div className="nweet_content_img_wrapper">
                                         <img src={nweetObj.attachmentUrl} alt="img" />
