@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Auth from "routes/Auth";
 import CreateAccount from "../components/CreateAccount";
 import Footer from "../components/Footer";
+import "./FirstScreen.css"
 
 
-const FirstScreen = ({ userObj }) => {
+const FirstScreen = ({ userObj, refreshUser }) => {
     const [signUp, setSignUp] = useState(false);
     const signUpPage = useRef();
     const onClick = () => {
@@ -27,7 +28,7 @@ const FirstScreen = ({ userObj }) => {
         <div className="modal_wrapper">
             <div className="modal">
                 <div className="register_wrapper" ref={signUpPage}>
-                 <CreateAccount setSignUp={setSignUp} userObj={userObj}/>
+                 <CreateAccount setSignUp={setSignUp} refreshUser={refreshUser}/>
                 </div>
             </div>
         </div>)}

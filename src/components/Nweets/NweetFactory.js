@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj, userProfileImg }) => {
+const NweetFactory = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
     const [attachment, setAttachment] = useState("");
     const [nweetTyped, setNweetTyped] = useState(false);

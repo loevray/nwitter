@@ -1,15 +1,12 @@
 import { authService, dbService, fireBaseInstance } from "fbase";
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 const SocialLinks = () => {
     //가입하면 newAccount가 거짓이니 false로 바꿔주고, 반대도 마찬가지로 뒤집어주는 작업.
     //구글, 깃헙으로 로그인
-    const history = useHistory();
     const onSocialClick = async (event) => {
         const { target: { name }} = event;
         let provider;
-        let a = "";
         if(name === "google"){
             provider = new fireBaseInstance.auth.GoogleAuthProvider();
             provider.setCustomParameters({
@@ -18,12 +15,17 @@ const SocialLinks = () => {
         } else if(name === "github"){
             provider = new fireBaseInstance.auth.GithubAuthProvider();
         }
-        await authService.signInWithPopup(provider);
-        const user = authService.currentUser;
-        user.providerData.forEach((profile) => {
-            a = profile.photoURL;
-        });
-        history.push("/home");
+        await authService.signInWithPopup(provider).then(async (user) => {
+            const {additionalUserInfo :{isNewUser}} = user;
+            if(isNewUser){
+                const userInfo = {
+                    follower: [],
+                    following: []
+                };
+                const userInfoRef = dbService.collection("userInfo") 
+                await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
+            }
+        })
     };
     return(
         <>

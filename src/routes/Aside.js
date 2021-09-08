@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { useRef } from "react";
+import { useState } from "react/cjs/react.development";
 import "./Aside.css"
 
 const Aside = () => {
-    //useState 일부러 사용 안함. 한번 더 렌더링 되기 때문에...근데 코드 보기 싫네;;
+    const [searchValue, setSearchValue] = useState("");
+    const [searchClicked, setSearchClicked] = useState(false);
+    const [notLocal, setNotLocal] = useState(true);
     useEffect(() => {
         const labelStyleRecover = (event) => {
             if(!label.current.contains(event.target)){
-                const LABEL_STYLE = label.current.style;
-                LABEL_STYLE.cursor = "text";
-                LABEL_STYLE.backgroundColor = "#EFF3F4";
-                LABEL_STYLE.border = "1px solid #EFF3F4";
-                LABEL_STYLE.borderRadius = "10vh";
+                setSearchClicked(false);
                 searchIcon.current.style.fill = "#787a88";
             }
         }
@@ -23,23 +22,27 @@ const Aside = () => {
     const label = useRef();
     const searchIcon = useRef();
     const onSearchClick = () => {
-        const LABEL_STYLE = label.current.style;
-        LABEL_STYLE.cursor = "auto";
-        LABEL_STYLE.backgroundColor = "white";
-        LABEL_STYLE.border = "1px solid #00acee";
-        LABEL_STYLE.borderRadius = "10vh";
-        searchIcon.current.style.fill = "#00acee";
+            setSearchClicked(true);
+            searchIcon.current.style.fill = "#00acee";
+            if(window.localStorage.getItem("최근검색") !== null){
+                setNotLocal(false);
+            }
     };
+    const onChange = (event) => {
+        setSearchValue(event.target.value);
+    }
     const onSearchSubmit = (event) => {
-        event.prevenDefault();
-        
+        event.preventDefault();
+        window.localStorage.setItem("최근검색",searchValue);
+        setSearchValue("");
+        setNotLocal(false)
     };
     return(
         <div className="aside">
             <div className="aside_wrapper">
                 <div className="aside_left">
                     <div onClick={onSearchClick} className="aside_left_search">
-                        <label ref={label}>
+                        <label className={searchClicked ? "label_click" : "label_out"} ref={label}>
                             <div className="aside_left_search_left">
                                 <svg viewBox="0 0 24 24" 
                                 aria-hidden="true" 
@@ -52,21 +55,26 @@ const Aside = () => {
                                 </svg>
                             </div>
                             <form onSubmit={onSearchSubmit} className="aside_left_search_center">
-                                <input 
-                                className="aside_left_search_input"
-                                type="text"
-                                placeholder="트위터 검색"
-                                />
-                                <input
-                                type="submit"
-                                value="제출"
-                                className="hidden"
-                                />
+                                    <input 
+                                    className="aside_left_search_input"
+                                    type="text"
+                                    placeholder="트위터 검색"
+                                    value={searchValue}
+                                    onChange={onChange}
+                                    />
+                                    <input
+                                    type="submit"
+                                    value="제출"
+                                    className="hidden"
+                                    />
                             </form>
                             <div className="aside_left_search_right">
-                            <span></span>
+                                <span></span>
                             </div>
                         </label>
+                        <div className={searchClicked && notLocal ? "test1" : "hidden"}>
+                            {searchValue && <span>"{searchValue}"검색</span>}
+                        </div>
                     </div>
                     <div className="aside_left_trend">
                         <div className="aside_left_trend_1">

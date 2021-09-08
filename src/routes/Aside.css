@@ -28,16 +28,26 @@
 
 .aside_left_search {
     width: 36.5vh;
-    background-color: #EFF3F4;
     border-radius: 10vh;
 }
 
-.aside_left_search > label {
+.label_out {
     padding: 1.3vh 0 1.3vh 0;
     display: flex;
     align-items: center;
     cursor: text;
+    background-color: #EFF3F4;
     border: 1px solid #EFF3F4;
+    border-radius: 10vh;
+}
+
+.label_click {
+    padding: 1.3vh 0 1.3vh 0;
+    display: flex;
+    align-items: center;
+    cursor: auto;
+    border: 1px solid #00acee;
+    border-radius: 10vh;
 }
 
 .aside_left_search_left {
@@ -81,4 +91,17 @@
     border-radius: 50%;
     background-color: #00acee;
     cursor: pointer;
+}
+
+.test1 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 36.5vh;
+    height: 18.25vh;
+    background-color: tomato;
+}
+
+.test1 > span {
+    padding-left: 5vh;
 }

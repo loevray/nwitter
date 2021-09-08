@@ -87,7 +87,7 @@
     align-items: center;
 }
 
-.nweet_right_bottom_like, .nweet_right_bottom_reNweet {
+.nweet_right_bottom_like, .nweet_right_bottom_reNweet, .nweet_right_bottom_follow {
     cursor: pointer;
     display: flex;
 }
@@ -97,7 +97,7 @@
     fill: #00BA7C
 }
 
-.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg {
+.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg, .nweet_right_bottom_follow > svg {
     width: 2vh;
     fill: #536471;
 }

@@ -6,6 +6,7 @@ import Navigation from "../routes/Navigation";
 import Aside from "routes/Aside";
 import Verified from "routes/Verified";
 import { useEffect, useState } from "react";
+import Search from "routes/Search";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
     const [verifying, setVeyrifying] = useState(false);
@@ -36,11 +37,14 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 <Route exact path="/profile">
                     <Profile userObj={userObj} refreshUser={refreshUser} />
                 </Route>
+                <Route exact path="/search">
+                    <Search />
+                </Route>
             </>
             ) : (
                 <>
                 <Route path="*">
-                    <FirstScreen userObj={userObj} isLoggedIn={isLoggedIn} />
+                    <FirstScreen userObj={userObj} isLoggedIn={isLoggedIn} refreshUser={refreshUser}/>
                 </Route>
                 </>
                 )}

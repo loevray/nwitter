@@ -1,12 +1,10 @@
-import { authService } from "fbase";
+import { authService, dbService, storageService } from "fbase";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import "../css/CreateAccount.css"
 
-const CreateAccount = ({ setSignUp }) => {
+const CreateAccount = ({ setSignUp, refreshUser }) => {
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
-    const history = useHistory();
     const onChange = (event) => {
         const {target: {name, value}} = event;
         if(name === "register_email") {
@@ -21,13 +19,29 @@ const CreateAccount = ({ setSignUp }) => {
             alert("verification link sent to your email. please check email.");
         });
     }; */
-    const onSubmit = async (event) => {
+    const onSubmit =  async(event) => {
         event.preventDefault();
         try{
-            await authService.createUserWithEmailAndPassword(registerEmail, registerPassword);
+            await authService.createUserWithEmailAndPassword(registerEmail, registerPassword)
+            .then(async (user) => {
+                let profileUrl = "";
+                const storageRef = storageService.ref().child(`userDeafultSet/profile_img/userprofile.png`);
+                profileUrl = await storageRef.getDownloadURL();
+                await user.user.updateProfile({
+                        photoURL: profileUrl
+                    })
+                refreshUser();
+                const userInfo = {
+                    follower: [],
+                    following: []
+                };
+                const userInfoRef = dbService.collection("userInfo") 
+                await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
+            }).catch((e) => {
+                console.log("에러:", e);
+            });
             authService.languageCode = "ko";
-            alert("가입완료");
-            history.push("/home")
+            // alert("가입완료");
             // emailVerification();
             // window.localStorage.setItem("sendMail", true);
             } catch(error) {
