@@ -97,9 +97,15 @@
     fill: #00BA7C
 }
 
-.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg, .nweet_right_bottom_follow > svg {
+.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg{
     width: 2vh;
     fill: #536471;
+}
+
+.nweet_right_bottom_follow > svg {
+    width: 2vh;
+    fill: white;
+    stroke: #536471;
 }
 
 .nweet_right_bottom_like > span, .nweet_right_bottom_reNweet > span {
@@ -115,7 +121,7 @@
 
 .nweet_content_img_wrapper {
     padding-top: 1vh;
-    width: 57vh;
+    width: 55vh;
     height: 32vh;
 }
 
