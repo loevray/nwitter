@@ -93,7 +93,6 @@ const Home = ({ userObj }) => {
                         <Nweet key={a_nweet.id} 
                         nweetObj={a_nweet} 
                         isOwner={a_nweet.createrId === userObj.uid}
-                        profile={a_nweet.profile}
                         userObj={userObj}
                         setFollowOnly={setFollowOnly}
                         followOnly={followOnly}

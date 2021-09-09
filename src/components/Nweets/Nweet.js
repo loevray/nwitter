@@ -1,25 +1,16 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
 import "./Nweet.css"
+import NweetEdit from "./NweetEdit";
 
-const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
+const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
     const [editing, setEditing] = useState(false);
     const [menuOn, setMenuOn] = useState(false);
-    const [nweetTime, setNweetTime] = useState("");
     const [userId, setUserId] = useState("");
     const [time, setTime] = useState("");
-    const [newNweet, setNewNweet] = useState(nweetObj.text);
     const [tt, setTt] = useState(false);
     useEffect(() => {
         console.log("render from Nweet.js");
-        const nweetAt = `
-        ${nweetObj.createdAt[1]}년 
-        ${nweetObj.createdAt[2]}월 
-        ${nweetObj.createdAt[3]}일
-        ${nweetObj.createdAt[4]}시
-        ${nweetObj.createdAt[5]}분
-        `;
-        setNweetTime(nweetAt);
         let now = new Date().getTime();
         let second = Math.floor((now - nweetObj.createdAt[0])/1000);
         if(second>2592000) {
@@ -49,6 +40,7 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
             }
         )
  }, [])
+ const toggleEditing = () => setEditing(prev => !prev);
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this nweet?");
         if(ok) {
@@ -58,79 +50,62 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
             }
         }
     };
-    const toggleEditing = () => setEditing(prev => !prev);
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        await dbService.doc(`nweets/${nweetObj.id}`).update({
-            text: newNweet
-        });
-        setEditing(false);
-    };
-    const onChange = (event) => {
-        const {target :{value}} = event;
-        setNewNweet(value);
-    };
     const onLikeBtnClick = async () => {
-        if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
-            await dbService.doc(`nweets/${nweetObj.id}`).update({
-            like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
-            })
-            return;
-        }
-        await dbService.doc(`nweets/${nweetObj.id}`).update({
-            like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
-        })
-    };
-    const onReNweetBtnClick = async () => {
-        if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
-            await dbService.doc(`nweets/${nweetObj.id}`).update({
-            reNweet: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
-            })
-            return;
-        }
-        await dbService.doc(`nweets/${nweetObj.id}`).update({
-            reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
-        })
-    };
+      if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
+          await dbService.doc(`nweets/${nweetObj.id}`).update({
+          like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
+          })
+          return;
+      }
+      await dbService.doc(`nweets/${nweetObj.id}`).update({
+          like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
+      })
+  };
+  const onReNweetBtnClick = async () => {
+      if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
+          await dbService.doc(`nweets/${nweetObj.id}`).update({
+          reNweet: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`)
+          })
+          return;
+      }
+      await dbService.doc(`nweets/${nweetObj.id}`).update({
+          reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`)
+      })
+  };
+  const onFollowBtnClick = async () => {
+      const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+      followingRef.get()
+      .then(async (doc) => {
+          const isFollowing = doc.data().following;
+          if(!isFollowing.includes(nweetObj.createrId, 0)){
+              await dbService.doc(`userInfo/${userObj.uid}`).update({
+                  following: dbStore.FieldValue.arrayUnion(`${nweetObj.createrId}`)
+              })
+              await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
+                  follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`)
+              })
+              alert("팔로우 성공!");
+          }
+          if(isFollowing.includes(nweetObj.createrId, 0)){
+              await dbService.doc(`userInfo/${userObj.uid}`).update({
+                  following: dbStore.FieldValue.arrayRemove (`${nweetObj.createrId}`)
+              })
+              await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
+                  follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`)
+              })
+              alert("팔로우 해제!");
+          }
+      });
+  };
     const onMenuClick = () => {
-        setMenuOn(prev => !prev);
-    };
-    const onFollowBtnClick = async () => {
-        const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-        followingRef.get()
-        .then(async (doc) => {
-            const isFollowing = doc.data().following;
-            if(!isFollowing.includes(nweetObj.createrId, 0)){
-                await dbService.doc(`userInfo/${userObj.uid}`).update({
-                    following: dbStore.FieldValue.arrayUnion(`${nweetObj.createrId}`)
-                })
-                await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
-                    follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`)
-                })
-                alert("팔로우 성공!");
-            }
-            if(isFollowing.includes(nweetObj.createrId, 0)){
-                await dbService.doc(`userInfo/${userObj.uid}`).update({
-                    following: dbStore.FieldValue.arrayRemove (`${nweetObj.createrId}`)
-                })
-                await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
-                    follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`)
-                })
-                alert("팔로우 해제!");
-            }
-        });
-    }
+      setMenuOn(prev => !prev);
+  };
     return (
         <>
             {editing ? 
                 <>
-                {isOwner && <>
-                <form onSubmit={onSubmit} >
-                    <input onChange={onChange} type="text" placeholder="Edit your nweet" value={newNweet} maxLength="80" required />
-                    <input type="submit" value="Update Nweet" />
-                </form>
-                <button onClick={toggleEditing} >Cancel</button>
-                </>
+                {isOwner && 
+                <NweetEdit nweetObj={nweetObj} setEditing={setEditing} />
                 }
                 </>
                 :
@@ -140,7 +115,7 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
                 <div className="nweet_wrapper">
                     <div className="nweet">
                         <div className="nweet_left">
-                            <img src={profile} alt="img" />
+                            <img src={nweetObj.profile} alt="img" />
                         </div>
                         <div className="nweet_right">
                             <div className="nweet_right_top">
@@ -149,7 +124,6 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
                                     <span className="nweet_info_userId">{userId[0]}</span>
                                     <span className="block">·</span>
                                     <span className="nweet_info_timeAgo">{time}</span>
-                                    {/* <span>{nweetTime}</span> */}
                                 </div>
                                 <div className="nweet_menu_wrapper">
                                         <button className="nweet_menu" onClick={onMenuClick}>메뉴</button>
@@ -215,7 +189,7 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
                     <div className="nweet_wrapper">
                     <div className="nweet">
                         <div className="nweet_left">
-                            <img src={profile} alt="img" />
+                            <img src={nweetObj.profile} alt="img" />
                         </div>
                         <div className="nweet_right">
                             <div className="nweet_right_top">
@@ -224,7 +198,6 @@ const Nweet = ({ nweetObj, isOwner, profile, userObj, followOnly }) => {
                                     <span className="nweet_info_userId">{userId[0]}</span>
                                     <span className="block">·</span>
                                     <span className="nweet_info_timeAgo">{time}</span>
-                                    {/* <span>{nweetTime}</span> */}
                                 </div>
                                 <div className="nweet_menu_wrapper">
                                         <button className="nweet_menu" onClick={onMenuClick}>메뉴</button>
