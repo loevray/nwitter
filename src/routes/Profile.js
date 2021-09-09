@@ -3,16 +3,10 @@ import { authService } from "fbase";
 import { useHistory } from "react-router-dom";
 import "../css/Profile.css"
 import ProfileTop from "components/Profile/ProfileTop";
-import GetMyNweets from "components/Nweets/GetMyNweets";
+import ProfileBot from "components/Profile/ProfileBot";
 
 const Profile = ({ userObj, refreshUser }) => {
     // const [verified, setVeriFied] = useState(false); 
-
-    const history = useHistory();
-    const onLogOutClick = () => {
-        authService.signOut();
-        history.push("/");
-    };
     //  useEffect(() => {
     //     if(!userObj.verified){
     //         return;
@@ -26,8 +20,7 @@ const Profile = ({ userObj, refreshUser }) => {
         <ProfileTop userObj={userObj} refreshUser={refreshUser}/>
         <div className="profile_bottom">
             프로필_바텀
-            <GetMyNweets userObj={userObj} />
-            <button onClick={onLogOutClick}>Log Out</button>
+            <ProfileBot userObj={userObj}/>
         </div>
     </div>
     </>

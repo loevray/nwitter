@@ -39,17 +39,17 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                 }
             }
         )
- }, [])
- const toggleEditing = () => setEditing(prev => !prev);
-    const onDeleteClick = async () => {
-        const ok = window.confirm("Are you sure you want to delete this nweet?");
-        if(ok) {
-            await dbService.doc(`nweets/${nweetObj.id}`).delete();
-            if(nweetObj.attachmentUrl !== "") {
-                await storageService.refFromURL(nweetObj.attachmentUrl).delete();
-            }
+}, [])
+  const toggleEditing = () => setEditing(prev => !prev);
+  const onDeleteClick = async () => {
+    const ok = window.confirm("Are you sure you want to delete this nweet?");
+      if(ok) {
+        await dbService.doc(`nweets/${nweetObj.id}`).delete();
+        if(nweetObj.attachmentUrl !== "") {
+          await storageService.refFromURL(nweetObj.attachmentUrl).delete();
         }
-    };
+      }
+  };
     const onLikeBtnClick = async () => {
       if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
           await dbService.doc(`nweets/${nweetObj.id}`).update({

@@ -1,7 +1,8 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useRef } from "react";
 import "./Navigation.css"
+import { authService } from "fbase";
 
 const Navigation = ({ userObj} ) => {
     const navIcon = useRef();
@@ -13,6 +14,11 @@ const Navigation = ({ userObj} ) => {
     const onClick = () => {
         navIcon.current.style.fill = "black";
     }
+    const history = useHistory();
+    const onLogOutClick = () => {
+        authService.signOut();
+        history.push("/");
+    };
     return(
         <nav className="nav">
             <div className="nav_menu_wrapper1">
@@ -52,6 +58,7 @@ const Navigation = ({ userObj} ) => {
                             </li>
                         </ul>
                     </div>
+                    <button onClick={onLogOutClick}>Log Out</button>
                 </div>
             </div>
         </nav>

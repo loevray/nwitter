@@ -55,7 +55,7 @@ const ProfileTop = ({ userObj, refreshUser }) => {
                     <span>{userObj.creationTime}</span>
                 </div>
                 <div className="profile_menu_bar">
-                <span className="profile_menu_tweet">트윗</span> 
+                <span className="profile_menu_tweet">내가 한 트윗</span> 
                 <span className="profile_menu_like">마음에 들어요</span>
             </div>
         </div>

@@ -1,7 +1,6 @@
 .profile {
     flex-basis: 0;
     flex-grow: 1;
-    border: 1px solid black;
     height: 100%;
 }
 
@@ -129,7 +128,6 @@
 
 .profile_bottom {
     height: 50vh;
-    background-color: purple;
 }
 
 .profile_info_name > span, .profile_info_state > span, .profile_info_creationtime > span {
