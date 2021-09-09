@@ -81,7 +81,6 @@
 }
 
 .nweet_right_bottom {
-    padding-top: 1.5vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -97,6 +96,11 @@
     fill: #00BA7C
 }
 
+.nweet_right_bottom_follow:hover > svg {
+    background-color: #DEF1EB;
+    stroke: #00BA7C;
+}
+
 .nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg{
     width: 2vh;
     fill: #536471;
@@ -108,8 +112,13 @@
     stroke: #536471;
 }
 
-.nweet_right_bottom_like > span, .nweet_right_bottom_reNweet > span {
-    padding-left: 1vh;
+.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg, .nweet_right_bottom_follow > svg {
+    padding: 0.7vh 0.7vh 0.7vh 0.7vh;
+    border-radius: 50%;
+}
+
+.nweet_right_bottom_like > span, .nweet_right_bottom_reNweet > span, .nweet_right_bottom_follow > span {
+    padding-top: 0.7vh;
     color: #536471;
     font-size: 1.5vh;
     align-self: flex;

@@ -12,6 +12,16 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
     const onNickNameSubmit = async (event) => {
         event.preventDefault();
         if(userObj.displayName !== newDisplayName){
+            const userRef = dbService.collection("nweets");
+            const query = userRef.where("createrId", "==", `${userObj.uid}`);
+            query.get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    userRef.doc(doc.id).update({
+                    displayName: newDisplayName
+                    })
+                });
+            })
             await userObj.updateProfile({
                 displayName: newDisplayName,
             })
