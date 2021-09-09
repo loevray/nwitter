@@ -19,7 +19,6 @@ const Profile = ({ userObj, refreshUser }) => {
     <div className="profile">
         <ProfileTop userObj={userObj} refreshUser={refreshUser}/>
         <div className="profile_bottom">
-            프로필_바텀
             <ProfileBot userObj={userObj}/>
         </div>
     </div>
