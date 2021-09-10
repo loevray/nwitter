@@ -1,11 +1,11 @@
-import { authService } from "fbase";
 // import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import "../css/Profile.css"
 import ProfileTop from "components/Profile/ProfileTop";
 import ProfileBot from "components/Profile/ProfileBot";
+import { useState } from "react";
 
 const Profile = ({ userObj, refreshUser }) => {
+  const [clickOn, setClickON] = useState(false);
     // const [verified, setVeriFied] = useState(false); 
     //  useEffect(() => {
     //     if(!userObj.verified){
@@ -17,9 +17,9 @@ const Profile = ({ userObj, refreshUser }) => {
     return (
     <>
     <div className="profile">
-        <ProfileTop userObj={userObj} refreshUser={refreshUser}/>
+        <ProfileTop userObj={userObj} refreshUser={refreshUser} setClickON={setClickON} clickOn={clickOn}/>
         <div className="profile_bottom">
-            <ProfileBot userObj={userObj}/>
+            <ProfileBot userObj={userObj} clickOn={clickOn}/>
         </div>
     </div>
     </>

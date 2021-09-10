@@ -36,7 +36,7 @@ const SearchNweet = ({ nweetObj, userObj }) => {
                 }
             }
         )
-  }, [nweetObj]);
+  }, [nweetObj, userObj]);
 const onLikeBtnClick = async () => {
     if(nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
         await dbService.doc(`nweets/${nweetObj.id}`).update({

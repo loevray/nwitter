@@ -1,13 +1,24 @@
+import { dbService } from "fbase";
 import React, { useEffect, useRef, useState } from "react";
 import EditProfile from "./EditProfile";
 
-const ProfileTop = ({ userObj, refreshUser }) => {
+const ProfileTop = ({ userObj, refreshUser, clickOn, setClickON }) => {
     const [edit, setEdit] = useState(false);
+    const [backImg, setBackImg] = useState("");
     const editing = useRef();
     const onClick = () => {
         setEdit(true);
     }
+    const onLikeListClikc = () => {
+      setClickON(prev => !prev);
+    }
     useEffect(() => {
+      dbService.collection("userInfo").doc(`${userObj.uid}`).onSnapshot((snapshot) => {
+        const { background } = snapshot.data();
+        if(background){
+          setBackImg(background);
+        }
+      })
         const handleClickOutside = (event) => {
             if(edit && !editing.current.contains(event.target)){
                 setEdit(false);
@@ -17,7 +28,7 @@ const ProfileTop = ({ userObj, refreshUser }) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
-    }, [edit]);
+    }, [edit, userObj]);
     return(
         <div className="profile_top">
             <div className="profile_top_top">
@@ -35,7 +46,7 @@ const ProfileTop = ({ userObj, refreshUser }) => {
                         </div>
                     </div>
                     <div className="profile_background_img">
-                        프로필 배경이미지
+                        {backImg ? <img src={backImg} alt="backImg"/> : null}
                     </div>
                 </div>
         </div>
@@ -54,9 +65,9 @@ const ProfileTop = ({ userObj, refreshUser }) => {
                 <div className="profile_info_creationtime">
                     <span>{userObj.creationTime}</span>
                 </div>
-                <div className="profile_menu_bar">
-                <span className="profile_menu_tweet">내가 한 트윗</span> 
-                <span className="profile_menu_like">마음에 들어요</span>
+                <div onClick={onLikeListClikc} className="profile_menu_bar">
+                  <span className={!clickOn ? "click_on" : "click_off"}>내가 한 트윗</span> 
+                  <span className={clickOn ? "click_on" : "click_off"}>마음에 들어요</span>
             </div>
         </div>
     </div>

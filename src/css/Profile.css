@@ -17,6 +17,12 @@
     background-color: #CFD9DE;
 }
 
+.profile_background_img > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 .profile_img_wrapper1 {
     position: relative;
     height: 100%;
@@ -50,6 +56,7 @@
     width: 14.6vh;
     height: 14.6vh;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .profile_top_bottom {
@@ -109,6 +116,7 @@
     justify-content: space-evenly;
     align-items: center;
     flex: 1;
+    cursor: pointer;
 }
 
 .profile_menu_bar > span {
@@ -120,10 +128,18 @@
     position: relative;
 }
 
+.click_on {
+  border-bottom:3px solid #00acee;
+  margin-bottom: -3px;
+}
+
+.click_off {
+  border:none;
+  margin-bottom: none;
+}
+
 .profile_menu_bar > span:hover {
-    background-color: gray;
-    text-decoration:none; 
-    border-bottom:3px solid #00acee;
+    background-color: rgb(223, 223, 223);
 }
 
 .profile_bottom {

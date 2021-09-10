@@ -27,7 +27,7 @@ const GetMyNweets = ({ userObj, myNweet }) => {
     }
     const userId = myNweet.userEmail.split("@");
     setUserId(userId);
-  }, []);
+  }, [myNweet]);
   const onMenuClick = () => {
     setMenuOn(prev => !prev);
   };
