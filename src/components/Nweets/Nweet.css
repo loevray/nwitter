@@ -125,6 +125,11 @@
     align-self: flex;
 }
 
+.nweet_hashtag {
+  color: #00acee;
+  padding-top: 2vh;
+}
+
 .nweet_content {
     white-space:pre;
 }

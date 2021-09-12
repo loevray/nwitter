@@ -3,7 +3,6 @@ import SocialLinks from "components/Auth/SocialLinks";
 
 //인증 컴포넌트
 const Auth = () => {
-
     //화면 리턴
     return(
     <>

@@ -7,6 +7,7 @@ const NweetFactory = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
     const [attachment, setAttachment] = useState("");
     const [nweetTyped, setNweetTyped] = useState(false);
+    const [hashTag, setHashTag] = useState([]);
     const fileInput = useRef();
     const nweetText = useRef();
     useEffect(() => {
@@ -14,7 +15,14 @@ const NweetFactory = ({ userObj }) => {
         const callback = function(mutationList, observer) {
             for(let mutation of mutationList) {
                 if (mutation.type === "characterData") {
-                    setNweet(nweetText.current.innerText);
+                    let nweetWord = nweetText.current.innerText;
+                    const hashRegex = /\#[가-힣ㄱ-ㅎa-zA-z0-9]*\s/g;
+                    const result = nweetWord.match(hashRegex);
+                    const deleteHash = nweetWord.replace(hashRegex,"");
+                    if(hashRegex.test(nweetWord)){
+                      setHashTag(result);
+                    }
+                    setNweet(deleteHash);
                     setNweetTyped(true);
                 } else if (nweetText.current.innerText === "") {
                     setNweetTyped(false);
@@ -44,6 +52,7 @@ const NweetFactory = ({ userObj }) => {
             attachmentUrl,
             reNweet: [],
             like: [],
+            hashTag: hashTag,
             profile: userObj.photoURL,
             displayName: userObj.displayName,
             userEmail: userObj.email
@@ -83,15 +92,16 @@ const NweetFactory = ({ userObj }) => {
                 className={ nweetTyped ? "hidden placeholder" : "placeholder"}>
                 무슨 일이 일어나고 있나요?
                 </div>
-                <span
-                className="nweet_factory_nweet_text"
-                role="textbox"
-                contentEditable="true"
-                suppressContentEditableWarning="true"
-                maxLength="80"
-                htmlFor="put_text"
-                ref={nweetText}>
-                </span>
+                    <span
+                    className="nweet_factory_nweet_text"
+                    role="textbox"
+                    contentEditable="true"
+                    suppressContentEditableWarning="true"
+                    maxLength="80"
+                    htmlFor="put_text"
+                    ref={nweetText}
+                    >
+                    </span>
             </div>
             {attachment && 
                 <div className="nweet_factory_attachmentImg">
