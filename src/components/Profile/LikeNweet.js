@@ -2,11 +2,12 @@ import { authService, dbService, dbStore } from "fbase";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const LikeNweet = ({ likeNweet, userObj}) => {
+const LikeNweet = ({ likeNweet, userObj }) => {
   const [userId, setUserId] = useState("");
   const [menuOn, setMenuOn] = useState(false);
   const [time, setTime] = useState("");
   const [tt, setTt] = useState(false);
+  const [isHash, setIsHash] = useState(false);
   useEffect(() => {
         let now = new Date().getTime();
         let second = Math.floor((now - likeNweet.createdAt[0])/1000);
@@ -36,6 +37,9 @@ const LikeNweet = ({ likeNweet, userObj}) => {
                 }
             }
         )
+        if(likeNweet.hashTag != null){
+          setIsHash(true);
+        }
   }, [likeNweet, userObj]);
 const onLikeBtnClick = async () => {
     if(likeNweet.reNweet.includes(authService.currentUser.uid, 0)) {
@@ -110,6 +114,7 @@ const onFollowBtnClick = async () => {
             </div>
             <div className="nweet_right_center">
               <h4 className="nweet_content">{likeNweet.text}</h4>
+              {isHash && <span className="nweet_hashtag">{likeNweet.hashTag}</span>}
               {likeNweet.attachmentUrl && (
                 <div className="nweet_content_img_wrapper">
                   <img src={likeNweet.attachmentUrl} alt="img" />

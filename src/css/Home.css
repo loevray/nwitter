@@ -26,7 +26,7 @@ a {
     display: flex;
     align-items: center;
     padding-left: 1.5vh;
-    padding-right: 1.5vh;
+    padding-right: 0.5vh;
     height: 5vh;
     border-bottom: 1px solid #EFF3F4;
     cursor: pointer;
@@ -39,7 +39,15 @@ a {
 }
 
 .star {
-    font-size: 2.5vh;
+  display: flex;
+  align-items: center;
+  padding: 0.8vh;
+  font-size: 2.5vh;
+  border-radius: 50%;
+}
+
+.star:hover {
+  background-color: #e6e6e6;
 }
 
 .home_center_homebar > span {
@@ -53,6 +61,7 @@ a {
 .home_center_homebar_menu {
     display: flex;
     flex-direction: column;
+    z-index: 4;
     position: absolute;
     width: 35vh;
     height: 22vh;
@@ -123,7 +132,6 @@ a {
     font-size: 1.45vh;
     padding-top: 1vh;
 }
-
 
 .home_center_nweet_wrapper {
     display: flex;

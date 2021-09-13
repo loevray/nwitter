@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
 const AsideTrend = ({ hashTagArray }) => {
   const [fill, setFill] = useState(false);
   useEffect(() => {
-    console.log(hashTagArray);
     if(hashTagArray !== []){
       setFill(true);
     }

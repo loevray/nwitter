@@ -115,6 +115,7 @@ const Aside = () => {
                         <div className="aside_left_trend_center">
                           {trend.map((data) => (
                           <AsideTrend
+                          key={data.id}
                           hashTagArray={data}
                           />
                           ))}

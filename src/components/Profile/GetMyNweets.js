@@ -7,6 +7,7 @@ const GetMyNweets = ({ userObj, myNweet }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [time, setTime] = useState("");
   const [tt, setTt] = useState(false);
+  const [isHash, setIsHash] = useState(false);
   useEffect(() => {
     let now = new Date().getTime();
     let second = Math.floor((now - myNweet.createdAt[0])/1000);
@@ -27,6 +28,9 @@ const GetMyNweets = ({ userObj, myNweet }) => {
     }
     const userId = myNweet.userEmail.split("@");
     setUserId(userId);
+    if(myNweet.hashTag != null){
+      setIsHash(true);
+    }
   }, [myNweet]);
   const onMenuClick = () => {
     setMenuOn(prev => !prev);
@@ -120,6 +124,7 @@ const onFollowBtnClick = async () => {
         </div>
         <div className="nweet_right_center">
           <h4 className="nweet_content">{myNweet.text}</h4>
+          {isHash && <span className="nweet_hashtag">{myNweet.hashTag}</span>}
           {myNweet.attachmentUrl && (
             <div className="nweet_content_img_wrapper">
                 <img src={myNweet.attachmentUrl} alt="img" />

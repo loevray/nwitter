@@ -57,10 +57,10 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
             .catch((error) => {
                 console.log("Error getting documents: ", error);
             });
+            await userObj.updateProfile({
+              photoURL: imgUrl
+          })
         }
-        await userObj.updateProfile({
-            photoURL: imgUrl
-        })
         setProfileImg("");
         refreshUser();
     };
@@ -82,15 +82,17 @@ const EditProfile = ({ userObj, refreshUser, setEdit }) => {
     }
     const onProfileImgChange = (event) => {
       const {target:{files}} = event;
-      const theFile = files[0];
-      const reader = new FileReader();
-      reader.onloadend = (finishedEvent) => {
-          const {currentTarget:{result}} = finishedEvent;
-          setProfileImg(result);
-      };
-      setNewProfile(true);
-      if(theFile){
-          reader.readAsDataURL(theFile);
+      if(files){
+        const theFile = files[0];
+        const reader = new FileReader();
+        reader.onloadend = (finishedEvent) => {
+            const {currentTarget:{result}} = finishedEvent;
+            setProfileImg(result);
+        };
+        setNewProfile(true);
+        if(theFile){
+            reader.readAsDataURL(theFile);
+        }
       }
   };
   const onBackImgChange = (event) => {

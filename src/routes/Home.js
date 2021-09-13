@@ -31,7 +31,8 @@ const Home = ({ userObj }) => {
     const onClick = () => {
         topCoord.current.scrollIntoView(false);
     };
-    const onFollowMenuClick = () => {
+    const onFollowMenuClick = (e) => {
+        e.stopPropagation();
         setFollowMenu(true);
     }
     const onFollowOnlyClick = () => {
@@ -48,9 +49,12 @@ const Home = ({ userObj }) => {
                     ) : (
                     <span>홈</span>
                     )}
+                    <span 
+                    onClick={onFollowMenuClick} 
+                    className="star">
+                    ★
+                    </span>
                 </div>
-                <div onClick={onFollowMenuClick}>
-                <span className="star">★</span>
                     <div ref={followMenuWrapper} className={followMenu ? "home_center_homebar_menu" : "hidden"}>
                         <div className="home_center_homebar_menu_top">
                             {followOnly ? (
@@ -79,7 +83,6 @@ const Home = ({ userObj }) => {
                         </div>
                     </div>
                 </div>
-            </div>
             <div className="home_center_nweet_wrapper" ref={topCoord}>
                 <div className="home_center_nweet_profile_img">
                     <img src={userObj.photoURL} alt="img" />
