@@ -126,11 +126,13 @@
 }
 
 .nweet_hashtag {
+  display: inline-block;
   color: #00acee;
-  padding-top: 2vh;
+  cursor: pointer;
 }
 
 .nweet_content {
+    padding-bottom: 1vh;
     white-space:pre;
 }
 

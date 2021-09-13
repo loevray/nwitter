@@ -49,7 +49,8 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 </>
                 )}
         </Switch>
-        {isLoggedIn && notWatching && <Aside />}
+        {isLoggedIn && notWatching && 
+        <Aside /> }
     </Router>
     );
 };

@@ -108,7 +108,7 @@
 
 .aside_left_trend {
   display: flex;
-  background-color: #EFF3F4;
+  background-color: #F7F9F9;
   border-radius: 1vh;
   height: 48vh;
 }
@@ -117,7 +117,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0.8vh 1.5vh 1.5vh 1.5vh;
+  padding: 1vh 1.7vh 1.7vh 1.7vh;
 }
 
 .aside_left_trend_top {
@@ -148,7 +148,6 @@
 .aside_left_trend_center {
   display: flex;
   flex-direction: column;
-  background-color: rgb(155, 209, 101);
   flex: 1;
 }
 
@@ -163,10 +162,24 @@
   justify-content: space-between;
 }
 
+.trend_gray {
+  color: #677681;
+  font-size: 1.4vh;
+  font-weight: 500;
+}
+
 .trend_remainder {
   display: flex;
   flex-direction: column;
 }
+
+.trend_remainder_hashTag {
+  color: #000000;
+  font-weight: bold;
+  font-size: 1.7vh;
+  padding: 0.5vh 0 0.5vh 0;
+}
+
 
 .aside_left_trend_bot {
   flex: 0.1;

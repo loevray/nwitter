@@ -1,4 +1,4 @@
-import SearchNweet from "components/SearchNweet";
+import SearchNweet from "components/Aside/SearchNweet";
 import { dbService } from "fbase";
 import React, { useEffect } from "react";
 import { useState } from "react";

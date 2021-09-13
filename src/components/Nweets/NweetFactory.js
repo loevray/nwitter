@@ -15,8 +15,8 @@ const NweetFactory = ({ userObj }) => {
         const callback = function(mutationList, observer) {
             for(let mutation of mutationList) {
                 if (mutation.type === "characterData") {
-                    let nweetWord = nweetText.current.innerText;
-                    const hashRegex = /\#[가-힣ㄱ-ㅎa-zA-z0-9]*\s/g;
+                    const nweetWord = nweetText.current.innerText;
+                    const hashRegex = /(^|\B)#([ㅏ-ㅣ|가-힣|ㄱ-ㅎ|a-zA-z0-9]{1,30})/g;
                     const result = nweetWord.match(hashRegex);
                     const deleteHash = nweetWord.replace(hashRegex,"");
                     if(hashRegex.test(nweetWord)){
@@ -60,6 +60,7 @@ const NweetFactory = ({ userObj }) => {
         await dbService.collection("nweets").add(nweetObj);
         setNweet("");
         setAttachment("");
+        setHashTag("");
         nweetText.current.innerText = "";
     };
     const onFileChange = (event) => {

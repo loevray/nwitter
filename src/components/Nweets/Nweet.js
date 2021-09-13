@@ -224,7 +224,7 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                   </div>
                   <div className="nweet_right_center">
                       <h4 className="nweet_content">{nweetObj.text}</h4>
-                      {isHashTag && <h4 className="nweet_hashtag">{nweetObj.hashTag}</h4>}
+                      {isHashTag && <span className="nweet_hashtag">{nweetObj.hashTag}</span>}
                       {nweetObj.attachmentUrl && (
                           <div className="nweet_content_img_wrapper">
                               <img src={nweetObj.attachmentUrl} alt="img" />

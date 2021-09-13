@@ -1,3 +1,5 @@
+import AsideTrend from "components/Aside/AsideTrend";
+import { dbService } from "fbase";
 import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
@@ -7,18 +9,38 @@ const Aside = () => {
     const [searchValue, setSearchValue] = useState("");
     const [searchClicked, setSearchClicked] = useState(false);
     const [notLocal, setNotLocal] = useState(true);
+    const [trend, setTrend] = useState([]);
     useEffect(() => {
-        const labelStyleRecover = (event) => {
-            if(!label.current.contains(event.target)){
-                setSearchClicked(false);
-                searchIcon.current.style.fill = "#787a88";
-            }
+      const callHashDb = () => {
+        const hashRef = dbService.collection("nweets");
+        hashRef.orderBy("hashTag").orderBy("createdAt", "desc")
+        .where("hashTag", "!=", [])
+        .limit(4)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            console.log("데이터 없음");
+          } else {
+            const newHashTag = doc.docs.map(docs => ({
+              id: docs.id,
+              ...docs.data()
+            }));
+            setTrend(newHashTag);
+          }
+        })
+      }
+      callHashDb();
+      const labelStyleRecover = (event) => {
+        if(!label.current.contains(event.target)){
+          setSearchClicked(false);
+          searchIcon.current.style.fill = "#787a88";
+          }
         }
         document.body.addEventListener("mousedown", labelStyleRecover)
         return () => {
         document.body.removeEventListener("mousedown", labelStyleRecover)
         }
-    })
+   }, []);
     const label = useRef();
     const searchIcon = useRef();
     const onSearchClick = () => {
@@ -91,46 +113,11 @@ const Aside = () => {
                                   </span>
                         </div>
                         <div className="aside_left_trend_center">
-                          <div className="aside_left_trend_2">
-                            <div className="trend_top">
-                              <span>1. 첫번째</span>
-                              <span>•••</span>
-                            </div>
-                              <div className="trend_remainder">
-                                <span>해쉬태그 어쩌고</span>
-                                <span>몇 번 트윗</span>
-                              </div>
-                          </div>
-                          <div className="aside_left_trend_3">
-                            <div className="trend_top">
-                              <span>2. 두번째</span>
-                              <span>•••</span>
-                            </div>
-                            <div className="trend_remainder">
-                              <span>해쉬태그 어쩌고</span>
-                              <span>몇 번 트윗</span>
-                            </div>
-                          </div>
-                          <div className="aside_left_trend_4">
-                            <div className="trend_top">
-                              <span>3. 세번째</span>
-                              <span>•••</span>
-                            </div>
-                            <div className="trend_remainder">
-                              <span>해쉬태그 어쩌고</span>
-                              <span>몇 번 트윗</span>
-                            </div>
-                          </div>
-                          <div className="aside_left_trend_5">
-                            <div className="trend_top">
-                              <span>4. 네번째</span>
-                              <span>•••</span>
-                            </div>
-                            <div className="trend_remainder">
-                              <span>해쉬태그 어쩌고</span>
-                              <span>몇 번 트윗</span>
-                            </div>
-                          </div>
+                          {trend.map((data) => (
+                          <AsideTrend
+                          hashTagArray={data}
+                          />
+                          ))}
                         </div>
                         <div className="aside_left_trend_bot">
                             더보기임
