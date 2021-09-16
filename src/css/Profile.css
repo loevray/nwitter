@@ -81,14 +81,18 @@
 .profile_edit > span {
     padding: 1vh;
     width: 50%;
-    border: 1px solid gray;
-    border-radius: 50vh;
+    border: 1px solid #d1d1d1;
+    border-radius: 2vh;
     font-size: 1.7vh;
     font-weight: 600;
     color: rgb(29, 29, 29);
     text-align: center;
     margin-right: 1vh;
     cursor: pointer;
+}
+
+.profile_edit > span:hover {
+  background-color: #f0efef;
 }
 
 .profile_info_name, .profile_info_state, .profile_info_creationtime {
