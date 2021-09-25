@@ -1,22 +1,22 @@
 body {
-    background-color: white;
+  background-color: white;
 }
 
 #root {
-    display: flex;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  align-items: center;
+  height: 100vh;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 55%;
-    background-color: rgb(54, 255, 4);
-    background-image: url("../img/main_left_logo.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55%;
+  background-color: rgb(54, 255, 4);
+  background-image: url("../img/main_left_logo.png");
 }

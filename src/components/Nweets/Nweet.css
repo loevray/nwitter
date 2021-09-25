@@ -1,10 +1,10 @@
 .nweet_wrapper {
-    border-top: 1px solid #EFF3F4;
+  border-top: 1px solid #eff3f4;
 }
 
 .nweet {
-    padding: 1.5vh 1.5vh 1.5vh 1.5vh;
-    display: flex;
+  padding: 1.5vh 1.5vh 1.5vh 1.5vh;
+  display: flex;
 }
 
 .nweet_left > img {
@@ -15,114 +15,140 @@
 }
 
 .nweet_right {
-    display: flex;
-    padding-left: 1.5vh;
-    flex: 1;
-    flex-direction: column;
+  display: flex;
+  padding-left: 1.5vh;
+  flex: 1;
+  flex-direction: column;
 }
 
 .nweet_right_top {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  flex: 0.1;
+  justify-content: space-between;
+}
+
+.nweet_right_center {
+  flex: 1;
 }
 
 .nweet_info {
-    display: flex;
+  display: flex;
 }
 
 .nweet_info_displayName {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .nweet_info_userId {
-    padding-left: 0.3vh;
+  padding-left: 0.3vh;
 }
 
-.nweet_info_userId, .nweet_info_timeAgo {
-    font-size: 1.6vh;
-    color: #536471;
+.nweet_info_userId,
+.nweet_info_timeAgo {
+  font-size: 1.6vh;
+  color: #536471;
 }
 
 .block {
-    color: #536471;
-    padding-left: 0.4vh;
-    padding-right: 0.4vh;
+  color: #536471;
+  padding-left: 0.4vh;
+  padding-right: 0.4vh;
 }
 
 .nweet_menu_wrapper {
-    position: relative;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.nweet_menu {
+  padding: 0.7vh 0.5vh 0.5vh 0.5vh;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nweet_menu:hover {
+  background-color: #eff3f4;
 }
 
 .nweet_drop_down {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position: absolute;
-    background-color: rgb(107, 175, 30);
-    color: white;
-    width: 18vh;
-    height: 8vh;
-    right: 0vh;
-    z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  background-color: rgb(107, 175, 30);
+  color: white;
+  width: 18vh;
+  height: 8vh;
+  right: 0vh;
+  z-index: 10;
 }
 
-.nweet_drop_menu{
-    font-size: 1.7vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 50%;
-    cursor: pointer;
+.nweet_drop_menu {
+  font-size: 1.7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+  cursor: pointer;
 }
 
 .nweet_drop_menu:hover {
-    background-color: rgb(82, 114, 255);
+  background-color: rgb(82, 114, 255);
 }
 
 .nweet_right_bottom {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.nweet_right_bottom_like, .nweet_right_bottom_reNweet, .nweet_right_bottom_follow {
-    cursor: pointer;
-    display: flex;
+.nweet_right_bottom_like,
+.nweet_right_bottom_reNweet,
+.nweet_right_bottom_follow {
+  cursor: pointer;
+  display: flex;
 }
 
-.nweet_right_bottom_like:hover > svg, .nweet_right_bottom_reNweet:hover > svg {
-    background-color: #DEF1EB;
-    fill: #00BA7C
+.nweet_right_bottom_like:hover > svg,
+.nweet_right_bottom_reNweet:hover > svg {
+  background-color: #def1eb;
+  fill: #00ba7c;
 }
 
 .nweet_right_bottom_follow:hover > svg {
-    background-color: #DEF1EB;
-    stroke: #00BA7C;
+  background-color: #def1eb;
+  stroke: #00ba7c;
 }
 
-.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg{
-    width: 2vh;
-    fill: #536471;
+.nweet_right_bottom_like > svg,
+.nweet_right_bottom_reNweet > svg {
+  width: 2vh;
+  fill: #536471;
 }
 
 .nweet_right_bottom_follow > svg {
-    width: 2vh;
-    fill: white;
-    stroke: #536471;
+  width: 2vh;
+  fill: white;
+  stroke: #536471;
 }
 
-.nweet_right_bottom_like > svg, .nweet_right_bottom_reNweet > svg, .nweet_right_bottom_follow > svg {
-    padding: 0.7vh 0.7vh 0.7vh 0.7vh;
-    border-radius: 50%;
+.nweet_right_bottom_like > svg,
+.nweet_right_bottom_reNweet > svg,
+.nweet_right_bottom_follow > svg {
+  padding: 0.7vh 0.7vh 0.7vh 0.7vh;
+  border-radius: 50%;
 }
 
-.nweet_right_bottom_like > span, .nweet_right_bottom_reNweet > span, .nweet_right_bottom_follow > span {
-    padding-top: 0.7vh;
-    color: #536471;
-    font-size: 1.5vh;
-    align-self: flex;
+.nweet_right_bottom_like > span,
+.nweet_right_bottom_reNweet > span,
+.nweet_right_bottom_follow > span {
+  padding-top: 0.7vh;
+  color: #536471;
+  font-size: 1.5vh;
+  align-self: flex;
 }
 
 .nweet_hashtag {
@@ -132,20 +158,27 @@
 }
 
 .nweet_content {
-    padding-bottom: 1vh;
-    white-space:pre;
+  padding-bottom: 1vh;
+  white-space: normal;
+  word-break: break-all;
 }
 
 .nweet_content_img_wrapper {
-    padding: 1vh 0 1vh 0;
-    width: 55vh;
-    height: 32vh;
+  padding: 1vh 0 1vh 0;
+  width: 55vh;
+  height: 32vh;
 }
 
-.nweet_content_img_wrapper > img {
-    border: 0.5px solid #EFF3F4;
-    border-radius: 15px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.nweet_content_img_wrapper > a {
+  width: inherit;
+  height: inherit;
+}
+
+.nweet_content_img_wrapper > a > img {
+  border: 0.5px solid #eff3f4;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
 }

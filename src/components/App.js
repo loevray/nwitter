@@ -3,13 +3,14 @@ import AppRouter from "components/Router";
 import { authService } from "fbase";
 import "../css/App.css";
 import GlobalStyle from "./GlobalStyle";
+import NewLoading from "./NewLoading";
 
 function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      if(user){
+      if (user) {
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
@@ -24,21 +25,29 @@ function App() {
       setInit(true);
     });
   }, []);
-  const refreshUser = () =>{
+  const refreshUser = () => {
     const user = authService.currentUser;
-      setUserObj({
-        displayName: user.displayName,
-        uid: user.uid,
-        email: user.email,
-        photoURL: user.photoURL,
-        creationTime: user.metadata.creationTime,
-        updateProfile: (args) => user.updateProfile(args),
-      });
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      email: user.email,
+      photoURL: user.photoURL,
+      creationTime: user.metadata.creationTime,
+      updateProfile: (args) => user.updateProfile(args),
+    });
   };
   return (
     <>
-    <GlobalStyle />
-    {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "initializing..." }
+      <GlobalStyle />
+      {init ? (
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)}
+          userObj={userObj}
+        />
+      ) : (
+        <NewLoading />
+      )}
     </>
   );
 }

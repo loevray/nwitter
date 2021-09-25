@@ -3,75 +3,91 @@ import React, { useEffect, useRef, useState } from "react";
 import EditProfile from "./EditProfile";
 
 const ProfileTop = ({ userObj, refreshUser, clickOn, setClickON }) => {
-    const [edit, setEdit] = useState(false);
-    const [backImg, setBackImg] = useState("");
-    const editing = useRef();
-    const onClick = () => {
-        setEdit(true);
-    }
-    const onLikeListClikc = () => {
-      setClickON(prev => !prev);
-    }
-    useEffect(() => {
-      dbService.collection("userInfo").doc(`${userObj.uid}`).onSnapshot((snapshot) => {
-        const { background } = snapshot.data();
-        if(background){
+  const [edit, setEdit] = useState(false);
+  const [backImg, setBackImg] = useState("");
+  const [stateMessage, setStateMessage] = useState("");
+  const editing = useRef();
+  const onClick = () => {
+    setEdit(true);
+  };
+  const onLikeListClikc = () => {
+    setClickON((prev) => !prev);
+  };
+  useEffect(() => {
+    dbService
+      .collection("userInfo")
+      .doc(`${userObj.uid}`)
+      .onSnapshot((snapshot) => {
+        const { background, stateMsg } = snapshot.data();
+        if (background) {
           setBackImg(background);
         }
-      })
-        const handleClickOutside = (event) => {
-            if(edit && !editing.current.contains(event.target)){
-                setEdit(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside)
+        if (stateMsg) {
+          setStateMessage(stateMsg);
         }
-    }, [edit, userObj]);
-    return(
-        <div className="profile_top">
-            <div className="profile_top_top">
-                {edit &&
-                <div className="edit_profile_modal_wrapper">
-                    <div className="edit_profile_modal" ref={editing}>
-                        <EditProfile userObj={userObj} refreshUser={refreshUser} setEdit={setEdit}/>
-                    </div>
-                </div>
-                }
-                <div className="profile_img_wrapper1">
-                    <div className="profile_img_wrapper">
-                        <div className="profile_img_circle">
-                            <img src={userObj.photoURL} alt="profile_image" />
-                        </div>
-                    </div>
-                    <div className="profile_background_img">
-                        {backImg ? <img src={backImg} alt="backImg"/> : null}
-                    </div>
-                </div>
-        </div>
-            <div className="profile_top_bottom">
-                <div className="profile_edit_wrapper">
-                    <div className="profile_edit">
-                        <span onClick={onClick}>프로필 수정</span>
-                    </div>
-                </div>
-                <div className="profile_info_name">
-                    <span>{userObj.displayName}</span>
-                </div>
-                <div className="profile_info_state">
-                    <span>상태메세지:</span>
-                </div>
-                <div className="profile_info_creationtime">
-                    <span>{userObj.creationTime}</span>
-                </div>
-                <div onClick={onLikeListClikc} className="profile_menu_bar">
-                  <span className={!clickOn ? "click_on" : "click_off"}>내가 한 트윗</span> 
-                  <span className={clickOn ? "click_on" : "click_off"}>마음에 들어요</span>
+      });
+    const handleClickOutside = (event) => {
+      if (edit && !editing.current.contains(event.target)) {
+        setEdit(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [edit, userObj]);
+  return (
+    <div className="profile_top">
+      <div className="profile_top_top">
+        {edit && (
+          <div className="edit_profile_modal_wrapper">
+            <div className="edit_profile_modal" ref={editing}>
+              <EditProfile
+                userObj={userObj}
+                refreshUser={refreshUser}
+                setEdit={setEdit}
+                stateMessage={stateMessage}
+              />
             </div>
+          </div>
+        )}
+        <div className="profile_img_wrapper1">
+          <div className="profile_img_wrapper">
+            <div className="profile_img_circle">
+              <img src={userObj.photoURL} alt="profile_image" />
+            </div>
+          </div>
+          <div className="profile_background_img">
+            {backImg ? <img src={backImg} alt="backImg" /> : null}
+          </div>
         </div>
+      </div>
+      <div className="profile_top_bottom">
+        <div className="profile_edit_wrapper">
+          <div className="profile_edit">
+            <span onClick={onClick}>프로필 수정</span>
+          </div>
+        </div>
+        <div className="profile_info_name">
+          <span>{userObj.displayName}</span>
+        </div>
+        <div className="profile_info_state">
+          <span>상태메세지:{stateMessage}</span>
+        </div>
+        <div className="profile_info_creationtime">
+          <span>{userObj.creationTime}</span>
+        </div>
+        <div onClick={onLikeListClikc} className="profile_menu_bar">
+          <span className={!clickOn ? "click_on" : "click_off"}>
+            내가 한 트윗
+          </span>
+          <span className={clickOn ? "click_on" : "click_off"}>
+            마음에 들어요
+          </span>
+        </div>
+      </div>
     </div>
-    );
+  );
 };
 
 export default ProfileTop;

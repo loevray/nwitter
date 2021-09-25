@@ -1,114 +1,118 @@
 .aside {
-    flex-grow: 1.15;
-    flex-basis: 0;
-    display: flex;
-    border-left: 1px solid #EFF3F4;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    background-color: white;
+  flex-grow: 1.15;
+  flex-basis: 0;
+  display: flex;
+  border-left: 1px solid #eff3f4;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
 
 .aside_wrapper {
-    display: flex;
-    flex: 1;
-    padding: 0 3vh 0 3vh;
+  display: flex;
+  flex: 1;
+  padding: 0 3vh 0 3vh;
 }
 
-.aside_left, .aside_right {
-    flex: 1;
+.aside_left,
+.aside_right {
+  flex: 1;
 }
 
 .aside_left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.4vh 0 0.4vh 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4vh 0 0.4vh 0;
 }
 
-.aside_left_search, .aside_left_trend, .aside_left_follow_recommend, .aside_left_footer {
-    width: 36.5vh;
+.aside_left_search,
+.aside_left_trend,
+.aside_left_follow_recommend,
+.aside_left_footer {
+  width: 36.5vh;
 }
 
 .label_out {
-    padding: 1.3vh 0 1.3vh 0;
-    display: flex;
-    align-items: center;
-    cursor: text;
-    background-color: #EFF3F4;
-    border: 1px solid #EFF3F4;
-    border-radius: 10vh;
+  padding: 1.3vh 0 1.3vh 0;
+  display: flex;
+  align-items: center;
+  cursor: text;
+  background-color: #eff3f4;
+  border: 1px solid #eff3f4;
+  border-radius: 10vh;
 }
 
 .label_click {
-    padding: 1.3vh 0 1.3vh 0;
-    display: flex;
-    align-items: center;
-    cursor: auto;
-    border: 1px solid #00acee;
-    border-radius: 10vh;
+  padding: 1.3vh 0 1.3vh 0;
+  display: flex;
+  align-items: center;
+  cursor: auto;
+  border: 1px solid #00acee;
+  border-radius: 10vh;
 }
 
 .aside_left_search_left {
-    text-align: center;
-    flex: 1;
+  text-align: center;
+  flex: 1;
 }
 
 .aside_left_search_left > svg {
-    fill: #787a88;
-    width: 2vh;
+  fill: #787a88;
+  width: 2vh;
 }
 
 .aside_left_search_center {
-    flex: 1;
+  flex: 1;
 }
 
 .aside_left_search_input {
-    padding-top: 0.15vh;
-    border: none;
-    width: 24vh;
-    font-size: 1.8vh;
-    background-color: transparent;
+  padding-top: 0.15vh;
+  border: none;
+  width: 24vh;
+  font-size: 1.8vh;
+  background-color: transparent;
 }
 
 .aside_left_search_input::placeholder {
-    font-size: 1.7vh;
+  font-size: 1.7vh;
 }
 
 .aside_left_search_input:focus {
-    outline: none; 
+  outline: none;
 }
 
 .aside_left_search_right {
-    display: flex;
-    justify-content: center;
-    flex: 1;
+  display: flex;
+  justify-content: center;
+  flex: 1;
 }
 
 .aside_left_search_right > span {
-    padding: 1.1vh 1.1vh 1.1vh 1.1vh;
-    border-radius: 50%;
-    background-color: #00acee;
-    cursor: pointer;
+  padding: 1.1vh 1.1vh 1.1vh 1.1vh;
+  border-radius: 50%;
+  background-color: #00acee;
+  cursor: pointer;
 }
 
 .test1 {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: 36.5vh;
-    height: 18.25vh;
-    background-color: tomato;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 36.5vh;
+  height: 18.25vh;
+  background-color: tomato;
 }
 
 .test1 > span {
-    padding-left: 5vh;
+  padding-left: 5vh;
 }
 
 .aside_left_trend {
   display: flex;
-  background-color: #F7F9F9;
+  background-color: #f7f9f9;
   border-radius: 1vh;
   height: 48vh;
 }
@@ -127,7 +131,7 @@
   padding-right: 1vh;
 }
 
-.aside_left_trend_top > span:first-child{
+.aside_left_trend_top > span:first-child {
   font-size: 2vh;
   font-weight: bold;
   padding-top: 0.7vh;
@@ -144,14 +148,16 @@
   background-color: #dddddd;
 }
 
-
 .aside_left_trend_center {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.aside_left_trend_2, .aside_left_trend_3, .aside_left_trend_4, .aside_left_trend_5 {
+.aside_left_trend_2,
+.aside_left_trend_3,
+.aside_left_trend_4,
+.aside_left_trend_5 {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -180,14 +186,13 @@
   padding: 0.5vh 0 0.5vh 0;
 }
 
-
 .aside_left_trend_bot {
   flex: 0.1;
 }
 
 .aside_left_follow_recommend {
   display: flex;
-  background-color: #EFF3F4;
+  background-color: #eff3f4;
   border-radius: 1vh;
   height: 32vh;
 }

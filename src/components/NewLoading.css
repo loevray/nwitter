@@ -1,0 +1,13 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > span {
+  color: white;
+  font-size: 3vh;
+}

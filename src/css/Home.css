@@ -1,41 +1,42 @@
 #root {
-    overflow-x: hidden; overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
-    cursor: inherit;
+  text-decoration: none;
+  color: inherit;
+  cursor: inherit;
 }
 
 .home_center {
-    flex-grow: 1;
-    flex-basis: 0;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
 .home_center {
-    align-self: flex-start;
-    background-color: white;
+  align-self: flex-start;
+  background-color: white;
 }
 
 .home_center_homebar_wrapper {
-    z-index: 2;
-    background-color: white;
-    position: sticky;
-    top: 0;
-    display: flex;
-    align-items: center;
-    padding-left: 1.5vh;
-    padding-right: 0.5vh;
-    height: 5vh;
-    border-bottom: 1px solid #EFF3F4;
-    cursor: pointer;
+  z-index: 2;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 1.5vh;
+  padding-right: 0.5vh;
+  height: 5vh;
+  border-bottom: 1px solid #eff3f4;
+  cursor: pointer;
 }
 
 .home_center_homebar {
-    display: flex;
-    justify-content: space-between;
-    flex: 1;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .star {
@@ -51,100 +52,100 @@ a {
 }
 
 .home_center_homebar > span {
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    font-size: 2vh;
-    font-weight: bold;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  font-size: 2vh;
+  font-weight: bold;
 }
 
 .home_center_homebar_menu {
-    display: flex;
-    flex-direction: column;
-    z-index: 4;
-    position: absolute;
-    width: 35vh;
-    height: 22vh;
-    right: 0;
-    top: 0;
-    margin-right: 1vh;
-    margin-top: 1vh;
-    background-color: white;
-    box-shadow: 0 0 0.5vh 0.1vh rgba(128, 128, 128, 0.37);
-    border-radius: 0.5vh;
-    animation-duration: 0.03s;
-    animation-name: slideTopToBot;
+  display: flex;
+  flex-direction: column;
+  z-index: 4;
+  position: absolute;
+  width: 35vh;
+  height: 22vh;
+  right: 0;
+  top: 0;
+  margin-right: 1vh;
+  margin-top: 1vh;
+  background-color: white;
+  box-shadow: 0 0 0.5vh 0.1vh rgba(128, 128, 128, 0.37);
+  border-radius: 0.5vh;
+  animation-duration: 0.03s;
+  animation-name: slideTopToBot;
 }
 
 @keyframes slideTopToBot {
-    from {
-        height: 16vh;
-    }
+  from {
+    height: 16vh;
+  }
 
-    to {
-        height: 22vh;
-    }
+  to {
+    height: 22vh;
+  }
 }
 
 .home_center_homebar_menu_top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    width: 100%;
-    cursor: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+  cursor: auto;
 }
 
 .home_center_homebar_menu_top > span {
-    font-size: 2.15vh;
-    text-align: center;
-    font-weight: bold;
-    padding: 4.5vh 1.5vh 1.5vh 1.5vh;
-    line-height: 2.5vh;
+  font-size: 2.15vh;
+  text-align: center;
+  font-weight: bold;
+  padding: 4.5vh 1.5vh 1.5vh 1.5vh;
+  line-height: 2.5vh;
 }
 
 .home_center_homebar_menu_bottom {
-    display: flex;
-    align-items: center;
-    height: 50%;
-    width: 100%;
-    border-top: 1px solid #EFF3F4;
+  display: flex;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+  border-top: 1px solid #eff3f4;
 }
 
 .home_center_homebar_menu_bottom:hover {
-    background-color: #f3f3f3;
+  background-color: #f3f3f3;
 }
 
 .home_center_homebar_menu_bottom > svg {
-    width: 2vh;
-    fill: #646464;
-    padding-left: 2.5vh;
+  width: 2vh;
+  fill: #646464;
+  padding-left: 2.5vh;
 }
 
 .home_center_homebar_menu_bottom_text {
-    display: flex;
-    flex-direction: column;
-    padding-left: 1.5vh;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.5vh;
 }
 
 .ola {
-    color: gray;
-    font-size: 1.45vh;
-    padding-top: 1vh;
+  color: gray;
+  font-size: 1.45vh;
+  padding-top: 1vh;
 }
 
 .home_center_nweet_wrapper {
-    display: flex;
-    padding: 0 2vh 0 1.5vh;
+  display: flex;
+  padding: 0 2vh 0 1.5vh;
 }
 
 .home_center_nweet_profile_img {
-    padding-top: 1.5vh;
+  padding-top: 1.5vh;
 }
 
 .home_center_nweet_profile_img > img {
-    width: 55px;
-    height: 55px;
-    object-fit: cover;
-    border-radius: 25px;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 25px;
 }
