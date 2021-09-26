@@ -60,12 +60,32 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
             <div className="profile_img_wrapper1">
               <div className="profile_img_wrapper">
                 <div className="profile_img_circle">
-                  <img src={userInfo.photoUrl} alt="profile_image" />
+                  <a
+                    href={userObj.photoURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      className="profile_image"
+                      src={userInfo.photoUrl}
+                      alt="profile_image"
+                    />
+                  </a>
                 </div>
               </div>
-              <div className="profile_background_img">
+              <div className="profile_background_img_wrapper">
                 {userInfo.background ? (
-                  <img src={userInfo.background} alt="backImg" />
+                  <a
+                    href={userInfo.background}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      className="profile_background_img"
+                      src={userInfo.background}
+                      alt="backImg"
+                    />
+                  </a>
                 ) : null}
               </div>
             </div>

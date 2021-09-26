@@ -14,6 +14,14 @@
   border-radius: 25px;
 }
 
+.nweet_profile_img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
 .nweet_right {
   display: flex;
   padding-left: 1.5vh;

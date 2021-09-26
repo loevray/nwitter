@@ -54,11 +54,29 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
         <div className="profile_img_wrapper1">
           <div className="profile_img_wrapper">
             <div className="profile_img_circle">
-              <img src={userObj.photoURL} alt="profile_image" />
+              <a
+                href={userObj.photoURL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="profile_image"
+                  src={userObj.photoURL}
+                  alt="profile_image"
+                />
+              </a>
             </div>
           </div>
-          <div className="profile_background_img">
-            {backImg ? <img src={backImg} alt="backImg" /> : null}
+          <div className="profile_background_img_wrapper">
+            <a href={backImg} target="_blank" rel="noopener noreferrer">
+              {backImg ? (
+                <img
+                  className="profile_background_img"
+                  src={backImg}
+                  alt="backImg"
+                />
+              ) : null}
+            </a>
           </div>
         </div>
       </div>
@@ -72,7 +90,7 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
           <span>{userObj.displayName}</span>
         </div>
         <div className="profile_info_state">
-          <span>상태메세지:{stateMessage}</span>
+          <span>{stateMessage}</span>
         </div>
         <div className="profile_info_creationtime">
           <span>{userObj.creationTime}</span>

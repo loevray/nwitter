@@ -7,7 +7,7 @@ const AsideTrend = ({ hashTagArray }) => {
     if (hashTagArray !== []) {
       setFill(true);
     }
-  }, []);
+  }, [hashTagArray]);
   return (
     <div className="aside_left_trend_2">
       <div className="trend_top">

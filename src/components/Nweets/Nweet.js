@@ -93,7 +93,9 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
             <div className="nweet_wrapper">
               <div className="nweet">
                 <div className="nweet_left">
-                  <img src={nweetObj.profile} alt="img" />
+                  <Link to={`/user/${nweetObj.createrId}`}>
+                    <img src={nweetObj.profile} alt="img" />
+                  </Link>
                 </div>
                 <div className="nweet_right">
                   <div className="nweet_right_top">
@@ -188,7 +190,13 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
               <div className="nweet_wrapper">
                 <div className="nweet">
                   <div className="nweet_left">
-                    <img src={nweetObj.profile} alt="img" />
+                    <Link to={`/user/${nweetObj.createrId}`}>
+                      <img
+                        className="nweet_profile_img"
+                        src={nweetObj.profile}
+                        alt="img"
+                      />
+                    </Link>
                   </div>
                   <div className="nweet_right">
                     <div className="nweet_right_top">

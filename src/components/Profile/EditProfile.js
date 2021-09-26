@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./EditProfile.css";
 import { dbService, storageService } from "fbase";
 
@@ -9,9 +9,6 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
   const [backgroundImg, setBackgroundImg] = useState("");
   const [newProfile, setNewProfile] = useState(false);
   const [newBack, setNewBack] = useState(false);
-  useEffect(() => {
-    return () => setEdit(false);
-  }, []);
   const onNickNameChange = (event) => {
     const {
       target: { value },

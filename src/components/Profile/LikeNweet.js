@@ -1,6 +1,7 @@
 import { authService, dbService, dbStore } from "fbase";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const LikeNweet = ({ likeNweet, userObj }) => {
   const [userId, setUserId] = useState("");
@@ -62,13 +63,21 @@ const LikeNweet = ({ likeNweet, userObj }) => {
     <div className="nweet_wrapper">
       <div className="nweet">
         <div className="nweet_left">
-          <img src={likeNweet.profile} alt="img" />
+          <Link to={`/user/${likeNweet.createrId}`}>
+            <img
+              className="nweet_profile_img"
+              src={likeNweet.profile}
+              alt="img"
+            />
+          </Link>
         </div>
         <div className="nweet_right">
           <div className="nweet_right_top">
             <div className="nweet_info">
               <span className="nweet_info_displayName">
-                {likeNweet.displayName}
+                <Link to={`/user/${likeNweet.createrId}`}>
+                  {likeNweet.displayName}
+                </Link>
               </span>
               <span className="nweet_info_userId">{userId[0]}</span>
               <span className="block">·</span>

@@ -39,7 +39,8 @@ const GetUserNweets = ({ strangerNweet, userObj }) => {
     if (strangerNweet.hashTag != null) {
       setIsHash(true);
     }
-  }, [strangerNweet]);
+    console.log("겟 유저느윗에서 알림");
+  }, []);
   const onLikeBtnClick = async () => {
     if (strangerNweet.reNweet.includes(authService.currentUser.uid, 0)) {
       await dbService.doc(`nweets/${strangerNweet.id}`).update({
@@ -99,7 +100,11 @@ const GetUserNweets = ({ strangerNweet, userObj }) => {
     <div className="nweet_wrapper">
       <div className="nweet">
         <div className="nweet_left">
-          <img src={strangerNweet.profile} alt="img" />
+          <img
+            className="nweet_profile_img"
+            src={strangerNweet.profile}
+            alt="img"
+          />
         </div>
         <div className="nweet_right">
           <div className="nweet_right_top">
