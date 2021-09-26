@@ -125,7 +125,9 @@ const GetUserNweets = ({ strangerNweet, userId, userObj }) => {
             )}
             {strangerNweet.attachmentUrl && (
               <div className="nweet_content_img_wrapper">
-                <img src={strangerNweet.attachmentUrl} alt="img" />
+                <a href={strangerNweet.attachmentUrl} target="_blank">
+                  <img src={strangerNweet.attachmentUrl} alt="img" />
+                </a>
               </div>
             )}
           </div>

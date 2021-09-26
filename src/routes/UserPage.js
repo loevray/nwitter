@@ -21,7 +21,12 @@ const UserPage = ({ match, userObj }) => {
   }, []);
   return (
     <div className="profile">
-      <UserPageTop userId={userId} clickOn={clickOn} setClickOn={setClickOn} />
+      <UserPageTop
+        userId={userId}
+        clickOn={clickOn}
+        setClickOn={setClickOn}
+        userObj={userObj}
+      />
       <div className="profile_bottom">
         <UserPageBot userId={userId} clickOn={clickOn} userObj={userObj} />
       </div>

@@ -72,7 +72,8 @@
   justify-content: flex-end;
 }
 
-.profile_edit {
+.profile_edit,
+.profile_following {
   display: flex;
   width: 35%;
   align-items: center;
@@ -87,6 +88,33 @@
   font-size: 1.7vh;
   font-weight: 600;
   color: rgb(29, 29, 29);
+  text-align: center;
+  margin-right: 1vh;
+  cursor: pointer;
+}
+
+.profile_following_false {
+  padding: 1vh;
+  width: 50%;
+  border: 1px solid #d1d1d1;
+  border-radius: 2vh;
+  font-size: 1.6vh;
+  font-weight: 600;
+  color: rgb(29, 29, 29);
+  text-align: center;
+  margin-right: 1vh;
+  cursor: pointer;
+}
+
+.profile_following_true {
+  padding: 1vh;
+  width: 50%;
+  border: 1px solid #d1d1d1;
+  border-radius: 2vh;
+  font-size: 1.6vh;
+  font-weight: 600;
+  color: white;
+  background-color: rgb(29, 29, 29);
   text-align: center;
   margin-right: 1vh;
   cursor: pointer;

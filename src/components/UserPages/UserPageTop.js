@@ -1,9 +1,10 @@
-import { dbService } from "fbase";
+import { dbService, dbStore } from "fbase";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const UserPageTop = ({ userId, clickOn, setClickOn }) => {
+const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
   const [userInfo, setUserInfo] = useState();
+  const [following, setFollowing] = useState(false);
   useEffect(() => {
     if (userId && userInfo === undefined) {
       const userInfoRef = dbService.collection("userInfo");
@@ -13,6 +14,13 @@ const UserPageTop = ({ userId, clickOn, setClickOn }) => {
         setUserInfo(data);
       });
     }
+    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+    followingRef.get().then(async (doc) => {
+      const isFollowing = doc.data().following;
+      if (isFollowing.includes(userId, 0)) {
+        setFollowing(true);
+      }
+    });
     console.log("유저페이지탑이 렌더함");
     return () => {
       setClickOn(false);
@@ -21,8 +29,31 @@ const UserPageTop = ({ userId, clickOn, setClickOn }) => {
   const onLikeListClick = () => {
     setClickOn((prev) => !prev);
   };
-  const onClick = () => {
-    console.log("팔로우하기 눌름");
+  const onFollowBtnClick = async () => {
+    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+    followingRef.get().then(async (doc) => {
+      const isFollowing = doc.data().following;
+      if (!isFollowing.includes(userId, 0)) {
+        await dbService.doc(`userInfo/${userObj.uid}`).update({
+          following: dbStore.FieldValue.arrayUnion(`${userId}`),
+        });
+        await dbService.doc(`userInfo/${userId}`).update({
+          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+        });
+        setFollowing(true);
+        alert("팔로우 성공!");
+      }
+      if (following) {
+        await dbService.doc(`userInfo/${userObj.uid}`).update({
+          following: dbStore.FieldValue.arrayRemove(`${userId}`),
+        });
+        await dbService.doc(`userInfo/${userId}`).update({
+          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+        });
+        setFollowing(false);
+        alert("팔로우 해제!");
+      }
+    });
   };
   return (
     <>
@@ -44,8 +75,22 @@ const UserPageTop = ({ userId, clickOn, setClickOn }) => {
           </div>
           <div className="profile_top_bottom">
             <div className="profile_edit_wrapper">
-              <div className="profile_edit">
-                <span onClick={onClick}>팔로잉</span>
+              <div className="profile_following">
+                {!following ? (
+                  <span
+                    onClick={onFollowBtnClick}
+                    className="profile_following_false"
+                  >
+                    팔로잉
+                  </span>
+                ) : (
+                  <span
+                    onClick={onFollowBtnClick}
+                    className="profile_following_true"
+                  >
+                    팔로우 해제
+                  </span>
+                )}
               </div>
             </div>
             <div className="profile_info_name">
