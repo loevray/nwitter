@@ -94,7 +94,11 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
               <div className="nweet">
                 <div className="nweet_left">
                   <Link to={`/user/${nweetObj.createrId}`}>
-                    <img src={nweetObj.profile} alt="img" />
+                    <img
+                      className="nweet_profile_img"
+                      src={nweetObj.profile}
+                      alt="img"
+                    />
                   </Link>
                 </div>
                 <div className="nweet_right">
