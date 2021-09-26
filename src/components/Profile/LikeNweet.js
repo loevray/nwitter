@@ -6,7 +6,6 @@ const LikeNweet = ({ likeNweet, userObj }) => {
   const [userId, setUserId] = useState("");
   const [menuOn, setMenuOn] = useState(false);
   const [time, setTime] = useState("");
-  const [tt, setTt] = useState(false);
   const [isHash, setIsHash] = useState(false);
   useEffect(() => {
     let now = new Date().getTime();
@@ -28,13 +27,6 @@ const LikeNweet = ({ likeNweet, userObj }) => {
     }
     const userId = likeNweet.userEmail.split("@");
     setUserId(userId);
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-    followingRef.get().then(async (doc) => {
-      const isFollowing = doc.data().following;
-      if (isFollowing.includes(likeNweet.createrId, 0)) {
-        setTt(true);
-      }
-    });
     if (likeNweet.hashTag != null) {
       setIsHash(true);
     }
@@ -61,30 +53,6 @@ const LikeNweet = ({ likeNweet, userObj }) => {
     }
     await dbService.doc(`nweets/${likeNweet.id}`).update({
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
-    });
-  };
-  const onFollowBtnClick = async () => {
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-    followingRef.get().then(async (doc) => {
-      const isFollowing = doc.data().following;
-      if (!isFollowing.includes(likeNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayUnion(`${likeNweet.createrId}`),
-        });
-        await dbService.doc(`userInfo/${likeNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
-        });
-        alert("팔로우 성공!");
-      }
-      if (isFollowing.includes(likeNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayRemove(`${likeNweet.createrId}`),
-        });
-        await dbService.doc(`userInfo/${likeNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
-        });
-        alert("팔로우 해제!");
-      }
     });
   };
   const onMenuClick = () => {
@@ -120,7 +88,11 @@ const LikeNweet = ({ likeNweet, userObj }) => {
             )}
             {likeNweet.attachmentUrl && (
               <div className="nweet_content_img_wrapper">
-                <a href={likeNweet.attachmentUrl} target="_blank">
+                <a
+                  href={likeNweet.attachmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src={likeNweet.attachmentUrl} alt="img" />
                 </a>
               </div>

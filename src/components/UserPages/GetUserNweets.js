@@ -1,9 +1,9 @@
-import { authService, dbService, dbStore, storageService } from "fbase";
+import { authService, dbService, dbStore } from "fbase";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const GetUserNweets = ({ strangerNweet, userId, userObj }) => {
+const GetUserNweets = ({ strangerNweet, userObj }) => {
   const [userEmail, setUserEmail] = useState("");
   const [menuOn, setMenuOn] = useState(false);
   const [time, setTime] = useState("");
@@ -125,7 +125,11 @@ const GetUserNweets = ({ strangerNweet, userId, userObj }) => {
             )}
             {strangerNweet.attachmentUrl && (
               <div className="nweet_content_img_wrapper">
-                <a href={strangerNweet.attachmentUrl} target="_blank">
+                <a
+                  href={strangerNweet.attachmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src={strangerNweet.attachmentUrl} alt="img" />
                 </a>
               </div>

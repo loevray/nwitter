@@ -77,30 +77,6 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
   };
-  const onFollowBtnClick = async () => {
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-    followingRef.get().then(async (doc) => {
-      const isFollowing = doc.data().following;
-      if (!isFollowing.includes(nweetObj.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayUnion(`${nweetObj.createrId}`),
-        });
-        await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
-          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
-        });
-        alert("팔로우 성공!");
-      }
-      if (isFollowing.includes(nweetObj.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayRemove(`${nweetObj.createrId}`),
-        });
-        await dbService.doc(`userInfo/${nweetObj.createrId}`).update({
-          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
-        });
-        alert("팔로우 해제!");
-      }
-    });
-  };
   const onMenuClick = () => {
     setMenuOn((prev) => !prev);
   };
@@ -169,7 +145,11 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                     )}
                     {nweetObj.attachmentUrl && (
                       <div className="nweet_content_img_wrapper">
-                        <a href={nweetObj.attachmentUrl} target="_blank">
+                        <a
+                          href={nweetObj.attachmentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <img src={nweetObj.attachmentUrl} alt="img" />
                         </a>
                       </div>
@@ -262,7 +242,11 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                       )}
                       {nweetObj.attachmentUrl && (
                         <div className="nweet_content_img_wrapper">
-                          <a href={nweetObj.attachmentUrl} target="_blank">
+                          <a
+                            href={nweetObj.attachmentUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             <img src={nweetObj.attachmentUrl} alt="img" />
                           </a>
                         </div>

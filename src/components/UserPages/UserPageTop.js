@@ -22,9 +22,6 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
       }
     });
     console.log("유저페이지탑이 렌더함");
-    return () => {
-      setClickOn(false);
-    };
   });
   const onLikeListClick = () => {
     setClickOn((prev) => !prev);

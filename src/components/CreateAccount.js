@@ -28,24 +28,31 @@ const CreateAccount = ({ setSignUp, refreshUser }) => {
         .createUserWithEmailAndPassword(registerEmail, registerPassword)
         .then(async (user) => {
           let profileUrl = "";
+          const newUser = user.user;
           const storageRef = storageService
             .ref()
             .child(`userDeafultSet/profile_img/userprofile.png`);
           profileUrl = await storageRef.getDownloadURL();
-          await user.user.updateProfile({
+          await newUser.updateProfile({
             photoURL: profileUrl,
           });
-          refreshUser();
-          const newUser = authService.currentUser;
+          if (newUser.displayName === null) {
+            const email = newUser.email;
+            const emailToNickname = email.split("@");
+            await newUser.updateProfile({
+              displayName: emailToNickname[0],
+            });
+          }
           const userInfo = {
             follower: [],
             following: [],
             displayName: newUser.displayName,
             email: newUser.email,
-            photoURL: newUser.photoURL,
+            photoUrl: newUser.photoURL,
           };
           const userInfoRef = dbService.collection("userInfo");
           await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
+          refreshUser();
         })
         .catch((e) => {
           console.log("에러:", e);

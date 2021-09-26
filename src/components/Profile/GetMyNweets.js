@@ -1,12 +1,11 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
 
-const GetMyNweets = ({ userObj, myNweet }) => {
+const GetMyNweets = ({ myNweet }) => {
   const [editing, setEditing] = useState(false);
   const [userId, setUserId] = useState("");
   const [menuOn, setMenuOn] = useState(false);
   const [time, setTime] = useState("");
-  const [tt, setTt] = useState(false);
   const [isHash, setIsHash] = useState(false);
   useEffect(() => {
     let now = new Date().getTime();
@@ -68,30 +67,6 @@ const GetMyNweets = ({ userObj, myNweet }) => {
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
   };
-  const onFollowBtnClick = async () => {
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-    followingRef.get().then(async (doc) => {
-      const isFollowing = doc.data().following;
-      if (!isFollowing.includes(myNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayUnion(`${myNweet.createrId}`),
-        });
-        await dbService.doc(`userInfo/${myNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
-        });
-        alert("팔로우 성공!");
-      }
-      if (isFollowing.includes(myNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayRemove(`${myNweet.createrId}`),
-        });
-        await dbService.doc(`userInfo/${myNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
-        });
-        alert("팔로우 해제!");
-      }
-    });
-  };
   const toggleEditing = () => setEditing((prev) => !prev);
   return (
     <div className="nweet_wrapper">
@@ -130,7 +105,11 @@ const GetMyNweets = ({ userObj, myNweet }) => {
             {isHash && <span className="nweet_hashtag">{myNweet.hashTag}</span>}
             {myNweet.attachmentUrl && (
               <div className="nweet_content_img_wrapper">
-                <a href={myNweet.attachmentUrl} target="_blank">
+                <a
+                  href={myNweet.attachmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src={myNweet.attachmentUrl} alt="img" />
                 </a>
               </div>

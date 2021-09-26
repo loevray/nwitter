@@ -226,7 +226,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
           </div>
           <div className="edit_profile_state_msg_wrapper">
             <div className="edit_profile_state_msg">
-              <span>상태 메세지(구현중)</span>
+              <span>상태 메세지</span>
               <textarea
                 onChange={onStateMsgChange}
                 type="text"

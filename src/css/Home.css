@@ -137,6 +137,7 @@ a {
 .home_center_nweet_wrapper {
   display: flex;
   padding: 0 2vh 0 1.5vh;
+  border-bottom: 1px solid #eff3f4;
 }
 
 .home_center_nweet_profile_img {
