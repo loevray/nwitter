@@ -1,7 +1,7 @@
 import { dbService } from "fbase";
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 import GetUserLikeNweets from "./GetUserLikeNweets";
 import GetUserNweets from "./GetUserNweets";
 
