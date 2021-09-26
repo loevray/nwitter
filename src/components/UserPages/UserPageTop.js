@@ -61,7 +61,7 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
               <div className="profile_img_wrapper">
                 <div className="profile_img_circle">
                   <a
-                    href={userObj.photoURL}
+                    href={userInfo.photoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
