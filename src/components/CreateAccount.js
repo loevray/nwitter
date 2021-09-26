@@ -36,9 +36,13 @@ const CreateAccount = ({ setSignUp, refreshUser }) => {
             photoURL: profileUrl,
           });
           refreshUser();
+          const newUser = authService.currentUser;
           const userInfo = {
             follower: [],
             following: [],
+            displayName: newUser.displayName,
+            email: newUser.email,
+            photoURL: newUser.photoURL,
           };
           const userInfoRef = dbService.collection("userInfo");
           await userInfoRef.doc(`${user.user.uid}`).set(userInfo);

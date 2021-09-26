@@ -39,6 +39,14 @@
   font-weight: bold;
 }
 
+.nweet_info_displayName > a {
+  cursor: pointer;
+}
+
+.nweet_info_displayName > a:hover {
+  text-decoration: underline;
+}
+
 .nweet_info_userId {
   padding-left: 0.3vh;
 }

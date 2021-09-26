@@ -2,7 +2,7 @@ import { dbService } from "fbase";
 import React, { useEffect, useRef, useState } from "react";
 import EditProfile from "./EditProfile";
 
-const ProfileTop = ({ userObj, refreshUser, clickOn, setClickON }) => {
+const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
   const [edit, setEdit] = useState(false);
   const [backImg, setBackImg] = useState("");
   const [stateMessage, setStateMessage] = useState("");
@@ -10,8 +10,8 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickON }) => {
   const onClick = () => {
     setEdit(true);
   };
-  const onLikeListClikc = () => {
-    setClickON((prev) => !prev);
+  const onLikeListClick = () => {
+    setClickOn((prev) => !prev);
   };
   useEffect(() => {
     dbService
@@ -77,7 +77,7 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickON }) => {
         <div className="profile_info_creationtime">
           <span>{userObj.creationTime}</span>
         </div>
-        <div onClick={onLikeListClikc} className="profile_menu_bar">
+        <div onClick={onLikeListClick} className="profile_menu_bar">
           <span className={!clickOn ? "click_on" : "click_off"}>
             내가 한 트윗
           </span>

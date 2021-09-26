@@ -12,6 +12,7 @@ import Aside from "routes/Aside";
 import Verified from "routes/Verified";
 import { useEffect, useState } from "react";
 import Search from "routes/Search";
+import UserPage from "routes/UserPage";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   const [verifying, setVeyrifying] = useState(false);
@@ -43,6 +44,13 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
             <Route exact path="/home">
               <Home userObj={userObj} />
             </Route>
+            <Route
+              exact
+              path="/user/:id"
+              render={(props) => (
+                <UserPage userObj={userObj} match={props.match} />
+              )}
+            />
             <Route exact path="/profile">
               <Profile userObj={userObj} refreshUser={refreshUser} />
             </Route>

@@ -1,5 +1,6 @@
 import { authService, dbService, dbStore, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Nweet.css";
 import NweetEdit from "./NweetEdit";
 
@@ -122,7 +123,9 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                   <div className="nweet_right_top">
                     <div className="nweet_info">
                       <span className="nweet_info_displayName">
-                        {nweetObj.displayName}
+                        <Link to={`/user/${nweetObj.createrId}`}>
+                          {nweetObj.displayName}
+                        </Link>
                       </span>
                       <span className="nweet_info_userId">{userId[0]}</span>
                       <span className="block">·</span>
@@ -218,7 +221,9 @@ const Nweet = ({ nweetObj, isOwner, userObj, followOnly }) => {
                     <div className="nweet_right_top">
                       <div className="nweet_info">
                         <span className="nweet_info_displayName">
-                          {nweetObj.displayName}
+                          <Link to={`/user/${nweetObj.createrId}`}>
+                            {nweetObj.displayName}
+                          </Link>
                         </span>
                         <span className="nweet_info_userId">{userId[0]}</span>
                         <span className="block">·</span>

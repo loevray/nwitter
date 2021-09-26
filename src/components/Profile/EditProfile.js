@@ -38,6 +38,11 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
+      const userInfoRef = dbService.collection("userInfo");
+      const userInfoQuery = userInfoRef.doc(`${userObj.uid}`);
+      userInfoQuery.update({
+        displayName: newDisplayName,
+      });
       refreshUser();
     }
   };
@@ -70,6 +75,11 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
         });
       await userObj.updateProfile({
         photoURL: imgUrl,
+      });
+      const userInfo = dbService.collection("userInfo");
+      const userQuery = userInfo.doc(`${userObj.uid}`);
+      userQuery.update({
+        photoUrl: imgUrl,
       });
     }
     setProfileImg("");
