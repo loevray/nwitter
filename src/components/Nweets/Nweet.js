@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
-const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
+const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
   const [menuOn, setMenuOn] = useState(false);
+  const [isHashTag, setIsHashTag] = useState(false);
+  const [nweetMouseOn, setNweetMouseOn] = useState(false);
+  const [imgMouseOn, setImgMouseOn] = useState(false);
+  const [Like, setLike] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
-  const [isHashTag, setIsHashTag] = useState(false);
+  const history = useHistory();
   useEffect(() => {
-    console.log("render from Nweet.js");
+    console.log("render from Nweet.js", isLike);
     let now = new Date().getTime();
     let second = Math.floor((now - nweetObj.createdAt[0]) / 1000);
     if (second > 2592000) {
@@ -32,7 +37,8 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
       setIsHashTag(true);
     }
   }, [nweetObj]);
-  const onDeleteClick = async () => {
+  const onDeleteClick = async (e) => {
+    e.stopPropagation();
     const ok = window.confirm("진짜 지울거임?ㅋ");
     if (ok) {
       await dbService.doc(`nweets/${nweetObj.id}`).delete();
@@ -41,7 +47,8 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
       }
     }
   };
-  const onLikeBtnClick = async () => {
+  const onLikeBtnClick = async (e) => {
+    e.stopPropagation();
     if (nweetObj.like.includes(authService.currentUser.uid, 0)) {
       await dbService.doc(`nweets/${nweetObj.id}`).update({
         like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`),
@@ -52,7 +59,8 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
       like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
   };
-  const onReNweetBtnClick = async () => {
+  const onReNweetBtnClick = async (e) => {
+    e.stopPropagation();
     if (nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
       await dbService.doc(`nweets/${nweetObj.id}`).update({
         reNweet: dbStore.FieldValue.arrayRemove(
@@ -65,8 +73,29 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
   };
-  const onMenuClick = () => {
+  const onMenuClick = (e) => {
+    e.stopPropagation();
     setMenuOn((prev) => !prev);
+  };
+  const onNweetClick = (event) => {
+    const to = `/user/${nweetObj.createrId}/detail/${nweetObj.id}`;
+    history.push(to);
+  };
+  const onMouseEnter = (e) => {
+    if (e.target.nodeName === "IMG") {
+      setImgMouseOn(true);
+    }
+    setNweetMouseOn(true);
+  };
+  const onMouseLeave = (e) => {
+    if (e.target.nodeName === "IMG") {
+      setImgMouseOn((prev) => !prev);
+    } else {
+      setNweetMouseOn((prev) => !prev);
+    }
+  };
+  const stopBubble = (e) => {
+    e.stopPropagation();
   };
   return (
     <div className="nweet_wrapper">
@@ -75,13 +104,20 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
           <span>{reNweeter}님이 리트윗 함</span>
         </div>
       )}
-      <div className="nweet">
+      <div
+        className={nweetMouseOn ? "mouseOnNweet" : "nweet"}
+        onClick={onNweetClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         <div className="nweet_left">
-          <Link to={`/user/${nweetObj.createrId}`}>
+          <Link to={`/user/${nweetObj.createrId}`} onClick={stopBubble}>
             <img
-              className="nweet_profile_img"
+              className={imgMouseOn ? "mouseOnImg" : "nweet_profile_img"}
               src={nweetObj.profile}
               alt="img"
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
             />
           </Link>
         </div>
@@ -89,7 +125,7 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
           <div className="nweet_right_top">
             <div className="nweet_info">
               <span className="nweet_info_displayName">
-                <Link to={`/user/${nweetObj.createrId}`}>
+                <Link to={`/user/${nweetObj.createrId}`} onClick={stopBubble}>
                   {nweetObj.displayName}
                 </Link>
               </span>
@@ -134,7 +170,13 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
             <div className="nweet_right_bottom_like" onClick={onLikeBtnClick}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
-                  <path d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12zM7.354 4.225c-2.08 0-3.903 1.988-3.903 4.255 0 5.74 7.034 11.596 8.55 11.658 1.518-.062 8.55-5.917 8.55-11.658 0-2.267-1.823-4.255-3.903-4.255-2.528 0-3.94 2.936-3.952 2.965-.23.562-1.156.562-1.387 0-.014-.03-1.425-2.965-3.954-2.965z"></path>
+                  <path
+                    d={
+                      isLike
+                        ? "M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z"
+                        : "M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12zM7.354 4.225c-2.08 0-3.903 1.988-3.903 4.255 0 5.74 7.034 11.596 8.55 11.658 1.518-.062 8.55-5.917 8.55-11.658 0-2.267-1.823-4.255-3.903-4.255-2.528 0-3.94 2.936-3.952 2.965-.23.562-1.156.562-1.387 0-.014-.03-1.425-2.965-3.954-2.965z"
+                    }
+                  ></path>
                 </g>
               </svg>
               <span>{nweetObj.like.length}</span>

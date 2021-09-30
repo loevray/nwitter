@@ -19,6 +19,21 @@
   display: flex;
 }
 
+.mouseOnNweet {
+  background-color: #f7f7f7;
+  padding: 1.5vh 1.5vh 1.5vh 1.5vh;
+  display: flex;
+  cursor: pointer;
+}
+
+.mouseOnImg {
+  filter: brightness(80%);
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 25px;
+}
+
 .nweet_left > img {
   width: 55px;
   height: 55px;
@@ -96,7 +111,7 @@
 }
 
 .nweet_menu:hover {
-  background-color: #eff3f4;
+  background-color: #e1eef7;
 }
 
 .nweet_drop_down {
