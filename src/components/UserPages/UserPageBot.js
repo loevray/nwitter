@@ -7,8 +7,13 @@ import GetUserLikeNweets from "./GetUserLikeNweets";
 
 const UserPageBot = ({ clickOn, userId, userObj }) => {
   const [strangerNweets, setStrangerNweets] = useState([]);
+  const [getData, setGetData] = useState(false);
   const [strangerLikeNweets, setStrangerLikeNweets] = useState([]);
   useEffect(() => {
+    console.log("유저페이지 봇");
+    if (getData) {
+      return;
+    }
     if (userId) {
       dbService
         .collection("nweets")
@@ -16,11 +21,14 @@ const UserPageBot = ({ clickOn, userId, userObj }) => {
         .orderBy("createdAt", "desc")
         .limit(5)
         .onSnapshot((snapshot) => {
-          const nweetsMap = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setStrangerNweets(nweetsMap);
+          if (snapshot) {
+            const nweetsMap = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setStrangerNweets(nweetsMap);
+            setGetData(true);
+          }
         });
     }
   });

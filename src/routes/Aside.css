@@ -102,12 +102,22 @@
   display: flex;
   flex-direction: column;
   width: 36.5vh;
-  height: 18.25vh;
   background-color: tomato;
 }
 
 .test1 > span {
-  padding-left: 5vh;
+  padding: 2vh 0vh 2vh 2vh;
+}
+
+.aside_left_search_user {
+  display: flex;
+  padding: 1vh 0vh 0vh 1vh;
+  height: 5vh;
+  background-color: gray;
+}
+
+.search_user_right {
+  padding-left: 1vh;
 }
 
 .aside_left_trend {

@@ -34,7 +34,6 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      setClickOn(false);
     };
   }, [edit, userObj]);
   return (

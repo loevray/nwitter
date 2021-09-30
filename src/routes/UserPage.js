@@ -18,7 +18,7 @@ const UserPage = ({ match, userObj }) => {
       setUserId(userId);
     }
     console.log("유저페이지가 렌더링함");
-  }, []);
+  }, [match.params.id]);
   return (
     <div className="profile">
       <UserPageTop

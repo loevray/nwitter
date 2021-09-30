@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 
-const Nweet = ({ nweetObj, isOwner }) => {
+const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
@@ -70,6 +70,11 @@ const Nweet = ({ nweetObj, isOwner }) => {
   };
   return (
     <div className="nweet_wrapper">
+      {isReNweet && (
+        <div className="nweet_renweet">
+          <span>{reNweeter}님이 리트윗 함</span>
+        </div>
+      )}
       <div className="nweet">
         <div className="nweet_left">
           <Link to={`/user/${nweetObj.createrId}`}>
