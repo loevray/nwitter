@@ -1,9 +1,9 @@
+import Nweet from "components/Nweets/Nweet";
 import { dbService } from "fbase";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import GetUserLikeNweets from "./GetUserLikeNweets";
-import GetUserNweets from "./GetUserNweets";
 
 const UserPageBot = ({ clickOn, userId, userObj }) => {
   const [strangerNweets, setStrangerNweets] = useState([]);
@@ -29,10 +29,10 @@ const UserPageBot = ({ clickOn, userId, userObj }) => {
       {!clickOn ? (
         <>
           {strangerNweets.map((strangerNweet) => (
-            <GetUserNweets
+            <Nweet
               key={strangerNweet.id}
-              strangerNweet={strangerNweet}
-              userId={userId}
+              nweetObj={strangerNweet}
+              isOwner={strangerNweet.createrId === userObj.uid}
               userObj={userObj}
             />
           ))}

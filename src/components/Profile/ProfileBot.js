@@ -1,8 +1,7 @@
+import Nweet from "components/Nweets/Nweet";
 import { dbService } from "fbase";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import GetMyNweets from "./GetMyNweets";
-import LikeNweet from "./LikeNweet";
 
 const ProfileBot = ({ userObj, clickOn }) => {
   const [myNweets, setMyNweets] = useState([]);
@@ -38,16 +37,22 @@ const ProfileBot = ({ userObj, clickOn }) => {
       {!clickOn ? (
         <>
           {myNweets.map((myNweet) => (
-            <GetMyNweets key={myNweet.id} myNweet={myNweet} userObj={userObj} />
+            <Nweet
+              key={myNweet.id}
+              nweetObj={myNweet}
+              userObj={userObj}
+              isOwner={myNweet.createrId === userObj.uid}
+            />
           ))}
         </>
       ) : (
         <>
           {likeNweets.map((likeNweet) => (
-            <LikeNweet
+            <Nweet
               key={likeNweet.id}
-              likeNweet={likeNweet}
+              nweetObj={likeNweet}
               userObj={userObj}
+              isOwner={likeNweet.createrId === userObj.uid}
             />
           ))}
         </>

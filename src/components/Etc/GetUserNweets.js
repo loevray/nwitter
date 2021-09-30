@@ -57,34 +57,6 @@ const GetUserNweets = ({ strangerNweet, userObj }) => {
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
   };
-  const onFollowBtnClick = async () => {
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
-    followingRef.get().then(async (doc) => {
-      const isFollowing = doc.data().following;
-      if (!isFollowing.includes(strangerNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayUnion(
-            `${strangerNweet.createrId}`,
-          ),
-        });
-        await dbService.doc(`userInfo/${strangerNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
-        });
-        alert("팔로우 성공!");
-      }
-      if (isFollowing.includes(strangerNweet.createrId, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayRemove(
-            `${strangerNweet.createrId}`,
-          ),
-        });
-        await dbService.doc(`userInfo/${strangerNweet.createrId}`).update({
-          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
-        });
-        alert("팔로우 해제!");
-      }
-    });
-  };
   const onMenuClick = () => {
     setMenuOn((prev) => !prev);
   };

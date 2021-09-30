@@ -1,8 +1,8 @@
-import Nweet from "components/Nweets/Nweet";
 import NweetFactory from "components/Nweets/NweetFactory";
 import { dbService } from "fbase";
 import React, { useEffect, useRef, useState } from "react";
 import "../css/Home.css";
+import NweetForm from "components/Nweets/NweetForm";
 
 const Home = ({ userObj }) => {
   const [nweets, setNweets] = useState([]);
@@ -93,7 +93,7 @@ const Home = ({ userObj }) => {
             <div className="nweets">
               {/* nweets에서 받아온 배열을 map으로 분해 및 텍스트 출력. */}
               {nweets.map((a_nweet) => (
-                <Nweet
+                <NweetForm
                   key={a_nweet.id}
                   nweetObj={a_nweet}
                   isOwner={a_nweet.createrId === userObj.uid}
