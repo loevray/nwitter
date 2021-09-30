@@ -117,7 +117,11 @@ const NweetFactory = ({ userObj }) => {
         </div>
         {attachment && (
           <div className="nweet_factory_attachmentImg">
-            <img src={attachment} alt="img" />
+            <img
+              className="nweet_factory_attachmentImg"
+              src={attachment}
+              alt="img"
+            />
             {/* <button onClick={onClearAttachment} >Clear</button> */}
           </div>
         )}

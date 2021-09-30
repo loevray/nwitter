@@ -42,7 +42,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     }
   };
   const onLikeBtnClick = async () => {
-    if (nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
+    if (nweetObj.like.includes(authService.currentUser.uid, 0)) {
       await dbService.doc(`nweets/${nweetObj.id}`).update({
         like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`),
       });

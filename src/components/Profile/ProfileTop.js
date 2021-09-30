@@ -34,6 +34,7 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      setClickOn(false);
     };
   }, [edit, userObj]);
   return (
@@ -89,9 +90,11 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
         <div className="profile_info_name">
           <span>{userObj.displayName}</span>
         </div>
-        <div className="profile_info_state">
-          <span>{stateMessage}</span>
-        </div>
+        {stateMessage && (
+          <div className="profile_info_state">
+            <span>{stateMessage}</span>
+          </div>
+        )}
         <div className="profile_info_creationtime">
           <span>{userObj.creationTime}</span>
         </div>
