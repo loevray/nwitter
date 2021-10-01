@@ -11,8 +11,7 @@ const Search = ({ userObj, match }) => {
     dbService
       .collection(`nweets`)
       .orderBy("createdAt", "desc")
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
         if (snapshot) {
           const allNweets = snapshot.docs.map((doc) => ({
             id: doc.id,

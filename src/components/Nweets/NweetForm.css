@@ -17,28 +17,11 @@
 .nweet {
   padding: 1.5vh 1.5vh 1.5vh 1.5vh;
   display: flex;
-}
-
-.mouseOnNweet {
-  background-color: #f7f7f7;
-  padding: 1.5vh 1.5vh 1.5vh 1.5vh;
-  display: flex;
   cursor: pointer;
 }
 
-.mouseOnImg {
-  filter: brightness(80%);
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-  border-radius: 25px;
-}
-
-.nweet_left > img {
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-  border-radius: 25px;
+.nweet:hover {
+  background-color: #f7f7f7;
 }
 
 .nweet_profile_img {
@@ -47,6 +30,10 @@
   object-fit: cover;
   border-radius: 25px;
   cursor: pointer;
+}
+
+.nweet_profile_img:hover {
+  filter: brightness(80%);
 }
 
 .nweet_right {
@@ -155,39 +142,34 @@
   display: flex;
 }
 
-.nweet_right_bottom_like:hover > svg,
 .nweet_right_bottom_reNweet:hover > svg {
   background-color: #def1eb;
   fill: #00ba7c;
 }
 
-.nweet_right_bottom_follow:hover > svg {
-  background-color: #def1eb;
-  stroke: #00ba7c;
+.nweet_right_bottom_like:hover > svg {
+  background-color: #f8e0eb;
 }
 
-.nweet_right_bottom_like > svg,
+.liked {
+  width: 2vh;
+  fill: #f9318d;
+}
+
+.unliked,
 .nweet_right_bottom_reNweet > svg {
   width: 2vh;
   fill: #536471;
 }
 
-.nweet_right_bottom_follow > svg {
-  width: 2vh;
-  fill: white;
-  stroke: #536471;
-}
-
 .nweet_right_bottom_like > svg,
-.nweet_right_bottom_reNweet > svg,
-.nweet_right_bottom_follow > svg {
+.nweet_right_bottom_reNweet > svg {
   padding: 0.7vh 0.7vh 0.7vh 0.7vh;
   border-radius: 50%;
 }
 
 .nweet_right_bottom_like > span,
-.nweet_right_bottom_reNweet > span,
-.nweet_right_bottom_follow > span {
+.nweet_right_bottom_reNweet > span {
   padding-top: 0.7vh;
   color: #536471;
   font-size: 1.5vh;

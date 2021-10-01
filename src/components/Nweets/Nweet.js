@@ -3,17 +3,20 @@ import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
+const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [isHashTag, setIsHashTag] = useState(false);
-  const [nweetMouseOn, setNweetMouseOn] = useState(false);
-  const [imgMouseOn, setImgMouseOn] = useState(false);
   const [Like, setLike] = useState(false);
+  const [isLike, setIsLike] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
   const history = useHistory();
   useEffect(() => {
-    console.log("render from Nweet.js", isLike);
+    const likeRef = nweetObj.like.includes(userObj.uid);
+    if (likeRef) {
+      setIsLike(true);
+    }
+    console.log("render from Nweet.js");
     let now = new Date().getTime();
     let second = Math.floor((now - nweetObj.createdAt[0]) / 1000);
     if (second > 2592000) {
@@ -36,7 +39,7 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
     if (nweetObj.hashTag != null) {
       setIsHashTag(true);
     }
-  }, [nweetObj]);
+  }, [nweetObj, isLike]);
   const onDeleteClick = async (e) => {
     e.stopPropagation();
     const ok = window.confirm("진짜 지울거임?ㅋ");
@@ -53,6 +56,7 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
       await dbService.doc(`nweets/${nweetObj.id}`).update({
         like: dbStore.FieldValue.arrayRemove(`${authService.currentUser.uid}`),
       });
+      setIsLike(false);
       return;
     }
     await dbService.doc(`nweets/${nweetObj.id}`).update({
@@ -81,19 +85,6 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
     const to = `/user/${nweetObj.createrId}/detail/${nweetObj.id}`;
     history.push(to);
   };
-  const onMouseEnter = (e) => {
-    if (e.target.nodeName === "IMG") {
-      setImgMouseOn(true);
-    }
-    setNweetMouseOn(true);
-  };
-  const onMouseLeave = (e) => {
-    if (e.target.nodeName === "IMG") {
-      setImgMouseOn((prev) => !prev);
-    } else {
-      setNweetMouseOn((prev) => !prev);
-    }
-  };
   const stopBubble = (e) => {
     e.stopPropagation();
   };
@@ -104,20 +95,13 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
           <span>{reNweeter}님이 리트윗 함</span>
         </div>
       )}
-      <div
-        className={nweetMouseOn ? "mouseOnNweet" : "nweet"}
-        onClick={onNweetClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
+      <div className="nweet" onClick={onNweetClick}>
         <div className="nweet_left">
           <Link to={`/user/${nweetObj.createrId}`} onClick={stopBubble}>
             <img
-              className={imgMouseOn ? "mouseOnImg" : "nweet_profile_img"}
+              className="nweet_profile_img"
               src={nweetObj.profile}
               alt="img"
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
             />
           </Link>
         </div>
@@ -168,7 +152,11 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, isLike }) => {
           </div>
           <div className="nweet_right_bottom">
             <div className="nweet_right_bottom_like" onClick={onLikeBtnClick}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                className={isLike ? "liked" : "unliked"}
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <g>
                   <path
                     d={

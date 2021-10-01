@@ -7,13 +7,7 @@ const NweetForm = ({ nweetObj, isOwner, userObj, followOnly }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isReNweet, setIsReNweet] = useState(false);
   const [reNweeter, setReNweeter] = useState("");
-  const [isLike, setIsLike] = useState(false);
   useEffect(() => {
-    const likeRef = nweetObj.like.includes(userObj.uid);
-    if (likeRef) {
-      setIsLike(true);
-      console.log(likeRef);
-    }
     const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
     followingRef.get().then(async (doc) => {
       const isFollowingRef = doc.data().following;
@@ -41,13 +35,12 @@ const NweetForm = ({ nweetObj, isOwner, userObj, followOnly }) => {
           isReNweet={isReNweet}
           nweetObj={nweetObj}
           isOwner={isOwner}
-          isLike={isLike}
           reNweeter={reNweeter}
         />
       ) : (
         //여기 아래부턴 전체공개
         !followOnly && (
-          <Nweet nweetObj={nweetObj} isOwner={isOwner} isLike={isLike} />
+          <Nweet nweetObj={nweetObj} isOwner={isOwner} userObj={userObj} />
         )
       )}
     </>
