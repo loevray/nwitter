@@ -15,7 +15,6 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     if (likeRef) {
       setIsLike(true);
     }
-    console.log("render from Nweet.js");
     let now = new Date().getTime();
     let second = Math.floor((now - nweetObj.createdAt[0]) / 1000);
     if (second > 2592000) {
@@ -33,10 +32,14 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     } else if (60 >= second) {
       setPostTime(`${second}초 전`);
     }
-    const userId = nweetObj.userEmail.split("@");
-    setUserId(userId);
+    const userIdCut = nweetObj.userEmail.split("@");
+    if (!userId) {
+      setUserId(userIdCut);
+    }
     if (nweetObj.hashTag != null) {
-      setIsHashTag(true);
+      if (!isHashTag) {
+        setIsHashTag(true);
+      }
     }
   }, []);
   const onDeleteClick = async (e) => {

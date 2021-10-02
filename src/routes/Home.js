@@ -5,6 +5,7 @@ import "../css/Home.css";
 import NweetForm from "components/Nweets/NweetForm";
 
 const Home = ({ userObj }) => {
+  console.log("Reredner from home");
   const [nweets, setNweets] = useState([]);
   const [followMenu, setFollowMenu] = useState(false);
   const [followOnly, setFollowOnly] = useState(false);
@@ -19,7 +20,9 @@ const Home = ({ userObj }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        setNweets(nweetInfoObj);
+        if (!nweetInfoObj) {
+          setNweets(nweetInfoObj);
+        }
       });
     const unsubscribe = dbService
       .collection("nweets")

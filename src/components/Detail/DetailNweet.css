@@ -26,14 +26,14 @@
   color: #536487;
 }
 
-.detail_nweet_img > img {
+.detail_nweet_profile > img {
   cursor: pointer;
   border-radius: 50%;
   width: 55px;
   height: 55px;
 }
 
-.detail_nweet_img > img:hover {
+.detail_nweet_profile > img:hover {
   filter: brightness(80%);
 }
 
@@ -50,6 +50,21 @@
   font-size: 2.5vh;
 }
 
+.detail_nweet_img {
+  padding-top: 1vh;
+  width: 100%;
+  height: 32vh;
+}
+
+.detail_nweet_img > img {
+  border: 0.5px solid #eff3f4;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 .detail_nweet_createdAt {
   color: #536487;
   font-size: 1.6vh;
@@ -60,7 +75,23 @@
 
 .detail_nweet_liked {
   padding: 2vh 0 2vh 0;
+  font-size: 1.6vh;
   border-bottom: 1px solid #eff3f4;
+}
+
+.detail_nweet_like_length :hover,
+.detail_nweet_liked_text:hover {
+  text-decoration: underline;
+}
+
+.detail_nweet_like_length {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.detail_nweet_liked_text {
+  cursor: pointer;
+  color: #536487;
 }
 
 .detail_nweet_btns {

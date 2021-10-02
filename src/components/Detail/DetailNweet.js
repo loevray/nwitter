@@ -16,7 +16,7 @@ const DetailNweet = ({ detailNweet }) => {
     <>
       <div className="detail_nweet">
         <div className="detail_nweet_top">
-          <div className="detail_nweet_img">
+          <div className="detail_nweet_profile">
             <img src={detailNweet.profile} alt="profile_img" />
           </div>
           <div className="detail_nweet_userInfo">
@@ -28,6 +28,11 @@ const DetailNweet = ({ detailNweet }) => {
           <div className="detail_nweet_content">
             <div className="detail_nweet_text">
               <span>{detailNweet.text}</span>
+            </div>
+            <div className="detail_nweet_img">
+              {detailNweet.attachmentUrl && (
+                <img src={detailNweet.attachmentUrl} alt="attach"></img>
+              )}
             </div>
             <div className="detail_nweet_createdAt">
               {detailNweet.createdAt && (
@@ -41,7 +46,7 @@ const DetailNweet = ({ detailNweet }) => {
                 <span className="detail_nweet_like_length">
                   {detailNweet.like.length}
                 </span>
-                <span className="detail_nweet_liked_text">마음에 들어요</span>
+                <span className="detail_nweet_liked_text"> 마음에 들어요</span>
               </>
             )}
           </div>
