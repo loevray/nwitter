@@ -29,11 +29,11 @@ const DetailNweet = ({ detailNweet }) => {
             <div className="detail_nweet_text">
               <span>{detailNweet.text}</span>
             </div>
-            <div className="detail_nweet_img">
-              {detailNweet.attachmentUrl && (
+            {detailNweet.attachmentUrl && (
+              <div className="detail_nweet_img">
                 <img src={detailNweet.attachmentUrl} alt="attach"></img>
-              )}
-            </div>
+              </div>
+            )}
             <div className="detail_nweet_createdAt">
               {detailNweet.createdAt && (
                 <span>{`${detailNweet.createdAt[4]}시 ${detailNweet.createdAt[5]}분 . ${detailNweet.createdAt[1]}년 ${detailNweet.createdAt[2]}월 ${detailNweet.createdAt[3]} 일`}</span>
