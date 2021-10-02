@@ -26,6 +26,18 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
           setStateMessage(stateMsg);
         }
       });
+    const unsubscribe = dbService
+      .collection("userInfo")
+      .doc(`${userObj.uid}`)
+      .onSnapshot((snapshot) => {
+        const { background, stateMsg } = snapshot.data();
+        if (background) {
+          setBackImg(background);
+        }
+        if (stateMsg) {
+          setStateMessage(stateMsg);
+        }
+      });
     const handleClickOutside = (event) => {
       if (edit && !editing.current.contains(event.target)) {
         setEdit(false);
@@ -33,6 +45,7 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      unsubscribe();
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [edit, userObj]);

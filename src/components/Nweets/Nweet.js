@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
+const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [isHashTag, setIsHashTag] = useState(false);
-  const [Like, setLike] = useState(false);
   const [isLike, setIsLike] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
@@ -39,7 +38,7 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     if (nweetObj.hashTag != null) {
       setIsHashTag(true);
     }
-  }, [nweetObj, isLike]);
+  }, []);
   const onDeleteClick = async (e) => {
     e.stopPropagation();
     const ok = window.confirm("진짜 지울거임?ㅋ");
@@ -62,6 +61,7 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     await dbService.doc(`nweets/${nweetObj.id}`).update({
       like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
+    setIsLike(true);
   };
   const onReNweetBtnClick = async (e) => {
     e.stopPropagation();
@@ -185,6 +185,6 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Nweet;

@@ -26,7 +26,7 @@ const NweetForm = ({ nweetObj, isOwner, userObj, followOnly }) => {
         }
       }
     });
-  }, [nweetObj, userObj]);
+  }, []);
   return (
     <>
       {/* 여기 아래는 팔로우 전용 */}
@@ -36,6 +36,7 @@ const NweetForm = ({ nweetObj, isOwner, userObj, followOnly }) => {
           nweetObj={nweetObj}
           isOwner={isOwner}
           reNweeter={reNweeter}
+          userObj={userObj}
         />
       ) : (
         //여기 아래부턴 전체공개

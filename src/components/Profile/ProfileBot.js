@@ -31,6 +31,34 @@ const ProfileBot = ({ userObj, clickOn }) => {
         }));
         setLikeNweets(nweetsMap);
       });
+    const unsubscribe = dbService
+      .collection("nweets")
+      .where("createrId", "==", userObj.uid)
+      .orderBy("createdAt", "desc")
+      .limit(5)
+      .onSnapshot((snapshot) => {
+        const nweetsMap = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMyNweets(nweetsMap);
+      });
+    const unsubscribe2 = dbService
+      .collection("nweets")
+      .where("like", "array-contains", userObj.uid)
+      .orderBy("createdAt", "desc")
+      .limit(5)
+      .onSnapshot((snapshot) => {
+        const nweetsMap = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setLikeNweets(nweetsMap);
+      });
+    return () => {
+      unsubscribe();
+      unsubscribe2();
+    };
   }, [userObj]);
   return (
     <>

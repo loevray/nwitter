@@ -13,7 +13,7 @@ import Verified from "routes/Verified";
 import { useEffect, useState } from "react";
 import Search from "routes/Search";
 import UserPage from "routes/UserPage";
-import NweetDetailPage from "./UserPages/NweetDetailPage";
+import NweetDetailPage from "./Detail/NweetDetailPage";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   const [verifying, setVeyrifying] = useState(false);
@@ -55,7 +55,9 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
             <Route
               exact
               path="/user/:id/detail/:postId"
-              render={(props) => <NweetDetailPage match={props.match} />}
+              render={(props) => (
+                <NweetDetailPage match={props.match} userObj={userObj} />
+              )}
             />
             <Route exact path="/profile">
               <Profile userObj={userObj} refreshUser={refreshUser} />

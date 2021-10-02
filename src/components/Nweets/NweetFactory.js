@@ -95,9 +95,6 @@ const NweetFactory = ({ userObj }) => {
   const onFileClick = (event) => {
     event.target.value = null;
   };
-  const aaaa = () => {
-    return;
-  };
   return (
     <>
       <div className="nweet_factory_right">
@@ -132,7 +129,6 @@ const NweetFactory = ({ userObj }) => {
             maxLength="80"
             id="put_text"
             value={nweet}
-            onChange={aaaa}
           />
           <div className="nweet_factory_form_bottom">
             <div className="nweet_factory_choose_img">
