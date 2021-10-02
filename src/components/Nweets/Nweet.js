@@ -11,6 +11,7 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [postTime, setPostTime] = useState("");
   const history = useHistory();
   useEffect(() => {
+    console.log("nweet");
     const likeRef = nweetObj.like.includes(userObj.uid);
     if (likeRef) {
       setIsLike(true);
@@ -41,10 +42,22 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
         setIsHashTag(true);
       }
     }
+    const menuOff = (event) => {
+      if (
+        !event.target.classList.contains("nweet_drop_down") &&
+        !event.target.classList.contains("nweet_delete_nweet")
+      ) {
+        setMenuOn(false);
+      }
+    };
+    document.body.addEventListener("mousedown", menuOff);
+    return () => {
+      document.body.removeEventListener("mousedown", menuOff);
+    };
   }, []);
   const onDeleteClick = async (e) => {
     e.stopPropagation();
-    const ok = window.confirm("진짜 지울거임?ㅋ");
+    const ok = window.confirm("정말 삭제하시겠습니까?(복구할 수 없습니다.)");
     if (ok) {
       await dbService.doc(`nweets/${nweetObj.id}`).delete();
       if (nweetObj.attachmentUrl !== "") {
@@ -126,9 +139,14 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
               </span>
               {menuOn && isOwner && (
                 <>
-                  <div className="nweet_drop_down">
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="nweet_drop_down"
+                  >
                     <div className="nweet_drop_menu" onClick={onDeleteClick}>
-                      <span className="nweet_delete_nweet">이 트윗 지우기</span>
+                      <span className="nweet_delete_nweet">
+                        이 트윗 삭제하기
+                      </span>
                     </div>
                   </div>
                 </>
