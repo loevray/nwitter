@@ -133,7 +133,7 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
                   {nweetObj.displayName}
                 </Link>
               </span>
-              <span className="nweet_info_userId">{userId[0]}</span>
+              <span className="nweet_info_userId">@{userId[0]}</span>
               <span className="block">·</span>
               <span className="nweet_info_timeAgo">{postTime}</span>
             </div>

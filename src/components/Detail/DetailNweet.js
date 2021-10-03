@@ -40,16 +40,14 @@ const DetailNweet = ({ detailNweet }) => {
               )}
             </div>
           </div>
-          <div className="detail_nweet_liked">
-            {detailNweet.like && detailNweet.like.length > 0 && (
-              <>
-                <span className="detail_nweet_like_length">
-                  {detailNweet.like.length}
-                </span>
-                <span className="detail_nweet_liked_text"> 마음에 들어요</span>
-              </>
-            )}
-          </div>
+          {detailNweet.like && detailNweet.like.length > 0 && (
+            <div className="detail_nweet_liked">
+              <span className="detail_nweet_like_length">
+                {detailNweet.like.length}
+              </span>
+              <span className="detail_nweet_liked_text"> 마음에 들어요</span>
+            </div>
+          )}
           <div className="detail_nweet_btns">
             <span>리트</span>
             <span>좋아</span>
