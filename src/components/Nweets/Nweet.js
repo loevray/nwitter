@@ -104,6 +104,10 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const stopBubble = (e) => {
     e.stopPropagation();
   };
+  const onIgnoreClick = (e) => {
+    e.stopPropagation();
+    console.log("무시하기 눌림");
+  };
   return (
     <div className="nweet_wrapper">
       {isReNweet && (
@@ -139,19 +143,41 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
               </span>
               {menuOn && isOwner && (
                 <>
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="nweet_drop_down"
-                  >
-                    <div className="nweet_drop_menu" onClick={onDeleteClick}>
-                      <span className="nweet_delete_nweet">
+                  <div onClick={stopBubble} className="nweet_drop_down">
+                    <div className="nweet_drop_menu">
+                      <span
+                        className="nweet_delete_nweet"
+                        onClick={onDeleteClick}
+                      >
                         이 트윗 삭제하기
+                      </span>
+                      <span className="nweet_delete_nweet">
+                        이 트윗 땡땡하기
                       </span>
                     </div>
                   </div>
                 </>
               )}
-              {menuOn && !isOwner && <button>이 유저에게 관심없음</button>}
+              {menuOn && !isOwner && (
+                <>
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="nweet_drop_down"
+                  >
+                    <div className="nweet_drop_menu">
+                      <span
+                        className="nweet_delete_nweet"
+                        onClick={onIgnoreClick}
+                      >
+                        이 트윗 관심 없음
+                      </span>
+                      <span className="nweet_delete_nweet">
+                        이 유저 차단하기
+                      </span>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="nweet_right_center">

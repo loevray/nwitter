@@ -103,8 +103,7 @@
 
 .nweet_drop_down {
   display: flex;
-  flex-direction: column;
-  z-index: 4;
+  z-index: 50;
   position: absolute;
   width: 25vh;
   height: 10vh;
@@ -129,15 +128,22 @@
 .nweet_drop_menu {
   font-size: 1.7vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: 50%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
   cursor: pointer;
 }
 
-.nweet_drop_menu:hover {
+.nweet_delete_nweet:hover {
   background-color: #f3f3f3;
+}
+
+.nweet_delete_nweet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .nweet_right_bottom {
