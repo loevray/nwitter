@@ -11,7 +11,6 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [postTime, setPostTime] = useState("");
   const history = useHistory();
   useEffect(() => {
-    console.log("nweet");
     const likeRef = nweetObj.like.includes(userObj.uid);
     if (likeRef) {
       setIsLike(true);

@@ -10,7 +10,6 @@ const DetailNweet = ({ detailNweet }) => {
       const emailCut = detailNweet.userEmail.split("@");
       setUserId(emailCut[0]);
     }
-    console.log(detailNweet);
   }, [detailNweet]);
   return (
     <>
@@ -36,7 +35,7 @@ const DetailNweet = ({ detailNweet }) => {
             )}
             <div className="detail_nweet_createdAt">
               {detailNweet.createdAt && (
-                <span>{`${detailNweet.createdAt[4]}시 ${detailNweet.createdAt[5]}분 . ${detailNweet.createdAt[1]}년 ${detailNweet.createdAt[2]}월 ${detailNweet.createdAt[3]} 일`}</span>
+                <span>{`${detailNweet.createdAt[4]}시 ${detailNweet.createdAt[5]}분 . ${detailNweet.createdAt[1]}년 ${detailNweet.createdAt[2]}월 ${detailNweet.createdAt[3]}일`}</span>
               )}
             </div>
           </div>

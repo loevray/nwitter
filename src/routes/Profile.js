@@ -4,7 +4,7 @@ import ProfileTop from "components/Profile/ProfileTop";
 import ProfileBot from "components/Profile/ProfileBot";
 import { useState } from "react";
 
-const Profile = ({ userObj, refreshUser }) => {
+const Profile = ({ userObj, refreshUser, match }) => {
   const [clickOn, setClickOn] = useState(false);
   // const [verified, setVeriFied] = useState(false);
   //  useEffect(() => {

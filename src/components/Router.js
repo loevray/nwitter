@@ -32,7 +32,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   }, [verifying]);
   return (
     <Router>
-      {isLoggedIn && notWatching && <Navigation userObj={userObj} />}
+      {isLoggedIn && notWatching && <Navigation />}
       <Switch>
         {verifying && (
           <Route exact path="/verifying">

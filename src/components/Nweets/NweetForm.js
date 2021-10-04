@@ -4,7 +4,6 @@ import "./NweetForm.css";
 import Nweet from "./Nweet";
 
 const NweetForm = React.memo(({ nweetObj, isOwner, userObj, followOnly }) => {
-  console.log("reder from nweetForm");
   const [isFollowing, setIsFollowing] = useState(false);
   const [isReNweet, setIsReNweet] = useState(false);
   const [reNweeter, setReNweeter] = useState("");

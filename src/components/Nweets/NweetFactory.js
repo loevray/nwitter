@@ -8,8 +8,21 @@ const NweetFactory = ({ userObj }) => {
   const [attachment, setAttachment] = useState("");
   const [nweetTyped, setNweetTyped] = useState(false);
   const [hashTag, setHashTag] = useState([]);
+  const [commentPage, setCommentPage] = useState(false);
   const fileInput = useRef();
   const nweetText = useRef();
+  useEffect(() => {
+    const putPathName = () => {
+      const pathName = window.location.hash;
+      const pathCut = pathName.split("/");
+      if (pathCut[3] === "detail" && commentPage === false) {
+        setCommentPage((prev) => !prev);
+        return;
+      }
+      setCommentPage((prev) => !prev);
+    };
+    window.addEventListener("hashchange", putPathName);
+  }, [commentPage]);
   useEffect(() => {
     const config = { characterData: true, childList: true, subtree: true };
     const callback = function (mutationList, observer) {
@@ -52,8 +65,8 @@ const NweetFactory = ({ userObj }) => {
       createdAt: [
         date.getTime(),
         date.getFullYear(),
-        date.getMonth(),
-        date.getDay(),
+        date.getMonth() + 1,
+        date.getDate(),
         date.getHours(),
         date.getMinutes(),
       ],
@@ -103,7 +116,9 @@ const NweetFactory = ({ userObj }) => {
       <div className="nweet_factory_right">
         <div className="nweet_factory_nweet_wrapper">
           <div className={nweetTyped ? "hidden placeholder" : "placeholder"}>
-            무슨 일이 일어나고 있나요?
+            {commentPage
+              ? "내 답글을 트윗합니다"
+              : "무슨 일이 일어나고 있나요?"}
           </div>
           <span
             className="nweet_factory_nweet_text"
@@ -128,7 +143,7 @@ const NweetFactory = ({ userObj }) => {
         <form onSubmit={onSubmit} className="nweet_factory_form">
           <textarea
             className="nweet_factory_nweet_input hidden"
-            placeholder="무슨일?"
+            placeholder="트윗"
             maxLength="80"
             id="put_text"
             value={nweet}
