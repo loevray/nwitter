@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/nwitter/static/css/main.afdb0ca5.chunk.css",
-    "main.js": "/nwitter/static/js/main.fb6530ba.chunk.js",
-    "main.js.map": "/nwitter/static/js/main.fb6530ba.chunk.js.map",
+    "main.css": "/nwitter/static/css/main.79d0613c.chunk.css",
+    "main.js": "/nwitter/static/js/main.03b069de.chunk.js",
+    "main.js.map": "/nwitter/static/js/main.03b069de.chunk.js.map",
     "runtime-main.js": "/nwitter/static/js/runtime-main.12f59089.js",
     "runtime-main.js.map": "/nwitter/static/js/runtime-main.12f59089.js.map",
     "static/js/2.45e12eb0.chunk.js": "/nwitter/static/js/2.45e12eb0.chunk.js",
     "static/js/2.45e12eb0.chunk.js.map": "/nwitter/static/js/2.45e12eb0.chunk.js.map",
     "index.html": "/nwitter/index.html",
-    "static/css/main.afdb0ca5.chunk.css.map": "/nwitter/static/css/main.afdb0ca5.chunk.css.map",
+    "static/css/main.79d0613c.chunk.css.map": "/nwitter/static/css/main.79d0613c.chunk.css.map",
     "static/js/2.45e12eb0.chunk.js.LICENSE.txt": "/nwitter/static/js/2.45e12eb0.chunk.js.LICENSE.txt",
     "static/media/home_black.c97d3f1a.svg": "/nwitter/static/media/home_black.c97d3f1a.svg",
     "static/media/home_white.cd86f23a.svg": "/nwitter/static/media/home_white.cd86f23a.svg",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.12f59089.js",
     "static/js/2.45e12eb0.chunk.js",
-    "static/css/main.afdb0ca5.chunk.css",
-    "static/js/main.fb6530ba.chunk.js"
+    "static/css/main.79d0613c.chunk.css",
+    "static/js/main.03b069de.chunk.js"
   ]
 }
