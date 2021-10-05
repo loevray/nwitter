@@ -7,22 +7,19 @@ const NweetFactory = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
   const [attachment, setAttachment] = useState("");
   const [nweetTyped, setNweetTyped] = useState(false);
-  const [hashTag, setHashTag] = useState([]);
   const [commentPage, setCommentPage] = useState(false);
+  const [hashTag, setHashTag] = useState([]);
   const fileInput = useRef();
   const nweetText = useRef();
-  useEffect(() => {
-    const putPathName = () => {
-      const pathName = window.location.hash;
-      const pathCut = pathName.split("/");
-      if (pathCut[3] === "detail" && commentPage === false) {
-        setCommentPage((prev) => !prev);
-        return;
-      }
+  const putPathName = () => {
+    const pathName = window.location.hash;
+    const pathCut = pathName.split("/");
+    if (pathCut[3] === "detail" && commentPage === false) {
       setCommentPage((prev) => !prev);
-    };
-    window.addEventListener("hashchange", putPathName);
-  }, [commentPage]);
+      return;
+    }
+  };
+  window.addEventListener("hashchange", putPathName);
   useEffect(() => {
     const config = { characterData: true, childList: true, subtree: true };
     const callback = function (mutationList, observer) {
@@ -37,8 +34,16 @@ const NweetFactory = ({ userObj }) => {
           }
           setNweet(deleteHash);
           setNweetTyped(true);
-        } else if (nweetText.current.innerText === "") {
+        }
+        if (nweetText.current.innerText === "") {
           setNweetTyped(false);
+        }
+        if (mutation.type === "childList") {
+          if (nweetText.current.hasChildNodes()) {
+            setNweetTyped(true);
+          } else {
+            setNweetTyped(false);
+          }
         }
       }
     };
@@ -78,8 +83,11 @@ const NweetFactory = ({ userObj }) => {
       profile: userObj.photoURL,
       displayName: userObj.displayName,
       userEmail: userObj.email,
+      depth: 0,
     };
-    await dbService.collection("nweets").add(nweetObj);
+    if (!commentPage) {
+      await dbService.collection("nweets").add(nweetObj);
+    }
     setNweet("");
     setAttachment("");
     setHashTag("");
@@ -123,6 +131,7 @@ const NweetFactory = ({ userObj }) => {
           <span
             className="nweet_factory_nweet_text"
             role="textbox"
+            aria-multiline="true"
             contentEditable="true"
             suppressContentEditableWarning="true"
             maxLength="80"
@@ -176,7 +185,7 @@ const NweetFactory = ({ userObj }) => {
                   : "nweet_factory_nweet_off"
               }
               type="submit"
-              value="트윗하기"
+              value={commentPage ? "답글" : "트윗하기"}
             />
           </div>
         </form>

@@ -201,7 +201,7 @@
 
 .nweet_content {
   padding-bottom: 1vh;
-  white-space: normal;
+  white-space: pre-line;
   word-break: break-all;
 }
 
