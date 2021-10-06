@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj }) => {
+const NweetFactory = ({ userObj, depthRef, docId }) => {
   const [nweet, setNweet] = useState("");
   const [attachment, setAttachment] = useState("");
   const [nweetTyped, setNweetTyped] = useState(false);
@@ -15,7 +15,7 @@ const NweetFactory = ({ userObj }) => {
     const pathName = window.location.hash;
     const pathCut = pathName.split("/");
     if (pathCut[3] === "detail" && commentPage === false) {
-      setCommentPage((prev) => !prev);
+      setCommentPage(true);
       return;
     }
   };
@@ -83,11 +83,10 @@ const NweetFactory = ({ userObj }) => {
       profile: userObj.photoURL,
       displayName: userObj.displayName,
       userEmail: userObj.email,
-      depth: 0,
+      depth: commentPage ? depthRef + 1 : 0,
+      docId: commentPage ? docId : 0,
     };
-    if (!commentPage) {
-      await dbService.collection("nweets").add(nweetObj);
-    }
+    await dbService.collection("nweets").add(nweetObj);
     setNweet("");
     setAttachment("");
     setHashTag("");

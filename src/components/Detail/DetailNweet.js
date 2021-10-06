@@ -1,24 +1,32 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useHistory } from "react-router";
 import "./DetailNweet.css";
 
-const DetailNweet = ({ detailNweet }) => {
+const DetailNweet = ({ detailNweet, match }) => {
   const [userId, setUserId] = useState("");
+  const history = useHistory();
   useEffect(() => {
     if (detailNweet.userEmail) {
       const emailCut = detailNweet.userEmail.split("@");
       setUserId(emailCut[0]);
     }
   }, [detailNweet]);
+  const onClick = () => {
+    if (match.params.id) {
+      const to = match.params.id;
+      history.push(`/user/${to}`);
+    }
+  };
   return (
     <>
       <div className="detail_nweet">
         <div className="detail_nweet_top">
-          <div className="detail_nweet_profile">
+          <div className="detail_nweet_profile" onClick={onClick}>
             <img src={detailNweet.profile} alt="profile_img" />
           </div>
-          <div className="detail_nweet_userInfo">
+          <div className="detail_nweet_userInfo" onClick={onClick}>
             <span className="detail_nweet_nick">{detailNweet.displayName}</span>
             <span className="detail_nweet_userId">@{userId}</span>
           </div>

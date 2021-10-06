@@ -19,7 +19,7 @@ const Home = ({ userObj }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        if (!nweetInfoObj) {
+        if (nweetInfoObj) {
           setNweets(nweetInfoObj);
         }
       });
@@ -112,6 +112,7 @@ const Home = ({ userObj }) => {
                   isOwner={a_nweet.createrId === userObj.uid}
                   userObj={userObj}
                   followOnly={followOnly}
+                  isDepthEqual={a_nweet.depth === 0}
                 />
               ))}
             </div>
