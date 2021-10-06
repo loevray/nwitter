@@ -67,6 +67,8 @@ const NweetDetailPage = ({ match, userObj }) => {
                 nweetObj={_comment}
                 isOwner={_comment.createrId === userObj.uid}
                 userObj={userObj}
+                postUser={detailNweet.userEmail}
+                postUserId={detailNweet.createrId}
               />
             ))}
         </div>
