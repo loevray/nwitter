@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import { ReactComponent as CommentWhite } from "svg/comment_white.svg";
 
 const Nweet = memo(
   ({
@@ -19,8 +20,18 @@ const Nweet = memo(
     const [userId, setUserId] = useState("");
     const [commentId, setCommentId] = useState("");
     const [postTime, setPostTime] = useState("");
+    const [commentSize, setCommentSize] = useState(0);
     const history = useHistory();
     useEffect(() => {
+      const commentRef = dbService
+        .collection("nweets")
+        .where("docId", "==", `${nweetObj.id}`);
+      commentRef.onSnapshot((doc) => {
+        const snap = doc.size;
+        if (snap > 0) {
+          setCommentSize(snap);
+        }
+      });
       const likeRef = nweetObj.like.includes(userObj.uid);
       if (likeRef) {
         setIsLike(true);
@@ -223,6 +234,10 @@ const Nweet = memo(
               )}
             </div>
             <div className="nweet_right_bottom">
+              <div className="nweet_right_bottom_comment">
+                <CommentWhite />
+                <span>{commentSize}</span>
+              </div>
               <div className="nweet_right_bottom_like" onClick={onLikeBtnClick}>
                 <svg
                   className={isLike ? "liked" : "unliked"}
