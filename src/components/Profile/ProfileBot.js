@@ -9,6 +9,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
   const [mediaNweets, setMeidaNweets] = useState([]);
   const [likeNweets, setLikeNweets] = useState([]);
   useEffect(() => {
+    //트윗db
     dbService
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
@@ -23,6 +24,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
         console.log("트윗만", nweetsMap);
         setMyNweets(nweetsMap);
       });
+    //트윗 및 답글db
     dbService
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
@@ -36,6 +38,22 @@ const ProfileBot = ({ userObj, clickOn }) => {
         console.log("트윗 및 답글까지", nweetsMap);
         setMyNweetsAndComment(nweetsMap);
       });
+    //미디어 db
+    dbService
+      .collection("nweets")
+      .where("createrId", "==", userObj.uid)
+      .where("attachmentUrl", "!=", "")
+      .orderBy("attachmentUrl", "desc")
+      .orderBy("createdAt", "desc")
+      .limit(5)
+      .onSnapshot((snapshot) => {
+        const nweetsMap = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMeidaNweets(nweetsMap);
+      });
+    //마음에 들어요 db
     dbService
       .collection("nweets")
       .where("like", "array-contains", userObj.uid)
@@ -47,19 +65,6 @@ const ProfileBot = ({ userObj, clickOn }) => {
           ...doc.data(),
         }));
         setLikeNweets(nweetsMap);
-      });
-    dbService
-      .collection("nweets")
-      .where("attachmentUrl", "!=", "")
-      .orderBy("attachmentUrl", "desc")
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .onSnapshot((snapshot) => {
-        const nweetsMap = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMeidaNweets(nweetsMap);
       });
     const unsubscribe = dbService
       .collection("nweets")
@@ -97,12 +102,27 @@ const ProfileBot = ({ userObj, clickOn }) => {
         }));
         setMyNweetsAndComment(nweetsMap);
       });
+    const unsubscribe4 = dbService
+      .collection("nweets")
+      .where("createrId", "==", userObj.uid)
+      .where("attachmentUrl", "!=", "")
+      .orderBy("attachmentUrl", "desc")
+      .orderBy("createdAt", "desc")
+      .limit(5)
+      .onSnapshot((snapshot) => {
+        const nweetsMap = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMeidaNweets(nweetsMap);
+      });
     return () => {
       unsubscribe();
       unsubscribe2();
       unsubscribe3();
+      unsubscribe4();
     };
-  }, [userObj]);
+  }, []);
   return (
     <>
       {clickOn.nweet &&

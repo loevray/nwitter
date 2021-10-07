@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const Profile = ({ userObj, refreshUser }) => {
   const [clickOn, setClickOn] = useState({
-    nweet: false,
+    nweet: true,
     nweetComment: false,
     media: false,
     like: false,
