@@ -28,7 +28,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
       .orderBy("createdAt", "desc")
-      .limit(2)
+      .limit(5)
       .onSnapshot((snapshot) => {
         const nweetsMap = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -64,6 +64,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
         }));
         setLikeNweets(nweetsMap);
       });
+    //트윗db 구독해제
     const unsubscribe = dbService
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
@@ -78,11 +79,12 @@ const ProfileBot = ({ userObj, clickOn }) => {
         console.log("트윗만", nweetsMap);
         setMyNweets(nweetsMap);
       });
+    //트윗 및 답글db 구독해제
     const unsubscribe2 = dbService
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
       .orderBy("createdAt", "desc")
-      .limit(2)
+      .limit(5)
       .onSnapshot((snapshot) => {
         const nweetsMap = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -90,6 +92,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
         }));
         setMyNweetsAndComment(nweetsMap);
       });
+    //미디어db 구독해제
     const unsubscribe3 = dbService
       .collection("nweets")
       .where("createrId", "==", userObj.uid)
@@ -104,6 +107,7 @@ const ProfileBot = ({ userObj, clickOn }) => {
         }));
         setMeidaNweets(nweetsMap);
       });
+    //마음에 들어요db 구독해제
     const unsubscribe4 = dbService
       .collection("nweets")
       .where("like", "array-contains", userObj.uid)
