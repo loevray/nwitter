@@ -57,6 +57,10 @@ const NweetDetailPage = ({ match, userObj }) => {
             userObj={userObj}
             depthRef={detailNweet.depth}
             docId={match.params.postId}
+            commentUserId={
+              detailNweet.userEmail && detailNweet.userEmail.split("@")
+            }
+            commentUserUid={detailNweet.createrId}
           />
         </div>
         <div className="home_center_bottom">
@@ -67,8 +71,6 @@ const NweetDetailPage = ({ match, userObj }) => {
                 nweetObj={_comment}
                 isOwner={_comment.createrId === userObj.uid}
                 userObj={userObj}
-                postUser={detailNweet.userEmail}
-                postUserId={detailNweet.createrId}
               />
             ))}
         </div>

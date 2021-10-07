@@ -10,8 +10,41 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
   const onClick = () => {
     setEdit(true);
   };
-  const onLikeListClick = () => {
-    setClickOn((prev) => !prev);
+  const onMenuListClick = (e) => {
+    switch (e.target.innerText) {
+      case "트윗":
+        setClickOn({
+          nweet: true,
+          nweetComment: false,
+          media: false,
+          like: false,
+        });
+        break;
+      case "트윗 및 답글":
+        setClickOn({
+          nweet: false,
+          nweetComment: true,
+          media: false,
+          like: false,
+        });
+        break;
+      case "미디어":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: true,
+          like: false,
+        });
+        break;
+      case "마음에 들어요":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: false,
+          like: true,
+        });
+        break;
+    }
   };
   useEffect(() => {
     dbService
@@ -110,11 +143,15 @@ const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
         <div className="profile_info_creationtime">
           <span>{userObj.creationTime}</span>
         </div>
-        <div onClick={onLikeListClick} className="profile_menu_bar">
-          <span className={!clickOn ? "click_on" : "click_off"}>
-            내가 한 트윗
+        <div onClick={onMenuListClick} className="profile_menu_bar">
+          <span className={clickOn.nweet ? "click_on" : "click_off"}>트윗</span>
+          <span className={clickOn.nweetComment ? "click_on" : "click_off"}>
+            트윗 및 답글
           </span>
-          <span className={clickOn ? "click_on" : "click_off"}>
+          <span className={clickOn.media ? "click_on" : "click_off"}>
+            미디어
+          </span>
+          <span className={clickOn.like ? "click_on" : "click_off"}>
             마음에 들어요
           </span>
         </div>

@@ -3,7 +3,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./NweetFactory.css";
 
-const NweetFactory = ({ userObj, depthRef, docId }) => {
+const NweetFactory = ({
+  userObj,
+  depthRef,
+  docId,
+  commentUserId,
+  commentUserUid,
+}) => {
   const [nweet, setNweet] = useState("");
   const [attachment, setAttachment] = useState("");
   const [nweetTyped, setNweetTyped] = useState(false);
@@ -84,7 +90,9 @@ const NweetFactory = ({ userObj, depthRef, docId }) => {
       displayName: userObj.displayName,
       userEmail: userObj.email,
       depth: commentPage ? depthRef + 1 : 0,
-      docId: commentPage ? docId : 0,
+      docId: commentPage && docId,
+      commentUserId: commentPage && commentUserId[0],
+      commentUserUid: commentPage && commentUserUid,
     };
     await dbService.collection("nweets").add(nweetObj);
     setNweet("");
