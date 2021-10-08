@@ -35,7 +35,6 @@ const UserPageTop = ({
         setFollowing(true);
       }
     });
-    console.log("유저페이지탑이 렌더함");
   });
   const onMenuListClick = (e) => {
     switch (e.target.innerText) {

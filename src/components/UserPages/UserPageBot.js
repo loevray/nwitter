@@ -9,8 +9,8 @@ const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
   const [userNweetsComment, setUserNweetsComment] = useState([]);
   const [mediaNweets, setMeidaNweets] = useState([]);
   const [likeNweets, setLikeNweets] = useState([]);
+  const [data, setData] = useState(false);
   useEffect(() => {
-    console.log("유저페이지 봇", userIdPath);
     //트윗db
     dbService
       .collection("nweets")
@@ -32,11 +32,16 @@ const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
       .orderBy("createdAt", "desc")
       .limit(5)
       .onSnapshot((snapshot) => {
-        const nweetsMap = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setUserNweetsComment(nweetsMap);
+        if (snapshot) {
+          const nweetsMap = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setUserNweetsComment(nweetsMap);
+          if (!data) {
+            setData(true);
+          }
+        }
       });
     //미디어 db
     dbService
@@ -66,48 +71,54 @@ const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
         }));
         setLikeNweets(nweetsMap);
       });
-  }, [userIdPath]);
+  }, [data]);
   return (
     <>
-      {clickOn.nweet &&
-        userNweets.map((_userNweet) => (
-          <Nweet
-            key={_userNweet.id}
-            nweetObj={_userNweet}
-            userObj={userObj}
-            isOwner={_userNweet.createrId === userObj.uid}
-          />
-        ))}
+      {data ? (
+        <>
+          {clickOn.nweet &&
+            userNweets.map((_userNweet) => (
+              <Nweet
+                key={_userNweet.id}
+                nweetObj={_userNweet}
+                userObj={userObj}
+                isOwner={_userNweet.createrId === userObj.uid}
+              />
+            ))}
 
-      {clickOn.nweetComment &&
-        userNweetsComment.map((_userNweetsComment) => (
-          <Nweet
-            key={_userNweetsComment.id}
-            nweetObj={_userNweetsComment}
-            userObj={userObj}
-            isOwner={_userNweetsComment.createrId === userObj.uid}
-          />
-        ))}
+          {clickOn.nweetComment &&
+            userNweetsComment.map((_userNweetsComment) => (
+              <Nweet
+                key={_userNweetsComment.id}
+                nweetObj={_userNweetsComment}
+                userObj={userObj}
+                isOwner={_userNweetsComment.createrId === userObj.uid}
+              />
+            ))}
 
-      {clickOn.media &&
-        mediaNweets.map((_mediaNweets) => (
-          <Nweet
-            key={_mediaNweets.id}
-            nweetObj={_mediaNweets}
-            userObj={userObj}
-            isOwner={_mediaNweets.createrId === userObj.uid}
-          />
-        ))}
+          {clickOn.media &&
+            mediaNweets.map((_mediaNweets) => (
+              <Nweet
+                key={_mediaNweets.id}
+                nweetObj={_mediaNweets}
+                userObj={userObj}
+                isOwner={_mediaNweets.createrId === userObj.uid}
+              />
+            ))}
 
-      {clickOn.like &&
-        likeNweets.map((_likeNweet) => (
-          <Nweet
-            key={_likeNweet.id}
-            nweetObj={_likeNweet}
-            userObj={userObj}
-            isOwner={_likeNweet.createrId === userObj.uid}
-          />
-        ))}
+          {clickOn.like &&
+            likeNweets.map((_likeNweet) => (
+              <Nweet
+                key={_likeNweet.id}
+                nweetObj={_likeNweet}
+                userObj={userObj}
+                isOwner={_likeNweet.createrId === userObj.uid}
+              />
+            ))}
+        </>
+      ) : (
+        <div>로딩중</div>
+      )}
     </>
   );
 };
