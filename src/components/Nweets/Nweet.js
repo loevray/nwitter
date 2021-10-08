@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";

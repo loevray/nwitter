@@ -1,34 +1,41 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useHistory } from "react-router";
 import "./UserPage.css";
+import "../css/Profile.css";
 import UserPageTop from "components/UserPages/UserPageTop";
 import UserPageBot from "components/UserPages/UserPageBot";
 
-const UserPage = ({ match, userObj }) => {
-  const [userId, setUserId] = useState("");
-  const [clickOn, setClickOn] = useState(false);
-  const history = useHistory();
+const UserPage = ({ match, userObj, refreshUser }) => {
+  const [userIdPath, setUserIdPath] = useState("");
+  const [clickOn, setClickOn] = useState({
+    nweet: true,
+    nweetComment: false,
+    media: false,
+    like: false,
+  });
   useEffect(() => {
     if (match.params.id) {
-      if (match.params.id === userObj.uid) {
-        history.push("/profile");
-      }
       const userId = match.params.id;
-      setUserId(userId);
+      setUserIdPath(userId);
     }
     console.log("유저페이지가 렌더링함");
   }, [match.params.id]);
   return (
     <div className="profile">
       <UserPageTop
-        userId={userId}
+        userIdPath={userIdPath}
         clickOn={clickOn}
         setClickOn={setClickOn}
         userObj={userObj}
+        isMyProfile={userIdPath === userObj.uid}
+        refreshUser={refreshUser}
       />
       <div className="profile_bottom">
-        <UserPageBot userId={userId} clickOn={clickOn} userObj={userObj} />
+        <UserPageBot
+          userIdPath={userIdPath}
+          clickOn={clickOn}
+          userObj={userObj}
+        />
       </div>
     </div>
   );

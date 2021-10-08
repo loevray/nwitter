@@ -9,21 +9,21 @@ import { ReactComponent as HomeBlack } from "../svg/home_black.svg";
 import { ReactComponent as Profilewhite } from "../svg/profile_white.svg";
 import { ReactComponent as ProfileBlack } from "../svg/profile_black.svg";
 
-const Navigation = () => {
+const Navigation = ({ userObj }) => {
   const [path, setPath] = useState({
     home: true,
-    profile: false,
+    user: false,
   });
   const history = useHistory();
   useEffect(() => {
     const putPathName = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");
-      if (pathCut[1] === "profile") {
-        setPath({ home: false, profile: true });
+      if (pathCut[1] === "user") {
+        setPath({ home: false, user: true });
       }
       if (pathCut[1] === "home") {
-        setPath({ home: true, profile: false });
+        setPath({ home: true, user: false });
       }
     };
     window.addEventListener("hashchange", putPathName);
@@ -63,13 +63,13 @@ const Navigation = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/profile">
+                <Link to={`/user/${userObj.uid}`}>
                   <div className="nav_profile_wrapper">
                     <div className="nav_profile">
-                      {path.profile ? <ProfileBlack /> : <Profilewhite />}
+                      {path.user ? <ProfileBlack /> : <Profilewhite />}
                       <span
                         className="nav_menu_text_profile"
-                        style={path.profile ? { fontWeight: "bold" } : null}
+                        style={path.user ? { fontWeight: "bold" } : null}
                       >
                         프로필
                       </span>

@@ -1,6 +1,6 @@
 import { dbService } from "fbase";
 import React, { useEffect, useRef, useState } from "react";
-import EditProfile from "./EditProfile";
+import EditProfile from "../EditProfile";
 
 const ProfileTop = ({ userObj, refreshUser, clickOn, setClickOn }) => {
   const [edit, setEdit] = useState(false);

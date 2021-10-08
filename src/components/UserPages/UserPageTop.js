@@ -1,40 +1,97 @@
+import EditProfile from "components/EditProfile";
 import { dbService, dbStore } from "fbase";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 
-const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
+const UserPageTop = ({
+  userIdPath,
+  clickOn,
+  setClickOn,
+  userObj,
+  isMyProfile,
+  refreshUser,
+}) => {
   const [userInfo, setUserInfo] = useState();
   const [following, setFollowing] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [stateMessage, setStateMessage] = useState("");
+  const editing = useRef();
   useEffect(() => {
-    if (userId && userInfo === undefined) {
+    if (userIdPath && !userInfo) {
       const userInfoRef = dbService.collection("userInfo");
-      const query = userInfoRef.doc(`${userId}`);
+      const query = userInfoRef.doc(`${userIdPath}`);
       query.get().then((doc) => {
         const data = doc.data();
         setUserInfo(data);
+        if (data.stateMsg) {
+          setStateMessage(data.stateMsg);
+        }
       });
     }
     const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
     followingRef.get().then(async (doc) => {
       const isFollowing = doc.data().following;
-      if (isFollowing.includes(userId, 0)) {
+      if (isFollowing.includes(userIdPath, 0)) {
         setFollowing(true);
       }
     });
     console.log("유저페이지탑이 렌더함");
   });
-  const onLikeListClick = () => {
-    setClickOn((prev) => !prev);
+  const onMenuListClick = (e) => {
+    switch (e.target.innerText) {
+      case "트윗":
+        setClickOn({
+          nweet: true,
+          nweetComment: false,
+          media: false,
+          like: false,
+        });
+        break;
+      case "트윗 및 답글":
+        setClickOn({
+          nweet: false,
+          nweetComment: true,
+          media: false,
+          like: false,
+        });
+        break;
+      case "미디어":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: true,
+          like: false,
+        });
+        break;
+      case "마음에 들어요":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: false,
+          like: true,
+        });
+        break;
+      default:
+        setClickOn({
+          nweet: true,
+          nweetComment: false,
+          media: false,
+          like: false,
+        });
+    }
+  };
+  const onProfileUpdateClick = () => {
+    setEdit(true);
   };
   const onFollowBtnClick = async () => {
     const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
     followingRef.get().then(async (doc) => {
       const isFollowing = doc.data().following;
-      if (!isFollowing.includes(userId, 0)) {
+      if (!isFollowing.includes(userIdPath, 0)) {
         await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayUnion(`${userId}`),
+          following: dbStore.FieldValue.arrayUnion(`${userIdPath}`),
         });
-        await dbService.doc(`userInfo/${userId}`).update({
+        await dbService.doc(`userInfo/${userIdPath}`).update({
           follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
         });
         setFollowing(true);
@@ -42,9 +99,9 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
       }
       if (following) {
         await dbService.doc(`userInfo/${userObj.uid}`).update({
-          following: dbStore.FieldValue.arrayRemove(`${userId}`),
+          following: dbStore.FieldValue.arrayRemove(`${userIdPath}`),
         });
-        await dbService.doc(`userInfo/${userId}`).update({
+        await dbService.doc(`userInfo/${userIdPath}`).update({
           follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
         });
         setFollowing(false);
@@ -57,6 +114,18 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
       {userInfo ? (
         <div className="profile_top">
           <div className="profile_top_top">
+            {edit && (
+              <div className="edit_profile_modal_wrapper">
+                <div className="edit_profile_modal" ref={editing}>
+                  <EditProfile
+                    userObj={userObj}
+                    refreshUser={refreshUser}
+                    setEdit={setEdit}
+                    stateMessage={stateMessage}
+                  />
+                </div>
+              </div>
+            )}
             <div className="profile_img_wrapper1">
               <div className="profile_img_wrapper">
                 <div className="profile_img_circle">
@@ -92,23 +161,29 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
           </div>
           <div className="profile_top_bottom">
             <div className="profile_edit_wrapper">
-              <div className="profile_following">
-                {!following ? (
-                  <span
-                    onClick={onFollowBtnClick}
-                    className="profile_following_false"
-                  >
-                    팔로잉
-                  </span>
-                ) : (
-                  <span
-                    onClick={onFollowBtnClick}
-                    className="profile_following_true"
-                  >
-                    팔로우 해제
-                  </span>
-                )}
-              </div>
+              {isMyProfile ? (
+                <div className="profile_edit">
+                  <span onClick={onProfileUpdateClick}>프로필 수정</span>
+                </div>
+              ) : (
+                <div className="profile_following">
+                  {!following ? (
+                    <span
+                      onClick={onFollowBtnClick}
+                      className="profile_following_false"
+                    >
+                      팔로잉
+                    </span>
+                  ) : (
+                    <span
+                      onClick={onFollowBtnClick}
+                      className="profile_following_true"
+                    >
+                      팔로우 해제
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
             <div className="profile_info_name">
               <span>{userInfo.displayName}</span>
@@ -126,9 +201,17 @@ const UserPageTop = ({ userId, clickOn, setClickOn, userObj }) => {
               </span>
               <span>팔로워</span>
             </div>
-            <div onClick={onLikeListClick} className="profile_menu_bar">
-              <span className={!clickOn ? "click_on" : "click_off"}>트윗</span>
-              <span className={clickOn ? "click_on" : "click_off"}>
+            <div onClick={onMenuListClick} className="profile_menu_bar">
+              <span className={clickOn.nweet ? "click_on" : "click_off"}>
+                트윗
+              </span>
+              <span className={clickOn.nweetComment ? "click_on" : "click_off"}>
+                트윗 및 답글
+              </span>
+              <span className={clickOn.media ? "click_on" : "click_off"}>
+                미디어
+              </span>
+              <span className={clickOn.like ? "click_on" : "click_off"}>
                 마음에 들어요
               </span>
             </div>

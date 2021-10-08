@@ -4,7 +4,6 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Profile from "routes/Profile";
 import Home from "../routes/Home";
 import FirstScreen from "../routes/FirstScreen";
 import Navigation from "../routes/Navigation";
@@ -20,11 +19,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   const [notWatching, setNotWatching] = useState(true);
   useEffect(() => {
     const emailsended = JSON.parse(window.localStorage.getItem("sendMail"));
-    if (
-      emailsended === null ||
-      emailsended === undefined ||
-      emailsended === false
-    ) {
+    if (!emailsended) {
       return;
     } else {
       setVeyrifying(true);
@@ -32,7 +27,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   }, [verifying]);
   return (
     <Router>
-      {isLoggedIn && notWatching && <Navigation />}
+      {isLoggedIn && notWatching && <Navigation userObj={userObj} />}
       <Switch>
         {verifying && (
           <Route exact path="/verifying">
@@ -49,7 +44,11 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
               exact
               path="/user/:id"
               render={(props) => (
-                <UserPage userObj={userObj} match={props.match} />
+                <UserPage
+                  userObj={userObj}
+                  match={props.match}
+                  refreshUser={refreshUser}
+                />
               )}
             />
             <Route
@@ -59,9 +58,6 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 <NweetDetailPage match={props.match} userObj={userObj} />
               )}
             />
-            <Route exact path="/profile">
-              <Profile userObj={userObj} refreshUser={refreshUser} />
-            </Route>
             <Route
               exact
               path="/search/:value"

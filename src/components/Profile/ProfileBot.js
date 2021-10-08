@@ -76,7 +76,6 @@ const ProfileBot = ({ userObj, clickOn }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("트윗만", nweetsMap);
         setMyNweets(nweetsMap);
       });
     //트윗 및 답글db 구독해제
