@@ -17,10 +17,11 @@ const UserPageTop = ({
   const [stateMessage, setStateMessage] = useState("");
   const editing = useRef();
   useEffect(() => {
-    if (userIdPath && !userInfo) {
+    console.log("유저페이지 탑", userIdPath);
+    if (userIdPath) {
       const userInfoRef = dbService.collection("userInfo");
       const query = userInfoRef.doc(`${userIdPath}`);
-      query.get().then((doc) => {
+      query.onSnapshot((doc) => {
         const data = doc.data();
         setUserInfo(data);
         if (data.stateMsg) {
@@ -35,7 +36,7 @@ const UserPageTop = ({
         setFollowing(true);
       }
     });
-  });
+  }, [userIdPath]);
   const onMenuListClick = (e) => {
     switch (e.target.innerText) {
       case "트윗":
