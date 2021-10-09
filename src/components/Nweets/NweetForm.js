@@ -1,9 +1,9 @@
 import { dbService } from "fbase";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./NweetForm.css";
 import Nweet from "./Nweet";
 
-const NweetForm = React.memo(
+const NweetForm = memo(
   ({ nweetObj, isOwner, userObj, followOnly, isDepthEqual }) => {
     const [isFollowing, setIsFollowing] = useState(false);
     const [isReNweet, setIsReNweet] = useState(false);
@@ -45,7 +45,12 @@ const NweetForm = React.memo(
           //여기 아래부턴 전체공개
           !followOnly &&
           isDepthEqual && (
-            <Nweet nweetObj={nweetObj} isOwner={isOwner} userObj={userObj} />
+            <Nweet
+              key={nweetObj.id}
+              nweetObj={nweetObj}
+              isOwner={isOwner}
+              userObj={userObj}
+            />
           )
         )}
       </>

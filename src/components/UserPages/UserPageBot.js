@@ -73,69 +73,6 @@ const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
           setLikeNweets(nweetsMap);
         });
     }
-
-    const unsubscribe = dbService
-      .collection("nweets")
-      .where("createrId", "==", userIdPath)
-      .where("docId", "==", false)
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .onSnapshot((snapshot) => {
-        const nweetsMap = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setUserNweets(nweetsMap);
-      });
-    //트윗 및 답글db
-    dbService
-      .collection("nweets")
-      .where("createrId", "==", userIdPath)
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .onSnapshot((snapshot) => {
-        if (snapshot) {
-          const nweetsMap = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setUserNweetsComment(nweetsMap);
-          if (!data) {
-            setData(true);
-          }
-        }
-      });
-    //미디어 db
-    dbService
-      .collection("nweets")
-      .where("createrId", "==", userIdPath)
-      .where("attachmentUrl", "!=", "")
-      .orderBy("attachmentUrl", "desc")
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .onSnapshot((snapshot) => {
-        const nweetsMap = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMeidaNweets(nweetsMap);
-      });
-    //마음에 들어요 db
-    dbService
-      .collection("nweets")
-      .where("like", "array-contains", userIdPath)
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .onSnapshot((snapshot) => {
-        const nweetsMap = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setLikeNweets(nweetsMap);
-      });
-    return () => {
-      unsubscribe();
-    };
   }, [data, userIdPath]);
   return (
     <>

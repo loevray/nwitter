@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { ReactComponent as CommentWhite } from "svg/comment_white.svg";
 
-const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
+const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [isHashTag, setIsHashTag] = useState(false);
   const [isLike, setIsLike] = useState(false);
@@ -259,6 +259,6 @@ const Nweet = ({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Nweet;
