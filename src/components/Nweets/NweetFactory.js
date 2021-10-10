@@ -61,7 +61,7 @@ const NweetFactory = ({
   }, [commentPage]);
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (!!nweet) {
+    if (nweet === "") {
       alert("내용을 입력해주세요!");
       return;
     }
