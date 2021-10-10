@@ -23,16 +23,6 @@ const Home = ({ userObj }) => {
           setNweets(nweetInfoObj);
         }
       });
-    const unsubscribe = dbService
-      .collection("nweets")
-      .orderBy("createdAt", "desc")
-      .onSnapshot((snapshot) => {
-        const nweetInfoObj = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setNweets(nweetInfoObj);
-      });
     const followMenuOff = (event) => {
       if (!followMenuWrapper.current.contains(event.target)) {
         setFollowMenu(false);
@@ -40,6 +30,16 @@ const Home = ({ userObj }) => {
     };
     document.body.addEventListener("mousedown", followMenuOff);
     return () => {
+      const unsubscribe = dbService
+        .collection("nweets")
+        .orderBy("createdAt", "desc")
+        .onSnapshot((snapshot) => {
+          const nweetInfoObj = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setNweets(nweetInfoObj);
+        });
       unsubscribe();
       document.body.removeEventListener("mousedown", followMenuOff);
     };

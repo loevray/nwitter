@@ -8,35 +8,22 @@ import Home from "../routes/Home";
 import FirstScreen from "../routes/FirstScreen";
 import Navigation from "../routes/Navigation";
 import Aside from "routes/Aside";
-import Verified from "routes/Verified";
-import { useEffect, useState } from "react";
 import Search from "routes/Search";
 import UserPage from "routes/UserPage";
 import NweetDetailPage from "./Detail/NweetDetailPage";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
-  const [verifying, setVeyrifying] = useState(false);
-  const [notWatching, setNotWatching] = useState(true);
-  useEffect(() => {
-    const emailsended = JSON.parse(window.localStorage.getItem("sendMail"));
-    if (!emailsended) {
-      return;
-    } else {
-      setVeyrifying(true);
-    }
-  }, [verifying]);
   return (
     <Router>
-      {isLoggedIn && notWatching && <Navigation userObj={userObj} />}
       <Switch>
-        {verifying && (
-          <Route exact path="/verifying">
-            <Verified setNotWatching={setNotWatching} />
-          </Route>
-        )}
         {isLoggedIn ? (
           <>
             <Redirect from="/" to="/home" />
+            <Route
+              render={(props) => (
+                <Navigation location={props.location} userObj={userObj} />
+              )}
+            />
             <Route exact path="/home">
               <Home userObj={userObj} />
             </Route>
@@ -65,6 +52,9 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 <Search userObj={userObj} match={props.match} />
               )}
             />
+            <Route>
+              <Aside />
+            </Route>
           </>
         ) : (
           <>
@@ -78,7 +68,6 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
           </>
         )}
       </Switch>
-      {isLoggedIn && notWatching && <Aside />}
     </Router>
   );
 };

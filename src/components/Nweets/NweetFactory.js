@@ -17,16 +17,16 @@ const NweetFactory = ({
   const [hashTag, setHashTag] = useState([]);
   const fileInput = useRef();
   const nweetText = useRef();
-  const putPathName = () => {
-    const pathName = window.location.hash;
-    const pathCut = pathName.split("/");
-    if (pathCut[3] === "detail" && commentPage === false) {
-      setCommentPage(true);
-      return;
-    }
-  };
-  window.addEventListener("hashchange", putPathName);
   useEffect(() => {
+    console.log("hi");
+    const getUrl = () => {
+      const pathName = window.location.hash;
+      const pathCut = pathName.split("/");
+      if (pathCut[3] === "detail" && !commentPage) {
+        setCommentPage((prev) => !prev);
+      }
+    };
+    getUrl();
     const config = { characterData: true, childList: true, subtree: true };
     const callback = function (mutationList, observer) {
       for (let mutation of mutationList) {
@@ -55,10 +55,13 @@ const NweetFactory = ({
     };
     const observer = new MutationObserver(callback);
     observer.observe(nweetText.current, config);
-  }, []);
+    return () => {
+      observer.disconnect();
+    };
+  }, [commentPage]);
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (nweet === "") {
+    if (!!nweet) {
       alert("내용을 입력해주세요!");
       return;
     }

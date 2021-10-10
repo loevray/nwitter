@@ -58,13 +58,22 @@
   font-size: 2.5vh;
 }
 
+.detail_nweet_hashtag {
+  display: inline-block;
+  cursor: pointer;
+  padding-top: 2vh;
+  white-space: pre-line;
+  color: #00acee;
+  font-size: 2.5vh;
+}
+
 .detail_nweet_img {
   padding-top: 1vh;
   width: 100%;
   height: 32vh;
 }
 
-.detail_nweet_img > img {
+.detail_nweet_img > a > img {
   border: 0.5px solid #eff3f4;
   border-radius: 15px;
   width: 100%;

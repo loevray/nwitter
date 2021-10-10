@@ -3,29 +3,19 @@ import { dbService, dbStore } from "fbase";
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 
-const UserPageTop = ({
-  userIdPath,
-  clickOn,
-  setClickOn,
-  userObj,
-  isMyProfile,
-  refreshUser,
-}) => {
+const UserPageTop = ({ userIdPath, userObj, isMyProfile, refreshUser }) => {
   const [userInfo, setUserInfo] = useState();
   const [following, setFollowing] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [stateMessage, setStateMessage] = useState("");
   const editing = useRef();
   useEffect(() => {
-    console.log("유저페이지 탑", userIdPath);
     if (userIdPath) {
       const userInfoRef = dbService.collection("userInfo");
       const query = userInfoRef.doc(`${userIdPath}`);
       query.onSnapshot((doc) => {
-        const data = doc.data();
-        setUserInfo(data);
-        if (data.stateMsg) {
-          setStateMessage(data.stateMsg);
+        if (doc.exists) {
+          const data = doc.data();
+          setUserInfo(data);
         }
       });
     }
@@ -37,49 +27,6 @@ const UserPageTop = ({
       }
     });
   }, [userIdPath]);
-  const onMenuListClick = (e) => {
-    switch (e.target.innerText) {
-      case "트윗":
-        setClickOn({
-          nweet: true,
-          nweetComment: false,
-          media: false,
-          like: false,
-        });
-        break;
-      case "트윗 및 답글":
-        setClickOn({
-          nweet: false,
-          nweetComment: true,
-          media: false,
-          like: false,
-        });
-        break;
-      case "미디어":
-        setClickOn({
-          nweet: false,
-          nweetComment: false,
-          media: true,
-          like: false,
-        });
-        break;
-      case "마음에 들어요":
-        setClickOn({
-          nweet: false,
-          nweetComment: false,
-          media: false,
-          like: true,
-        });
-        break;
-      default:
-        setClickOn({
-          nweet: true,
-          nweetComment: false,
-          media: false,
-          like: false,
-        });
-    }
-  };
   const onProfileUpdateClick = () => {
     setEdit(true);
   };
@@ -121,7 +68,7 @@ const UserPageTop = ({
                     userObj={userObj}
                     refreshUser={refreshUser}
                     setEdit={setEdit}
-                    stateMessage={stateMessage}
+                    stateMessage={userInfo.stateMsg && userInfo.stateMsg}
                   />
                 </div>
               </div>
@@ -186,10 +133,17 @@ const UserPageTop = ({
               )}
             </div>
             <div className="profile_info_name">
-              <span>{userInfo.displayName}</span>
+              <span className="profile_info_nickname">
+                {userInfo.displayName}
+              </span>
+              {userInfo.email && (
+                <span className="profile_info_id">
+                  @{userInfo.email.split("@")[0]}
+                </span>
+              )}
             </div>
             <div className="profile_info_state">
-              <span>상태메세지:{userInfo.stateMsg}</span>
+              <span>{userInfo.stateMsg}</span>
             </div>
             <div className="profile_info_following_wrapper">
               <span className="profile_info_follow_number">
@@ -200,20 +154,6 @@ const UserPageTop = ({
                 {userInfo.follower.length}
               </span>
               <span>팔로워</span>
-            </div>
-            <div onClick={onMenuListClick} className="profile_menu_bar">
-              <span className={clickOn.nweet ? "click_on" : "click_off"}>
-                트윗
-              </span>
-              <span className={clickOn.nweetComment ? "click_on" : "click_off"}>
-                트윗 및 답글
-              </span>
-              <span className={clickOn.media ? "click_on" : "click_off"}>
-                미디어
-              </span>
-              <span className={clickOn.like ? "click_on" : "click_off"}>
-                마음에 들어요
-              </span>
             </div>
           </div>
         </div>

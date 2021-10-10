@@ -4,11 +4,17 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
+const UserPageBot = ({ userIdPath, userObj }) => {
   const [userNweets, setUserNweets] = useState([]);
   const [userNweetsComment, setUserNweetsComment] = useState([]);
   const [mediaNweets, setMeidaNweets] = useState([]);
   const [likeNweets, setLikeNweets] = useState([]);
+  const [clickOn, setClickOn] = useState({
+    nweet: true,
+    nweetComment: false,
+    media: false,
+    like: false,
+  });
   const [data, setData] = useState(false);
   useEffect(() => {
     if (userIdPath) {
@@ -74,8 +80,61 @@ const UserPageBot = ({ clickOn, userIdPath, userObj }) => {
         });
     }
   }, [data, userIdPath]);
+  const onMenuListClick = (e) => {
+    switch (e.target.innerText) {
+      case "트윗":
+        setClickOn({
+          nweet: true,
+          nweetComment: false,
+          media: false,
+          like: false,
+        });
+        break;
+      case "트윗 및 답글":
+        setClickOn({
+          nweet: false,
+          nweetComment: true,
+          media: false,
+          like: false,
+        });
+        break;
+      case "미디어":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: true,
+          like: false,
+        });
+        break;
+      case "마음에 들어요":
+        setClickOn({
+          nweet: false,
+          nweetComment: false,
+          media: false,
+          like: true,
+        });
+        break;
+      default:
+        setClickOn({
+          nweet: true,
+          nweetComment: false,
+          media: false,
+          like: false,
+        });
+    }
+  };
   return (
     <>
+      <div onClick={onMenuListClick} className="profile_menu_bar">
+        <span className={clickOn.nweet ? "click_on" : "click_off"}>트윗</span>
+        <span className={clickOn.nweetComment ? "click_on" : "click_off"}>
+          트윗 및 답글
+        </span>
+        <span className={clickOn.media ? "click_on" : "click_off"}>미디어</span>
+        <span className={clickOn.like ? "click_on" : "click_off"}>
+          마음에 들어요
+        </span>
+      </div>
       {data ? (
         <>
           {clickOn.nweet &&

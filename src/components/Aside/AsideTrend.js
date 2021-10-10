@@ -5,7 +5,7 @@ import GetPopularTag from "./GetPopularTag";
 const AsideTrend = () => {
   const [trend, setTrend] = useState([]);
   useEffect(() => {
-    const callHashDb = () => {
+    const getHashData = () => {
       const hashRef = dbService.collection("nweets");
       hashRef
         .orderBy("hashTag")
@@ -24,7 +24,7 @@ const AsideTrend = () => {
           }
         });
     };
-    callHashDb();
+    getHashData();
   }, []);
   return (
     <div className="aside_left_trend">

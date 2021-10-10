@@ -6,7 +6,6 @@ import { ReactComponent as CommentWhite } from "svg/comment_white.svg";
 
 const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [menuOn, setMenuOn] = useState(false);
-  const [isHashTag, setIsHashTag] = useState(false);
   const [isLike, setIsLike] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
@@ -47,11 +46,7 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     if (!userId) {
       setUserId(userIdCut);
     }
-    if (nweetObj.hashTag != null) {
-      if (!isHashTag) {
-        setIsHashTag(true);
-      }
-    }
+
     const menuOff = (event) => {
       if (
         !event.target.classList.contains("nweet_drop_down") &&
@@ -205,7 +200,7 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
           )}
           <div className="nweet_right_center">
             <div className="nweet_content">{nweetObj.text}</div>
-            {isHashTag && (
+            {nweetObj.hashTag && (
               <span className="nweet_hashtag">{nweetObj.hashTag}</span>
             )}
             {nweetObj.attachmentUrl && (

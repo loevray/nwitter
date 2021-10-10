@@ -9,7 +9,6 @@ import DetailNweet from "./DetailNweet";
 const NweetDetailPage = ({ match, userObj }) => {
   const [detailNweet, setDetailNweet] = useState([]);
   const [comment, setCommnet] = useState([]);
-  const [isData, setIsData] = useState(false);
   useEffect(() => {
     if (match.params) {
       const postId = match.params.postId;
@@ -17,13 +16,11 @@ const NweetDetailPage = ({ match, userObj }) => {
         .collection("nweets")
         .doc(`${postId}`)
         .onSnapshot((doc) => {
-          if (doc) {
-            const detailNweet = doc.data();
-            setDetailNweet(detailNweet);
-            if (detailNweet) {
-              setIsData(true);
-            }
+          if (!doc) {
+            console.log("데이터 없음");
           }
+          const detailNweet = doc.data();
+          setDetailNweet(detailNweet);
         });
       const nweetRef = dbService.collection("nweets");
       const query = nweetRef.where("docId", "==", `${match.params.postId}`);
@@ -64,7 +61,7 @@ const NweetDetailPage = ({ match, userObj }) => {
           />
         </div>
         <div className="home_center_bottom">
-          {isData &&
+          {comment.length > 0 &&
             comment.map((_comment) => (
               <Nweet
                 key={_comment.id}

@@ -9,7 +9,7 @@ import { ReactComponent as HomeBlack } from "../svg/home_black.svg";
 import { ReactComponent as Profilewhite } from "../svg/profile_white.svg";
 import { ReactComponent as ProfileBlack } from "../svg/profile_black.svg";
 
-const Navigation = ({ userObj }) => {
+const Navigation = ({ userObj, location }) => {
   const [path, setPath] = useState({
     home: true,
     user: false,

@@ -36,9 +36,20 @@ const DetailNweet = ({ detailNweet, match }) => {
             <div className="detail_nweet_text">
               <span>{detailNweet.text}</span>
             </div>
+            {detailNweet.hashTag && (
+              <span className="detail_nweet_hashtag">
+                {detailNweet.hashTag}
+              </span>
+            )}
             {detailNweet.attachmentUrl && (
               <div className="detail_nweet_img">
-                <img src={detailNweet.attachmentUrl} alt="attach"></img>
+                <a
+                  href={detailNweet.attachmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={detailNweet.attachmentUrl} alt="attach"></img>
+                </a>
               </div>
             )}
             <div className="detail_nweet_createdAt">
