@@ -1,9 +1,9 @@
 import { authService, dbService, fireBaseInstance } from "fbase";
 import React from "react";
+import { useHistory } from "react-router";
 
 const SocialLinks = () => {
-  //가입하면 newAccount가 거짓이니 false로 바꿔주고, 반대도 마찬가지로 뒤집어주는 작업.
-  //구글, 깃헙으로 로그인
+  const history = useHistory();
   const onSocialClick = async (event) => {
     const {
       target: { name },
@@ -34,6 +34,7 @@ const SocialLinks = () => {
         await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
       }
     });
+    history.push("/home");
   };
   return (
     <>

@@ -79,6 +79,74 @@ const UserPageBot = ({ userIdPath, userObj }) => {
           setLikeNweets(nweetsMap);
         });
     }
+    return () => {
+      const unsub1 = dbService //트윗db
+        .collection("nweets")
+        .where("createrId", "==", userIdPath)
+        .where("docId", "==", false)
+        .orderBy("createdAt", "desc")
+        .limit(5)
+        .onSnapshot((snapshot) => {
+          const nweetsMap = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setUserNweets(nweetsMap);
+        });
+      //트윗 및 답글db
+      const unsub2 = dbService
+        .collection("nweets")
+        .where("createrId", "==", userIdPath)
+        .orderBy("createdAt", "desc")
+        .limit(5)
+        .onSnapshot((snapshot) => {
+          if (snapshot) {
+            const nweetsMap = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setUserNweetsComment(nweetsMap);
+            if (!data) {
+              setData(true);
+            }
+          }
+        });
+      //미디어 db
+      const unsub3 = dbService
+        .collection("nweets")
+        .where("createrId", "==", userIdPath)
+        .where("attachmentUrl", "!=", "")
+        .orderBy("attachmentUrl", "desc")
+        .orderBy("createdAt", "desc")
+        .limit(5)
+        .onSnapshot((snapshot) => {
+          const nweetsMap = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setMeidaNweets(nweetsMap);
+        });
+      //마음에 들어요 db
+      const unsub4 = dbService
+        .collection("nweets")
+        .where("like", "array-contains", userIdPath)
+        .orderBy("createdAt", "desc")
+        .limit(5)
+        .onSnapshot((snapshot) => {
+          const nweetsMap = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setLikeNweets(nweetsMap);
+        });
+      unsub1();
+      unsub2();
+      unsub3();
+      unsub4();
+      setClickOn((prevState) => ({
+        ...prevState,
+      }));
+    };
   }, [data, userIdPath]);
   const onMenuListClick = (e) => {
     switch (e.target.innerText) {

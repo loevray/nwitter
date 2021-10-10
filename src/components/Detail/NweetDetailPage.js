@@ -19,7 +19,10 @@ const NweetDetailPage = ({ match, userObj }) => {
           if (!doc) {
             console.log("데이터 없음");
           }
-          const detailNweet = doc.data();
+          const detailNweet = {
+            id: doc.id,
+            ...doc.data(),
+          };
           setDetailNweet(detailNweet);
         });
       const nweetRef = dbService.collection("nweets");
@@ -45,7 +48,11 @@ const NweetDetailPage = ({ match, userObj }) => {
             </div>
           </div>
         </div>
-        <DetailNweet detailNweet={detailNweet} match={match} />
+        <DetailNweet
+          detailNweet={detailNweet}
+          match={match}
+          userObj={userObj}
+        />
         <div className="home_center_nweet_wrapper">
           <div className="home_center_nweet_profile_img">
             <img src={userObj.photoURL} alt="img" />

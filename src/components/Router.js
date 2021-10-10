@@ -18,12 +18,14 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
       <Switch>
         {isLoggedIn ? (
           <>
-            <Redirect from="/" to="/home" />
             <Route
               render={(props) => (
                 <Navigation location={props.location} userObj={userObj} />
               )}
             />
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
             <Route exact path="/home">
               <Home userObj={userObj} />
             </Route>

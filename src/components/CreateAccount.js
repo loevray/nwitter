@@ -1,10 +1,12 @@
 import { authService, dbService, storageService } from "fbase";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import "../css/CreateAccount.css";
 
 const CreateAccount = ({ setSignUp, refreshUser }) => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const history = useHistory();
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -53,6 +55,7 @@ const CreateAccount = ({ setSignUp, refreshUser }) => {
           const userInfoRef = dbService.collection("userInfo");
           await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
           refreshUser();
+          history.push("/home");
         })
         .catch((e) => {
           console.log("에러:", e);

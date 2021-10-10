@@ -18,7 +18,6 @@ const NweetFactory = ({
   const fileInput = useRef();
   const nweetText = useRef();
   useEffect(() => {
-    console.log("hi");
     const getUrl = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");

@@ -2,12 +2,33 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { dbService, dbStore } from "fbase";
+import { ReactComponent as ReNweetBold } from "svg/reNweet_bold.svg";
+import { ReactComponent as ReNweet } from "svg/reNweet_normal.svg";
+import { ReactComponent as ShareLink } from "svg/shareLink.svg";
+import { ReactComponent as Like } from "svg/like.svg";
+import { ReactComponent as UnLiked } from "svg/unliked.svg";
 import "./DetailNweet.css";
+import ClipboardJS from "clipboard";
 
-const DetailNweet = ({ detailNweet, match }) => {
+const DetailNweet = ({ detailNweet, match, userObj }) => {
   const [userId, setUserId] = useState("");
+  const [isLike, setIsLike] = useState(false);
+  const [isReNweeted, setIsReNweeted] = useState(false);
   const history = useHistory();
   useEffect(() => {
+    if (detailNweet.like) {
+      const likeRef = detailNweet.like.includes(userObj.uid);
+      if (likeRef) {
+        setIsLike(true);
+      }
+    }
+    if (detailNweet.reNweet) {
+      const reNweetRef = detailNweet.reNweet.includes(userObj.uid);
+      if (reNweetRef) {
+        setIsReNweeted(true);
+      }
+    }
     if (detailNweet.userEmail) {
       const emailCut = detailNweet.userEmail.split("@");
       setUserId(emailCut[0]);
@@ -18,6 +39,40 @@ const DetailNweet = ({ detailNweet, match }) => {
       const to = match.params.id;
       history.push(`/user/${to}`);
     }
+  };
+  const onReNweetBtnClick = async (e) => {
+    e.stopPropagation();
+    if (detailNweet.reNweet.includes(userObj.uid, 0)) {
+      await dbService.doc(`nweets/${detailNweet.id}`).update({
+        reNweet: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+      });
+      setIsReNweeted(false);
+      return;
+    }
+    await dbService.doc(`nweets/${detailNweet.id}`).update({
+      reNweet: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+    });
+    setIsReNweeted(true);
+  };
+  const onLikeBtnClick = async (e) => {
+    e.stopPropagation();
+    if (detailNweet.like.includes(userObj.uid, 0)) {
+      await dbService.doc(`nweets/${detailNweet.id}`).update({
+        like: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+      });
+      setIsLike(false);
+      return;
+    }
+    await dbService.doc(`nweets/${detailNweet.id}`).update({
+      like: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+    });
+    setIsLike(true);
+  };
+  const onShareClick = () => {
+    const clipboard = new ClipboardJS(".nweet_right_bottom_share");
+    clipboard.on("success", () => {
+      alert("주소 복사 완료!");
+    });
   };
   return (
     <>
@@ -67,9 +122,25 @@ const DetailNweet = ({ detailNweet, match }) => {
             </div>
           )}
           <div className="detail_nweet_btns">
-            <span>리트</span>
-            <span>좋아</span>
-            <span>공유</span>
+            <div
+              className="nweet_right_bottom_reNweet nweet_icon_menus detail"
+              onClick={onReNweetBtnClick}
+            >
+              {isReNweeted ? <ReNweetBold /> : <ReNweet />}
+            </div>
+            <div
+              className="nweet_right_bottom_like nweet_icon_menus detail"
+              onClick={onLikeBtnClick}
+            >
+              {isLike ? <Like /> : <UnLiked />}
+            </div>
+            <div
+              className="nweet_right_bottom_share nweet_icon_menus detail"
+              data-clipboard-text={`loevray.github.io/nwitter/${window.location.hash}`}
+              onClick={onShareClick}
+            >
+              <ShareLink />
+            </div>
           </div>
         </div>
       </div>

@@ -3,10 +3,17 @@ import { authService, dbService, dbStore, storageService } from "fbase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { ReactComponent as CommentWhite } from "svg/comment_white.svg";
+import { ReactComponent as ReNweetBold } from "svg/reNweet_bold.svg";
+import { ReactComponent as ReNweet } from "svg/reNweet_normal.svg";
+import { ReactComponent as Like } from "svg/like.svg";
+import { ReactComponent as UnLiked } from "svg/unliked.svg";
+import { ReactComponent as ShareLink } from "svg/shareLink.svg";
+import ClipboardJS from "clipboard";
 
 const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const [menuOn, setMenuOn] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const [isReNweeted, setIsReNweeted] = useState(false);
   const [userId, setUserId] = useState("");
   const [postTime, setPostTime] = useState("");
   const [commentSize, setCommentSize] = useState(0);
@@ -24,6 +31,10 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
     const likeRef = nweetObj.like.includes(userObj.uid);
     if (likeRef) {
       setIsLike(true);
+    }
+    const reNweetRef = nweetObj.reNweet.includes(userObj.uid);
+    if (reNweetRef) {
+      setIsReNweeted(true);
     }
     let now = new Date().getTime();
     let second = Math.floor((now - nweetObj.createdAt[0]) / 1000);
@@ -92,19 +103,23 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
           `${authService.currentUser.uid}`,
         ),
       });
+      setIsReNweeted(false);
       return;
     }
     await dbService.doc(`nweets/${nweetObj.id}`).update({
       reNweet: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
     });
+    setIsReNweeted(true);
   };
   const onMenuClick = (e) => {
     e.stopPropagation();
     setMenuOn((prev) => !prev);
   };
-  const onNweetClick = (event) => {
-    const to = `/user/${nweetObj.createrId}/detail/${nweetObj.id}`;
-    history.push(to);
+  const onNweetClick = (e) => {
+    if (e.target.nodeName !== "svg") {
+      const to = `/user/${nweetObj.createrId}/detail/${nweetObj.id}`;
+      history.push(to);
+    }
   };
   const stopBubble = (e) => {
     e.stopPropagation();
@@ -112,6 +127,12 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
   const onIgnoreClick = (e) => {
     e.stopPropagation();
     console.log("무시하기 눌림");
+  };
+  const onShareClick = (e) => {
+    const clipboard = new ClipboardJS(".nweet_right_bottom_share");
+    clipboard.on("success", () => {
+      console.log("주소복사 완료!");
+    });
   };
   return (
     <div className="nweet_wrapper">
@@ -216,38 +237,31 @@ const Nweet = memo(({ isReNweet, nweetObj, isOwner, reNweeter, userObj }) => {
             )}
           </div>
           <div className="nweet_right_bottom">
-            <div className="nweet_right_bottom_comment">
+            <div className="nweet_right_bottom_comment nweet_icon_menus">
               <CommentWhite />
               <span>{commentSize}</span>
             </div>
-            <div className="nweet_right_bottom_like" onClick={onLikeBtnClick}>
-              <svg
-                className={isLike ? "liked" : "unliked"}
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <g>
-                  <path
-                    d={
-                      isLike
-                        ? "M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z"
-                        : "M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12zM7.354 4.225c-2.08 0-3.903 1.988-3.903 4.255 0 5.74 7.034 11.596 8.55 11.658 1.518-.062 8.55-5.917 8.55-11.658 0-2.267-1.823-4.255-3.903-4.255-2.528 0-3.94 2.936-3.952 2.965-.23.562-1.156.562-1.387 0-.014-.03-1.425-2.965-3.954-2.965z"
-                    }
-                  ></path>
-                </g>
-              </svg>
+
+            <div
+              className="nweet_right_bottom_reNweet nweet_icon_menus"
+              onClick={onReNweetBtnClick}
+            >
+              {isReNweeted ? <ReNweetBold /> : <ReNweet />}
+              <span>{nweetObj.reNweet.length}</span>
+            </div>
+            <div
+              className="nweet_right_bottom_like nweet_icon_menus"
+              onClick={onLikeBtnClick}
+            >
+              {isLike ? <Like /> : <UnLiked />}
               <span>{nweetObj.like.length}</span>
             </div>
             <div
-              className="nweet_right_bottom_reNweet"
-              onClick={onReNweetBtnClick}
+              className="nweet_right_bottom_share nweet_icon_menus"
+              data-clipboard-text={`loevray.github.io/nwitter/#/user/${nweetObj.createrId}/detail/${nweetObj.id}`}
+              onClick={onShareClick}
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"></path>
-                </g>
-              </svg>
-              <span>{nweetObj.reNweet.length}</span>
+              <ShareLink />
             </div>
           </div>
         </div>

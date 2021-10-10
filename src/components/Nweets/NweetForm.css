@@ -170,9 +170,7 @@
   align-items: center;
 }
 
-.nweet_right_bottom_like,
-.nweet_right_bottom_reNweet,
-.nweet_right_bottom_comment {
+.nweet_icon_menus {
   cursor: pointer;
   display: flex;
 }
@@ -187,8 +185,21 @@
   fill: #f91880;
 }
 
-.nweet_right_bottom_comment:hover > svg {
+.reNweeted {
+  fill: #00ba7c;
+  width: 2vh;
+}
+
+.nweet_right_bottom_comment:hover > .comment_Icon {
   background-color: #e1eef7;
+  fill: #1d9bf0;
+}
+
+.nweet_right_bottom_share:hover {
+  background-color: #e1eef7;
+}
+
+.nweet_right_bottom_share:hover > .sharelink {
   fill: #1d9bf0;
 }
 
@@ -197,17 +208,27 @@
   fill: #f9318d;
 }
 
+.sharelink {
+  width: 2vh;
+  fill: #536471;
+}
+
 .unliked,
-.nweet_right_bottom_reNweet > svg,
-.nweet_right_bottom_comment > svg {
+.unReNweeted,
+.comment_Icon {
   width: 2vh;
   fill: #536471;
 }
 
 .nweet_right_bottom_like > svg,
 .nweet_right_bottom_reNweet > svg,
-.nweet_right_bottom_comment > svg {
-  padding: 0.7vh 0.7vh 0.7vh 0.7vh;
+.comment_Icon {
+  border-radius: 50%;
+  padding: 0.7vh;
+}
+
+.nweet_right_bottom_share {
+  padding: 0.7vh;
   border-radius: 50%;
 }
 
