@@ -9,7 +9,7 @@ const NweetForm = memo(
     const [isReNweet, setIsReNweet] = useState(false);
     const [reNweeter, setReNweeter] = useState("");
     useEffect(() => {
-      const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+      const followingRef = dbService.doc(`userInfo/${userObj.userId}`);
       followingRef.get().then(async (doc) => {
         const isFollowingRef = doc.data().following;
         if (isFollowingRef.includes(nweetObj.createrId, 0)) {

@@ -16,22 +16,17 @@ const Navigation = ({ userObj }) => {
     const putPathName = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");
-      if (
-        pathCut.length === 3 &&
-        pathCut[1] === "user" &&
-        path.user === false
-      ) {
-        setPath((prevState) => ({
-          ...prevState,
-          home: false,
-          user: true,
-        }));
-      }
       if (pathCut[1] === "home") {
         setPath((prevState) => ({
           ...prevState,
           home: true,
           user: false,
+        }));
+      } else {
+        setPath((prevState) => ({
+          ...prevState,
+          home: false,
+          user: true,
         }));
       }
     };
@@ -73,7 +68,7 @@ const Navigation = ({ userObj }) => {
                 </Link>
               </li>
               <li>
-                <Link to={`/user/${userObj.uid}`}>
+                <Link to={`/${userObj.userId}`}>
                   <div className="nav_profile_wrapper">
                     <div className="nav_profile">
                       {path.user ? <ProfileBlack /> : <Profilewhite />}

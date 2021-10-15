@@ -18,7 +18,6 @@ const Nweet = memo(
     });
     const [isLike, setIsLike] = useState(false);
     const [isReNweeted, setIsReNweeted] = useState(false);
-    const [userId, setUserId] = useState("");
     const [postTime, setPostTime] = useState("");
     const [commentSize, setCommentSize] = useState(0);
     const timeout = useRef(null);
@@ -33,11 +32,11 @@ const Nweet = memo(
           setCommentSize(snap);
         }
       });
-      const likeRef = nweetObj.like.includes(userObj.uid);
+      const likeRef = nweetObj.like.includes(userObj.userId);
       if (likeRef) {
         setIsLike(true);
       }
-      const reNweetRef = nweetObj.reNweet.includes(userObj.uid);
+      const reNweetRef = nweetObj.reNweet.includes(userObj.userId);
       if (reNweetRef) {
         setIsReNweeted(true);
       }
@@ -58,10 +57,6 @@ const Nweet = memo(
       } else if (60 >= second) {
         setPostTime(`${second}초 전`);
       }
-      const userIdCut = nweetObj.userEmail.split("@");
-      if (!userId) {
-        setUserId(userIdCut);
-      }
     }, []);
     const onDeleteClick = async (e) => {
       e.stopPropagation();
@@ -75,35 +70,29 @@ const Nweet = memo(
     };
     const onLikeBtnClick = async (e) => {
       e.stopPropagation();
-      if (nweetObj.like.includes(authService.currentUser.uid, 0)) {
+      if (nweetObj.like.includes(userObj.userId, 0)) {
         await dbService.doc(`nweets/${nweetObj.id}`).update({
-          like: dbStore.FieldValue.arrayRemove(
-            `${authService.currentUser.uid}`,
-          ),
+          like: dbStore.FieldValue.arrayRemove(`${userObj.userId}`),
         });
         setIsLike(false);
         return;
       }
       await dbService.doc(`nweets/${nweetObj.id}`).update({
-        like: dbStore.FieldValue.arrayUnion(`${authService.currentUser.uid}`),
+        like: dbStore.FieldValue.arrayUnion(`${userObj.userId}`),
       });
       setIsLike(true);
     };
     const onReNweetBtnClick = async (e) => {
       e.stopPropagation();
-      if (nweetObj.reNweet.includes(authService.currentUser.uid, 0)) {
+      if (nweetObj.reNweet.includes(userObj.userId, 0)) {
         await dbService.doc(`nweets/${nweetObj.id}`).update({
-          reNweet: dbStore.FieldValue.arrayRemove(
-            `${authService.currentUser.uid}`,
-          ),
+          reNweet: dbStore.FieldValue.arrayRemove(`${userObj.userId}`),
         });
         setIsReNweeted(false);
         return;
       }
       await dbService.doc(`nweets/${nweetObj.id}`).update({
-        reNweet: dbStore.FieldValue.arrayUnion(
-          `${authService.currentUser.uid}`,
-        ),
+        reNweet: dbStore.FieldValue.arrayUnion(`${userObj.userId}`),
       });
       setIsReNweeted(true);
     };
@@ -125,7 +114,7 @@ const Nweet = memo(
     };
     const onNweetClick = (e) => {
       if (e.target.nodeName !== "svg") {
-        const to = `/user/${nweetObj.createrId}/detail/${nweetObj.id}`;
+        const to = `/${nweetObj.userId}/status/${nweetObj.id}`;
         history.push(to);
       }
     };
@@ -139,7 +128,7 @@ const Nweet = memo(
     const onShareLinksClick = () => {
       navigator.clipboard
         .writeText(
-          `loevray.github.io/nwitter/#/user/${nweetObj.createrId}/detail/${nweetObj.id}`,
+          `loevray.github.io/nwitter/#/${nweetObj.userId}/status/${nweetObj.id}`,
         )
         .then(() => {
           setCopyed((prev) => !prev);
@@ -163,7 +152,7 @@ const Nweet = memo(
         )}
         <div className="nweet" onClick={onNweetClick}>
           <div className="nweet_left">
-            <Link to={`/user/${nweetObj.createrId}`} onClick={stopBubble}>
+            <Link to={`/${nweetObj.userId}`} onClick={stopBubble}>
               <img
                 className="nweet_profile_img"
                 src={nweetObj.profile}
@@ -175,11 +164,11 @@ const Nweet = memo(
             <div className="nweet_right_top">
               <div className="nweet_info">
                 <span className="nweet_info_displayName">
-                  <Link to={`/user/${nweetObj.createrId}`} onClick={stopBubble}>
+                  <Link to={`/${nweetObj.userId}`} onClick={stopBubble}>
                     {nweetObj.displayName}
                   </Link>
                 </span>
-                <span className="nweet_info_userId">@{userId[0]}</span>
+                <span className="nweet_info_userId">@{nweetObj.userId}</span>
                 <span className="block">·</span>
                 <span className="nweet_info_timeAgo">{postTime}</span>
               </div>
@@ -218,10 +207,7 @@ const Nweet = memo(
             </div>
             {nweetObj.commentUserUid && (
               <div className="nweet_right_comment">
-                <Link
-                  to={`/user/${nweetObj.commentUserUid}`}
-                  onClick={stopBubble}
-                >
+                <Link to={`/${nweetObj.commentUserId}`} onClick={stopBubble}>
                   <span className="nweet_commented_id">
                     @{nweetObj.commentUserId}
                   </span>

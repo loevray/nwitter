@@ -21,7 +21,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
       //트윗db
       dbService
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .where("docId", "==", false)
         .orderBy("createdAt", "desc")
         .limit(5)
@@ -35,7 +35,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
       //트윗 및 답글db
       dbService
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .orderBy("createdAt", "desc")
         .limit(5)
         .onSnapshot((snapshot) => {
@@ -53,7 +53,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
       //미디어 db
       dbService
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .where("attachmentUrl", "!=", "")
         .orderBy("attachmentUrl", "desc")
         .orderBy("createdAt", "desc")
@@ -82,7 +82,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
     return () => {
       const unsub1 = dbService //트윗db
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .where("docId", "==", false)
         .orderBy("createdAt", "desc")
         .limit(5)
@@ -96,7 +96,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
       //트윗 및 답글db
       const unsub2 = dbService
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .orderBy("createdAt", "desc")
         .limit(5)
         .onSnapshot((snapshot) => {
@@ -114,7 +114,7 @@ const UserPageBot = ({ userIdPath, userObj }) => {
       //미디어 db
       const unsub3 = dbService
         .collection("nweets")
-        .where("createrId", "==", userIdPath)
+        .where("userId", "==", userIdPath)
         .where("attachmentUrl", "!=", "")
         .orderBy("attachmentUrl", "desc")
         .orderBy("createdAt", "desc")

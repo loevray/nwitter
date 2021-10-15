@@ -23,26 +23,28 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                 <Navigation location={props.location} userObj={userObj} />
               )}
             />
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route exact path="/home">
-              <Home userObj={userObj} />
-            </Route>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+              <Route exact path="/home">
+                <Home userObj={userObj} />
+              </Route>
+              <Route
+                exact
+                path="/:id"
+                render={(props) => (
+                  <UserPage
+                    userObj={userObj}
+                    match={props.match}
+                    refreshUser={refreshUser}
+                  />
+                )}
+              />
+            </Switch>
             <Route
               exact
-              path="/user/:id"
-              render={(props) => (
-                <UserPage
-                  userObj={userObj}
-                  match={props.match}
-                  refreshUser={refreshUser}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/user/:id/detail/:postId"
+              path="/:id/status/:postId"
               render={(props) => (
                 <NweetDetailPage match={props.match} userObj={userObj} />
               )}

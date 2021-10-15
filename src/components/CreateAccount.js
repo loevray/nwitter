@@ -31,6 +31,7 @@ const CreateAccount = ({ setSignUp, refreshUser }) => {
         .then(async (user) => {
           let profileUrl = "";
           const newUser = user.user;
+          const userId = newUser.email.split("@")[0];
           const storageRef = storageService
             .ref()
             .child(`userDeafultSet/profile_img/userprofile.png`);
@@ -51,9 +52,10 @@ const CreateAccount = ({ setSignUp, refreshUser }) => {
             displayName: newUser.displayName,
             email: newUser.email,
             photoUrl: newUser.photoURL,
+            userId: userId,
           };
           const userInfoRef = dbService.collection("userInfo");
-          await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
+          await userInfoRef.doc(`${userId}`).set(userInfo);
           refreshUser();
           history.push("/home");
         })

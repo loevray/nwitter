@@ -23,18 +23,19 @@ const SocialLinks = () => {
       } = user;
       if (isNewUser) {
         const newUser = authService.currentUser;
+        const userId = newUser.email.split("@")[0];
         const userInfo = {
           follower: [],
           following: [],
           displayName: newUser.displayName,
           email: newUser.email,
           photoUrl: newUser.photoURL,
+          userId: userId,
         };
         const userInfoRef = dbService.collection("userInfo");
-        await userInfoRef.doc(`${user.user.uid}`).set(userInfo);
+        await userInfoRef.doc(`${userId}`).set(userInfo);
       }
     });
-    history.push("/home");
   };
   return (
     <>

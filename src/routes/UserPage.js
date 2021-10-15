@@ -19,7 +19,7 @@ const UserPage = ({ match, userObj, refreshUser }) => {
       <UserPageTop
         userIdPath={userIdPath}
         userObj={userObj}
-        isMyProfile={userIdPath === userObj.uid}
+        isMyProfile={userIdPath === userObj.userId}
         refreshUser={refreshUser}
       />
       <div className="profile_bottom">

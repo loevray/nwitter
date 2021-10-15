@@ -19,7 +19,7 @@ const UserPageTop = ({ userIdPath, userObj, isMyProfile, refreshUser }) => {
         }
       });
     }
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+    const followingRef = dbService.doc(`userInfo/${userObj.userId}`);
     followingRef.get().then(async (doc) => {
       const isFollowing = doc.data().following;
       if (isFollowing.includes(userIdPath, 0)) {
@@ -31,25 +31,25 @@ const UserPageTop = ({ userIdPath, userObj, isMyProfile, refreshUser }) => {
     setEdit(true);
   };
   const onFollowBtnClick = async () => {
-    const followingRef = dbService.doc(`userInfo/${userObj.uid}`);
+    const followingRef = dbService.doc(`userInfo/${userObj.userId}`);
     followingRef.get().then(async (doc) => {
       const isFollowing = doc.data().following;
       if (!isFollowing.includes(userIdPath, 0)) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
+        await dbService.doc(`userInfo/${userObj.userId}`).update({
           following: dbStore.FieldValue.arrayUnion(`${userIdPath}`),
         });
         await dbService.doc(`userInfo/${userIdPath}`).update({
-          follower: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+          follower: dbStore.FieldValue.arrayUnion(`${userObj.userId}`),
         });
         setFollowing(true);
         alert("팔로우 성공!");
       }
       if (following) {
-        await dbService.doc(`userInfo/${userObj.uid}`).update({
+        await dbService.doc(`userInfo/${userObj.userId}`).update({
           following: dbStore.FieldValue.arrayRemove(`${userIdPath}`),
         });
         await dbService.doc(`userInfo/${userIdPath}`).update({
-          follower: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+          follower: dbStore.FieldValue.arrayRemove(`${userObj.userId}`),
         });
         setFollowing(false);
         alert("팔로우 해제!");

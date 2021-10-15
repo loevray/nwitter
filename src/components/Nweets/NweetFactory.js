@@ -21,46 +21,16 @@ const NweetFactory = ({
     const getUrl = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");
-      if (pathCut[3] === "detail" && !commentPage) {
+      if (pathCut[2] === "status" && !commentPage) {
         setCommentPage((prev) => !prev);
       }
     };
     getUrl();
-    const config = { characterData: true, childList: true, subtree: true };
-    const callback = function (mutationList, observer) {
-      for (let mutation of mutationList) {
-        if (mutation.type === "characterData") {
-          const nweetWord = nweetText.current.innerText;
-          const hashRegex = /(^|\B)#([ㅏ-ㅣ|가-힣|ㄱ-ㅎ|a-zA-z0-9]{1,30})/g;
-          const result = nweetWord.match(hashRegex);
-          const deleteHash = nweetWord.replace(hashRegex, "");
-          if (hashRegex.test(nweetWord)) {
-            setHashTag(result);
-          }
-          setNweet(deleteHash);
-          setNweetTyped(true);
-        }
-        if (nweetText.current.innerText === "") {
-          setNweetTyped(false);
-        }
-        if (mutation.type === "childList") {
-          if (nweetText.current.hasChildNodes()) {
-            setNweetTyped(true);
-          } else {
-            setNweetTyped(false);
-          }
-        }
-      }
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(nweetText.current, config);
-    return () => {
-      observer.disconnect();
-    };
-  }, [commentPage]);
+  }, [commentPage, nweet]);
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (nweet === "") {
+    const deleteLineBreak = nweet.replace(/(\r\n|\n|\r)/gm, "");
+    if (!deleteLineBreak.trimEnd()) {
       alert("내용을 입력해주세요!");
       return;
     }
@@ -69,7 +39,7 @@ const NweetFactory = ({
     if (attachment !== "") {
       const attachmentRef = storageService
         .ref()
-        .child(`${userObj.uid}/nweet_img/${uuidv4()}`);
+        .child(`${userObj.userId}/nweet_img/${uuidv4()}`);
       const response = await attachmentRef.putString(attachment, "data_url");
       attachmentUrl = await response.ref.getDownloadURL();
     }
@@ -91,6 +61,7 @@ const NweetFactory = ({
       profile: userObj.photoURL,
       displayName: userObj.displayName,
       userEmail: userObj.email,
+      userId: userObj.email.split("@")[0],
       depth: commentPage ? depthRef + 1 : 0,
       docId: commentPage && docId,
       commentUserId: commentPage && commentUserId[0],
@@ -100,6 +71,7 @@ const NweetFactory = ({
     setNweet("");
     setAttachment("");
     setHashTag("");
+    setNweetTyped(false);
     nweetText.current.innerText = "";
   };
   const onFileChange = (event) => {
@@ -128,6 +100,22 @@ const NweetFactory = ({
   const aaaa = () => {
     return;
   };
+  const onChange = () => {
+    setNweetTyped(true);
+    const nweetWord = nweetText.current.innerText;
+    const hashRegex = /(^|\B)#([ㅏ-ㅣ|가-힣|ㄱ-ㅎ|a-zA-z0-9]{1,30})/g;
+    const result = nweetWord.match(hashRegex);
+    const deleteHash = nweetWord.replace(hashRegex, "");
+    if (hashRegex.test(nweetWord)) {
+      setHashTag(result);
+      setNweet(deleteHash);
+    } else {
+      setNweet(nweetWord);
+    }
+    if (nweetText.current.innerText === "") {
+      setNweetTyped(false);
+    }
+  };
   return (
     <>
       <div className="nweet_factory_right">
@@ -146,6 +134,7 @@ const NweetFactory = ({
             maxLength="80"
             htmlFor="put_text"
             ref={nweetText}
+            onInput={onChange}
           ></span>
         </div>
         {attachment && (

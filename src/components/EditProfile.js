@@ -36,7 +36,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
         displayName: newDisplayName,
       });
       const userInfoRef = dbService.collection("userInfo");
-      const userInfoQuery = userInfoRef.doc(`${userObj.uid}`);
+      const userInfoQuery = userInfoRef.doc(`${userObj.userId}`);
       userInfoQuery.update({
         displayName: newDisplayName,
       });
@@ -45,7 +45,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
   };
   const onStateMsgSubmit = () => {
     const userRef = dbService.collection("userInfo");
-    const query = userRef.doc(`${userObj.uid}`);
+    const query = userRef.doc(`${userObj.userId}`);
     query.update({
       stateMsg: newStateMsg,
     });
@@ -53,11 +53,13 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
   const onProfileImgSubmit = async (event) => {
     let imgUrl = "";
     if (profileImg !== "") {
-      const imgRef = storageService.ref().child(`${userObj.uid}/profile_img/1`);
+      const imgRef = storageService
+        .ref()
+        .child(`${userObj.userId}/profile_img/1`);
       const response = await imgRef.putString(profileImg, "data_url");
       imgUrl = await response.ref.getDownloadURL();
       const userRef = dbService.collection("nweets");
-      const query = userRef.where("createrId", "==", `${userObj.uid}`);
+      const query = userRef.where("createrId", "==", `${userObj.userId}`);
       query
         .get()
         .then((querySnapshot) => {
@@ -74,7 +76,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
         photoURL: imgUrl,
       });
       const userInfo = dbService.collection("userInfo");
-      const userQuery = userInfo.doc(`${userObj.uid}`);
+      const userQuery = userInfo.doc(`${userObj.userId}`);
       userQuery.update({
         photoUrl: imgUrl,
       });
@@ -87,11 +89,11 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
     if (backgroundImg !== "") {
       const imgRef = storageService
         .ref()
-        .child(`${userObj.uid}/background_img/1`);
+        .child(`${userObj.userId}/background_img/1`);
       const response = await imgRef.putString(backgroundImg, "data_url");
       imgUrl = await response.ref.getDownloadURL();
       const userRef = dbService.collection("userInfo");
-      const query = userRef.doc(`${userObj.uid}`);
+      const query = userRef.doc(`${userObj.userId}`);
       query.update({
         background: imgUrl,
       });

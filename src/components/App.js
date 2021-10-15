@@ -16,6 +16,7 @@ function App() {
           uid: user.uid,
           email: user.email,
           photoURL: user.photoURL,
+          userId: user.email.split("@")[0],
           creationTime: user.metadata.creationTime,
           updateProfile: (args) => user.updateProfile(args),
         });
@@ -33,6 +34,7 @@ function App() {
       email: user.email,
       photoURL: user.photoURL,
       creationTime: user.metadata.creationTime,
+      userId: user.email.split("@")[0],
       updateProfile: (args) => user.updateProfile(args),
     });
   };

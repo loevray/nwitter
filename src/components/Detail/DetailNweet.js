@@ -23,20 +23,16 @@ const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
   const timeout = useRef(null);
   useEffect(() => {
     if (detailNweet.like) {
-      const likeRef = detailNweet.like.includes(userObj.uid);
+      const likeRef = detailNweet.like.includes(userObj.userId);
       if (likeRef) {
         setIsLike(true);
       }
     }
     if (detailNweet.reNweet) {
-      const reNweetRef = detailNweet.reNweet.includes(userObj.uid);
+      const reNweetRef = detailNweet.reNweet.includes(userObj.userId);
       if (reNweetRef) {
         setIsReNweeted(true);
       }
-    }
-    if (detailNweet.userEmail) {
-      const emailCut = detailNweet.userEmail.split("@");
-      setUserId(emailCut[0]);
     }
   }, [detailNweet]);
   const onClick = () => {
@@ -47,36 +43,36 @@ const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
   };
   const onReNweetBtnClick = async (e) => {
     e.stopPropagation();
-    if (detailNweet.reNweet.includes(userObj.uid, 0)) {
+    if (detailNweet.reNweet.includes(userObj.userId, 0)) {
       await dbService.doc(`nweets/${detailNweet.id}`).update({
-        reNweet: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+        reNweet: dbStore.FieldValue.arrayRemove(`${userObj.userId}`),
       });
       setIsReNweeted(false);
       return;
     }
     await dbService.doc(`nweets/${detailNweet.id}`).update({
-      reNweet: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+      reNweet: dbStore.FieldValue.arrayUnion(`${userObj.userId}`),
     });
     setIsReNweeted(true);
   };
   const onLikeBtnClick = async (e) => {
     e.stopPropagation();
-    if (detailNweet.like.includes(userObj.uid, 0)) {
+    if (detailNweet.like.includes(userObj.userId, 0)) {
       await dbService.doc(`nweets/${detailNweet.id}`).update({
-        like: dbStore.FieldValue.arrayRemove(`${userObj.uid}`),
+        like: dbStore.FieldValue.arrayRemove(`${userObj.userId}`),
       });
       setIsLike(false);
       return;
     }
     await dbService.doc(`nweets/${detailNweet.id}`).update({
-      like: dbStore.FieldValue.arrayUnion(`${userObj.uid}`),
+      like: dbStore.FieldValue.arrayUnion(`${userObj.userId}`),
     });
     setIsLike(true);
   };
   const onShareLinksClick = () => {
     navigator.clipboard
       .writeText(
-        `loevray.github.io/nwitter/#/user/${detailNweet.createrId}/detail/${detailNweet.id}`,
+        `loevray.github.io/nwitter/#/${detailNweet.userId}/status/${detailNweet.id}`,
       )
       .then(() => {
         setCopyed((prev) => !prev);
@@ -116,7 +112,7 @@ const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
           </div>
           <div className="detail_nweet_userInfo" onClick={onClick}>
             <span className="detail_nweet_nick">{detailNweet.displayName}</span>
-            <span className="detail_nweet_userId">@{userId}</span>
+            <span className="detail_nweet_userId">@{detailNweet.userId}</span>
           </div>
         </div>
         <div className="detail_nweet_bot">
@@ -169,7 +165,6 @@ const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
             </div>
             <div
               className="nweet_right_bottom_share nweet_icon_menus detail"
-              data-clipboard-text={`loevray.github.io/nwitter/${window.location.hash}`}
               onClick={onMenuClick}
             >
               <ShareLink />
