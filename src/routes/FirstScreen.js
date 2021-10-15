@@ -24,8 +24,8 @@ const FirstScreen = ({ refreshUser }) => {
   return (
     <div className="main_wrapper_1">
       {signUp && (
-        <div className="modal_wrapper">
-          <div className="modal">
+        <div className="main_modal_wrapper">
+          <div className="main_modal">
             <div className="register_wrapper" ref={signUpPage}>
               <CreateAccount setSignUp={setSignUp} refreshUser={refreshUser} />
             </div>

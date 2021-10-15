@@ -8,6 +8,7 @@ const Home = ({ userObj }) => {
   const [nweets, setNweets] = useState([]);
   const [followMenu, setFollowMenu] = useState(false);
   const [followOnly, setFollowOnly] = useState(false);
+  const [copyed, setCopyed] = useState(false);
   const followMenuWrapper = useRef();
   const topCoord = useRef();
   useEffect(() => {
@@ -113,9 +114,15 @@ const Home = ({ userObj }) => {
                   userObj={userObj}
                   followOnly={followOnly}
                   isDepthEqual={a_nweet.depth === 0}
+                  setCopyed={setCopyed}
                 />
               ))}
             </div>
+            {copyed && (
+              <div className="home_copy_message">
+                <span>클립보드로 복사함</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

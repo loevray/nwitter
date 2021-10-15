@@ -94,11 +94,19 @@
   padding: 2vh 0 2vh 0;
   font-size: 1.6vh;
   border-bottom: 1px solid #eff3f4;
+  animation-duration: 0.5s;
+  animation-name: slideTopToBot3;
 }
 
 .detail_nweet_like_length :hover,
 .detail_nweet_liked_text:hover {
   text-decoration: underline;
+}
+
+.detail_nweet_like_length,
+.detail_nweet_liked_text {
+  animation-duration: 1s;
+  animation-name: fadein0to1;
 }
 
 .detail_nweet_like_length {

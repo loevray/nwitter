@@ -20,3 +20,33 @@ body {
   background-color: rgb(54, 255, 4);
   background-image: url("../img/main_left_logo.png");
 }
+
+@keyframes slideTopToBot {
+  from {
+    height: 16vh;
+  }
+
+  to {
+    height: 22vh;
+  }
+}
+
+@keyframes slideTopToBot3 {
+  from {
+    height: 5px;
+  }
+
+  to {
+    height: 15px;
+  }
+}
+
+@keyframes fadein0to1 {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

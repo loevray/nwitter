@@ -77,16 +77,6 @@ a {
   animation-name: slideTopToBot;
 }
 
-@keyframes slideTopToBot {
-  from {
-    height: 16vh;
-  }
-
-  to {
-    height: 22vh;
-  }
-}
-
 .home_center_homebar_menu_top {
   display: flex;
   justify-content: center;
@@ -149,4 +139,22 @@ a {
   height: 55px;
   object-fit: cover;
   border-radius: 25px;
+}
+
+.home_copy_message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 170px;
+  height: 45px;
+  border-radius: 3px;
+  left: 45%;
+  bottom: 5%;
+  background-color: #1d9bf0;
+  z-index: 8888;
+}
+
+.home_copy_message > span {
+  color: white;
 }

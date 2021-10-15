@@ -4,7 +4,7 @@ import "./NweetForm.css";
 import Nweet from "./Nweet";
 
 const NweetForm = memo(
-  ({ nweetObj, isOwner, userObj, followOnly, isDepthEqual }) => {
+  ({ nweetObj, isOwner, userObj, followOnly, isDepthEqual, setCopyed }) => {
     const [isFollowing, setIsFollowing] = useState(false);
     const [isReNweet, setIsReNweet] = useState(false);
     const [reNweeter, setReNweeter] = useState("");
@@ -40,12 +40,14 @@ const NweetForm = memo(
             isOwner={isOwner}
             reNweeter={reNweeter}
             userObj={userObj}
+            setCopyed={setCopyed}
           />
         ) : (
           //여기 아래부턴 전체공개
           !followOnly &&
           isDepthEqual && (
             <Nweet
+              setCopyed={setCopyed}
               key={nweetObj.id}
               nweetObj={nweetObj}
               isOwner={isOwner}

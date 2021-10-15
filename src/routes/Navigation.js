@@ -9,23 +9,33 @@ import { ReactComponent as HomeBlack } from "../svg/home_black.svg";
 import { ReactComponent as Profilewhite } from "../svg/profile_white.svg";
 import { ReactComponent as ProfileBlack } from "../svg/profile_black.svg";
 
-const Navigation = ({ userObj, location }) => {
-  const [path, setPath] = useState({
-    home: true,
-    user: false,
-  });
+const Navigation = ({ userObj }) => {
+  const [path, setPath] = useState({});
   const history = useHistory();
   useEffect(() => {
     const putPathName = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");
-      if (pathCut[1] === "user") {
-        setPath({ home: false, user: true });
+      if (
+        pathCut.length === 3 &&
+        pathCut[1] === "user" &&
+        path.user === false
+      ) {
+        setPath((prevState) => ({
+          ...prevState,
+          home: false,
+          user: true,
+        }));
       }
       if (pathCut[1] === "home") {
-        setPath({ home: true, user: false });
+        setPath((prevState) => ({
+          ...prevState,
+          home: true,
+          user: false,
+        }));
       }
     };
+    putPathName();
     window.addEventListener("hashchange", putPathName);
   }, [path.home]);
   const onLogOutClick = () => {

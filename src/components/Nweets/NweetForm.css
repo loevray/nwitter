@@ -195,6 +195,11 @@
   fill: #1d9bf0;
 }
 
+.nweet_right_bottom_share {
+  position: relative;
+  border-radius: 50%;
+}
+
 .nweet_right_bottom_share:hover {
   background-color: #e1eef7;
 }
@@ -203,19 +208,19 @@
   fill: #1d9bf0;
 }
 
+.sharelink {
+  padding: 0.7vh;
+}
+
 .liked {
   width: 2vh;
   fill: #f9318d;
 }
 
-.sharelink {
-  width: 2vh;
-  fill: #536471;
-}
-
 .unliked,
 .unReNweeted,
-.comment_Icon {
+.comment_Icon,
+.sharelink {
   width: 2vh;
   fill: #536471;
 }
@@ -225,11 +230,6 @@
 .comment_Icon {
   border-radius: 50%;
   padding: 0.7vh;
-}
-
-.nweet_right_bottom_share {
-  padding: 0.7vh;
-  border-radius: 50%;
 }
 
 .nweet_right_bottom_like > span,
