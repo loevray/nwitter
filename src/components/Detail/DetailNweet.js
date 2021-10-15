@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
@@ -9,13 +9,18 @@ import { ReactComponent as ShareLink } from "svg/shareLink.svg";
 import { ReactComponent as Like } from "svg/like.svg";
 import { ReactComponent as UnLiked } from "svg/unliked.svg";
 import "./DetailNweet.css";
-import ClipboardJS from "clipboard";
+import DropMenu from "components/DropMenu/DropMenu";
 
-const DetailNweet = ({ detailNweet, match, userObj }) => {
+const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
+  const [menuOn, setMenuOn] = useState({
+    kebab: false,
+    share: false,
+  });
   const [userId, setUserId] = useState("");
   const [isLike, setIsLike] = useState(false);
   const [isReNweeted, setIsReNweeted] = useState(false);
   const history = useHistory();
+  const timeout = useRef(null);
   useEffect(() => {
     if (detailNweet.like) {
       const likeRef = detailNweet.like.includes(userObj.uid);
@@ -68,11 +73,39 @@ const DetailNweet = ({ detailNweet, match, userObj }) => {
     });
     setIsLike(true);
   };
-  const onShareClick = () => {
-    const clipboard = new ClipboardJS(".nweet_right_bottom_share");
-    clipboard.on("success", () => {
-      alert("주소 복사 완료!");
-    });
+  const onShareLinksClick = () => {
+    navigator.clipboard
+      .writeText(
+        `loevray.github.io/nwitter/#/user/${detailNweet.createrId}/detail/${detailNweet.id}`,
+      )
+      .then(() => {
+        setCopyed((prev) => !prev);
+        console.log("succes");
+        setMenuOn((prevState) => ({
+          ...prevState,
+          kebab: false,
+          share: false,
+        }));
+        timeout.current = setTimeout(() => {
+          setCopyed(false);
+        }, 3500);
+      });
+  };
+  const onMenuClick = (e) => {
+    e.stopPropagation();
+    if (e.target.nodeName === "SPAN") {
+      setMenuOn((prevState) => ({
+        ...prevState,
+        kebab: true,
+        share: false,
+      }));
+    } else {
+      setMenuOn((prevState) => ({
+        ...prevState,
+        kebab: false,
+        share: true,
+      }));
+    }
   };
   return (
     <>
@@ -137,9 +170,22 @@ const DetailNweet = ({ detailNweet, match, userObj }) => {
             <div
               className="nweet_right_bottom_share nweet_icon_menus detail"
               data-clipboard-text={`loevray.github.io/nwitter/${window.location.hash}`}
-              onClick={onShareClick}
+              onClick={onMenuClick}
             >
               <ShareLink />
+              {menuOn.share && (
+                <DropMenu
+                  menuData={[
+                    {
+                      text: "트윗 링크 복사하기",
+                      onClick: onShareLinksClick,
+                      id: 5,
+                    },
+                    { text: "다음을 통해 트윗 공유하기", id: 6 },
+                  ]}
+                  setMenuOn={setMenuOn}
+                />
+              )}
             </div>
           </div>
         </div>

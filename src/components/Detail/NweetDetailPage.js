@@ -9,6 +9,7 @@ import DetailNweet from "./DetailNweet";
 const NweetDetailPage = ({ match, userObj }) => {
   const [detailNweet, setDetailNweet] = useState([]);
   const [comment, setCommnet] = useState([]);
+  const [copyed, setCopyed] = useState(false);
   useEffect(() => {
     if (match.params) {
       const postId = match.params.postId;
@@ -52,6 +53,7 @@ const NweetDetailPage = ({ match, userObj }) => {
           detailNweet={detailNweet}
           match={match}
           userObj={userObj}
+          setCopyed={setCopyed}
         />
         <div className="home_center_nweet_wrapper">
           <div className="home_center_nweet_profile_img">
@@ -75,8 +77,14 @@ const NweetDetailPage = ({ match, userObj }) => {
                 nweetObj={_comment}
                 isOwner={_comment.createrId === userObj.uid}
                 userObj={userObj}
+                setCopyed={setCopyed}
               />
             ))}
+          {copyed && (
+            <div className="home_copy_message">
+              <span>클립보드로 복사함</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
