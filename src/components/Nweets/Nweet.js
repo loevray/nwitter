@@ -23,15 +23,15 @@ const Nweet = memo(
     const timeout = useRef(null);
     const history = useHistory();
     useEffect(() => {
-      const commentRef = dbService
+      dbService
         .collection("nweets")
-        .where("docId", "==", `${nweetObj.id}`);
-      commentRef.onSnapshot((doc) => {
-        const snap = doc.size;
-        if (snap > 0) {
-          setCommentSize(snap);
-        }
-      });
+        .where("docId", "==", `${nweetObj.id}`)
+        .onSnapshot((doc) => {
+          const snap = doc.size;
+          if (snap > 0) {
+            setCommentSize(snap);
+          }
+        });
       const likeRef = nweetObj.like.includes(userObj.userId);
       if (likeRef) {
         setIsLike(true);
@@ -57,6 +57,18 @@ const Nweet = memo(
       } else if (60 >= second) {
         setPostTime(`${second}초 전`);
       }
+      return () => {
+        const unsubscribe = dbService
+          .collection("nweets")
+          .where("docId", "==", `${nweetObj.id}`)
+          .onSnapshot((doc) => {
+            const snap = doc.size;
+            if (snap > 0) {
+              setCommentSize(snap);
+            }
+          });
+        unsubscribe();
+      };
     }, []);
     const onDeleteClick = async (e) => {
       e.stopPropagation();

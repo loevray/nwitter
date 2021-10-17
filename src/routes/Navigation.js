@@ -16,7 +16,13 @@ const Navigation = ({ userObj }) => {
     const putPathName = () => {
       const pathName = window.location.hash;
       const pathCut = pathName.split("/");
-      if (pathCut[1] === "home") {
+      if (pathCut[1] === `${userObj.userId}` && pathCut.length < 3) {
+        setPath((prevState) => ({
+          ...prevState,
+          home: false,
+          user: true,
+        }));
+      } else if (pathCut[1] === "home") {
         setPath((prevState) => ({
           ...prevState,
           home: true,
@@ -26,7 +32,7 @@ const Navigation = ({ userObj }) => {
         setPath((prevState) => ({
           ...prevState,
           home: false,
-          user: true,
+          user: false,
         }));
       }
     };

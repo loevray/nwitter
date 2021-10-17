@@ -29,8 +29,10 @@ const NweetFactory = ({
   }, [commentPage, nweet]);
   const onSubmit = async (event) => {
     event.preventDefault();
-    const deleteLineBreak = nweet.replace(/(\r\n|\n|\r)/gm, "");
-    if (!deleteLineBreak.trimEnd()) {
+    const deletedLineBreak = nweet.replace(/(\r\n|\n|\r)/gm, ""); //느윗 텍스트에서 모든 줄바꿈 제거
+    const deletedAllBlank = deletedLineBreak.replace(/\s/gi, ""); //위의 값에서 모든 공백까지 제거
+    //trim
+    if (!deletedAllBlank) {
       alert("내용을 입력해주세요!");
       return;
     }
@@ -97,13 +99,11 @@ const NweetFactory = ({
   const onFileClick = (event) => {
     event.target.value = null;
   };
-  const aaaa = () => {
-    return;
-  };
   const onChange = () => {
     setNweetTyped(true);
     const nweetWord = nweetText.current.innerText;
-    const hashRegex = /(^|\B)#([ㅏ-ㅣ|가-힣|ㄱ-ㅎ|a-zA-z0-9]{1,30})/g;
+    console.log(nweetText.current.innerHTML);
+    const hashRegex = /(^|\B)#([ㅏ-ㅣ|가-힣|ㄱ-ㅎ|a-zA-z0-9]{1,30})/g; //해쉬태그 정규표현식
     const result = nweetWord.match(hashRegex);
     const deleteHash = nweetWord.replace(hashRegex, "");
     if (hashRegex.test(nweetWord)) {
@@ -154,7 +154,6 @@ const NweetFactory = ({
             maxLength="80"
             id="put_text"
             value={nweet}
-            onChange={aaaa}
           />
           <div className="nweet_factory_form_bottom">
             <div className="nweet_factory_choose_img">

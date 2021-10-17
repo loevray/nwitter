@@ -7,11 +7,13 @@ import UserPageBot from "components/UserPages/UserPageBot";
 
 const UserPage = ({ match, userObj, refreshUser }) => {
   const [userIdPath, setUserIdPath] = useState("");
-  console.log("유저페이지 렌더링 됨");
   useEffect(() => {
+    console.log("유저페이지 렌더링 됨");
     if (match.params.id) {
-      const userId = match.params.id;
-      setUserIdPath(userId);
+      let userId = match.params.id;
+      if (userIdPath !== userId) {
+        setUserIdPath(userId);
+      }
     }
   }, [match.params.id]);
   return (

@@ -38,7 +38,7 @@ const DetailNweet = ({ detailNweet, match, userObj, setCopyed }) => {
   const onClick = () => {
     if (match.params.id) {
       const to = match.params.id;
-      history.push(`/user/${to}`);
+      history.push(`/${to}`);
     }
   };
   const onReNweetBtnClick = async (e) => {

@@ -50,7 +50,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
       stateMsg: newStateMsg,
     });
   };
-  const onProfileImgSubmit = async (event) => {
+  const onProfileImgSubmit = async () => {
     let imgUrl = "";
     if (profileImg !== "") {
       const imgRef = storageService
@@ -59,7 +59,7 @@ const EditProfile = ({ userObj, refreshUser, setEdit, stateMessage }) => {
       const response = await imgRef.putString(profileImg, "data_url");
       imgUrl = await response.ref.getDownloadURL();
       const userRef = dbService.collection("nweets");
-      const query = userRef.where("createrId", "==", `${userObj.userId}`);
+      const query = userRef.where("createrId", "==", `${userObj.uid}`);
       query
         .get()
         .then((querySnapshot) => {
